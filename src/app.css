@@ -53,3 +53,9 @@ a { color: var(--accent); }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
 }
+
+.stage { position: relative; height: 100%; padding: 16px; display: flex; flex-direction: column; justify-content: center; gap: 8px; }
+.stage .map-wrap { position: relative; flex: 1; min-height: 0; }
+.hud { position: absolute; left: calc(var(--step-col) + 24px); top: 24px; max-width: 420px; z-index: 3; background: color-mix(in srgb, var(--bg) 70%, transparent); padding: 12px 14px; border-radius: 10px; }
+@media (max-width: 1023px) { .hud { left: 16px; right: 16px; top: 12px; } }
+.panel { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px; }

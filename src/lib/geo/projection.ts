@@ -20,3 +20,5 @@ export function lerpProjection(width: number, height: number, from: GeoJSON.GeoJ
   const [cx, cy] = p(c)!;
   return p.translate([width / 2 - cx, height / 2 - cy]);
 }
+
+export const ROME_FRAME: GeoJSON.MultiPoint = { type: 'MultiPoint', coordinates: [[10.4, 43.4], [13.4, 43.4], [13.4, 41.3], [10.4, 41.3]] };

@@ -27,3 +27,7 @@ export const ALT_BINS = [0, 10000, 20000, 30000, 36000];
 export const altitudeBin = (ft: number) => ALT_BINS.reduce((b, lo, i) => (ft >= lo ? i : b), 0);
 export const ALT_VARS = ['--seq-300', '--seq-400', '--seq-500', '--seq-600', '--seq-700'];
 export const cssVar = (name: string, el: Element = document.documentElement) => getComputedStyle(el).getPropertyValue(name).trim();
+
+export const CAUSE_SHORT: Record<Cause, string> = {
+  'Capacity/Staffing (ATC)': 'ATC capacity', Weather: 'Weather', 'Aerodrome capacity': 'Airport', 'Disruptions (ATC)': 'Disruptions', Other: 'Other'
+};
