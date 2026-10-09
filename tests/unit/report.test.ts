@@ -17,3 +17,11 @@ describe('parseReportHtml', () => {
     expect(parseReportHtml('hello <p> </p>')).toEqual([{ kind: 'p', runs: [{ text: 'hello', bold: false }] }]);
   });
 });
+
+describe('parseReportHtml with out-of-range entities', () => {
+  it('keeps invalid numeric entities as literal text instead of throwing', () => {
+    expect(parseReportHtml('<p>a &#99999999; b &#x110000; c &#xD800; d &#65;</p>')).toEqual([
+      { kind: 'p', runs: [{ text: 'a &#99999999; b &#x110000; c &#xD800; d A', bold: false }] }
+    ]);
+  });
+});

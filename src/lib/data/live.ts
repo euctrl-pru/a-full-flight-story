@@ -1,4 +1,19 @@
-import { fetchBundle, fetchReport, type EntityKey, type EurocontrolSnapshot } from './eurocontrol';
+import { fetchBundle, fetchReport, type EntityBundle, type EntityKey, type EurocontrolSnapshot } from './eurocontrol';
+
+/** Live data wins, but a degraded live response never blanks what the snapshot already has. */
+export function mergeBundle(cur: EntityBundle | undefined, live: EntityBundle): EntityBundle {
+  if (!cur) return live;
+  const pick = <K extends 'traffic' | 'delay' | 'punctuality' | 'co2'>(k: K) => (live[k].length ? live[k] : cur[k]);
+  return {
+    ...live,
+    traffic: pick('traffic'), delay: pick('delay'), punctuality: pick('punctuality'), co2: pick('co2'),
+    headline: {
+      flights: live.headline.flights ?? cur.headline.flights,
+      delayMinutes: live.headline.delayMinutes ?? cur.headline.delayMinutes,
+      delayPerFlight: live.headline.delayPerFlight ?? cur.headline.delayPerFlight
+    }
+  };
+}
 
 export type Freshness = 'live' | 'snapshot';
 export interface EcState {
@@ -40,7 +55,7 @@ export async function loadEurocontrol(opts: {
         const live = await fetchBundle(k, f, timeout);
         const cur = state.snapshot?.bundles[k];
         if (cur && live.dataDate < cur.dataDate) return;
-        ensure().bundles[k] = live;
+        ensure().bundles[k] = mergeBundle(cur, live);
         state.freshness[k] = 'live';
         state.status = 'ready';
         emit();

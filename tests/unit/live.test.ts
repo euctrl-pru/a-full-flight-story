@@ -74,3 +74,27 @@ describe('loadEurocontrol', () => {
     expect((await p).status).toBe('error');
   });
 });
+
+describe('degraded live responses', () => {
+  it('keeps snapshot series and headline fields that a newer live bundle lacks', async () => {
+    const series = [{ name: '2026', chartType: 'daily_evolution', dateRange: null, share: null, points: [{ date: '2026-10-07', value: 1 }] }];
+    const snap: EurocontrolSnapshot = {
+      generatedAt: 'x', report: null,
+      bundles: { network: { ...bundle('network', '2026-10-07', 100), traffic: series, delay: series } }
+    };
+    const f = (async (url: string) => {
+      if (url.endsWith('/data/eurocontrol.json')) return new Response(JSON.stringify(snap));
+      const u = new URL(url);
+      if (u.pathname === '/api/syncs') return new Response(JSON.stringify({ data: [{ id: 9, syncDate: '2026-10-08T00:00:00+00:00' }] }));
+      if (u.pathname === '/api/delay_charts') return new Response(JSON.stringify({ data: [{ chartType: 'category_evolution', dateRange: 'DY', name: 'Weather', data: [{ date: '2026-10-08T00:00:00+00:00', value: 5 }] }] }));
+      return new Response(JSON.stringify({ data: [] })); // empty traffic, no headline rows
+    }) as typeof fetch;
+    const final = await loadEurocontrol({ snapshotUrl: '/data/eurocontrol.json', keys: ['network'], fetchFn: f, onUpdate: () => {} });
+    const b = final.snapshot!.bundles.network!;
+    expect(final.freshness.network).toBe('live');
+    expect(b.dataDate).toBe('2026-10-08');
+    expect(b.traffic).toEqual(series); // live had none → keep snapshot's
+    expect(b.delay[0].name).toBe('Weather'); // live had some → use live
+    expect(b.headline.flights).toBe(100); // live null → keep snapshot's
+  });
+});

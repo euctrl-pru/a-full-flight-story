@@ -5,7 +5,8 @@ export function decodeEntities(s: string): string {
   return s.replace(/&(#x[0-9a-f]+|#\d+|[a-z]+);/gi, (m, e: string) => {
     if (e[0] === '#') {
       const cp = e[1].toLowerCase() === 'x' ? parseInt(e.slice(2), 16) : parseInt(e.slice(1), 10);
-      return Number.isFinite(cp) ? String.fromCodePoint(cp) : m;
+      const valid = Number.isInteger(cp) && cp >= 0 && cp <= 0x10ffff && !(cp >= 0xd800 && cp <= 0xdfff);
+      return valid ? String.fromCodePoint(cp) : m;
     }
     return NAMED[e.toLowerCase()] ?? m;
   });

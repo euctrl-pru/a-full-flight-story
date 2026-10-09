@@ -43,3 +43,17 @@ describe('routeCharges', () => {
     expect(r[0].charge).toBe(0);
   });
 });
+
+describe('story copy agrees with the computed charges', () => {
+  it('Switzerland distance and bill shares in the en-route copy match the planned-route calculation', async () => {
+    const { loadCountries } = await import('$lib/geo/countries');
+    const { countrySpans, ROUTE_PLANNED, HERO } = await import('$lib/story/flight');
+    const { chapter } = await import('$lib/story/chapters');
+    const r = routeCharges(await countrySpans(ROUTE_PLANNED, await loadCountries()), ZONES, HERO.mtowT);
+    const ch = r.find((z) => z.zone.id === 'CH')!;
+    const km = r.reduce((s, z) => s + z.km, 0), eur = r.reduce((s, z) => s + z.charge, 0);
+    const text = chapter('enroute').steps.find((s) => s.id === 'er-switzerland')!.text;
+    expect(text).toContain(`about ${Math.round((ch.km / km) * 100)}% of the distance`);
+    expect(text).toContain(`about ${Math.round((ch.charge / eur) * 100)}% of the bill`);
+  });
+});

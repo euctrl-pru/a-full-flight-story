@@ -141,3 +141,9 @@ export function trimForSnapshot(b: EntityBundle): EntityBundle {
     delay: b.delay.filter((s) => s.chartType === 'category_evolution' && (s.dateRange === 'DY' || s.dateRange === 'Y2D') && !/\b20\d\d\b/.test(s.name))
   };
 }
+
+/** Build-time merge: entities (and the report) the new fetch missed keep their previous values. */
+export function mergeSnapshots(prev: EurocontrolSnapshot | null, next: EurocontrolSnapshot): EurocontrolSnapshot {
+  if (!prev) return next;
+  return { generatedAt: next.generatedAt, bundles: { ...prev.bundles, ...next.bundles }, report: next.report ?? prev.report };
+}

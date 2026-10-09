@@ -113,3 +113,18 @@ describe('trimForSnapshot', () => {
     expect(t.headline).toEqual(b.headline);
   });
 });
+
+describe('mergeSnapshots', () => {
+  it('keeps previous bundles and report that the new fetch could not get', async () => {
+    const { mergeSnapshots } = await import('$lib/data/eurocontrol');
+    const mk = (key: 'network' | 'EBBR', date: string) => ({ key, label: key, syncId: 1, dataDate: date, traffic: [], delay: [], punctuality: [], co2: [], headline: { flights: 1, delayMinutes: 1, delayPerFlight: 1 } });
+    const prev = { generatedAt: 'old', bundles: { network: mk('network', '2026-10-01'), EBBR: mk('EBBR', '2026-10-01') }, report: { date: '2026-09-29', title: 'W39', blocks: [] } };
+    const next = { generatedAt: 'new', bundles: { network: mk('network', '2026-10-08') }, report: null };
+    const m = mergeSnapshots(prev, next);
+    expect(m.generatedAt).toBe('new');
+    expect(m.bundles.network!.dataDate).toBe('2026-10-08');
+    expect(m.bundles.EBBR!.dataDate).toBe('2026-10-01');
+    expect(m.report!.title).toBe('W39');
+    expect(mergeSnapshots(null, next)).toEqual(next);
+  });
+});

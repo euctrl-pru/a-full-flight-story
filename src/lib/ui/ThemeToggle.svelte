@@ -1,9 +1,14 @@
 <script lang="ts">
+  import { theme as shared } from './theme.svelte';
   let theme = $state<'dark' | 'light'>('dark');
-  $effect(() => { theme = (document.documentElement.dataset.theme as 'dark' | 'light') ?? 'dark'; });
+  $effect(() => {
+    theme = (document.documentElement.dataset.theme as 'dark' | 'light') ?? 'dark';
+    shared.current = theme;
+  });
   function toggle() {
     theme = theme === 'dark' ? 'light' : 'dark';
     document.documentElement.dataset.theme = theme;
+    shared.current = theme;
     try { localStorage.setItem('theme', theme); } catch {}
   }
 </script>

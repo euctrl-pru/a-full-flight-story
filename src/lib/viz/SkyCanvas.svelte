@@ -5,6 +5,7 @@
   import { ALT_VARS, altitudeBin, cssVar } from './palette';
   import Tooltip from './Tooltip.svelte';
   import { fmtInt } from './chart-utils';
+  import { theme } from '$lib/ui/theme.svelte';
 
   let { aircraft, projection, width, height, dim = 0 }: { aircraft: Aircraft[]; projection: GeoProjection; width: number; height: number; dim?: number } = $props();
   let canvas: HTMLCanvasElement;
@@ -14,6 +15,7 @@
   const qt = $derived(quadtree<{ a: Aircraft; x: number; y: number }>().x((d) => d.x).y((d) => d.y).addAll(pts));
 
   $effect(() => {
+    const drawnTheme = theme.current; // re-run on theme toggle: the ramp is read from CSS variables
     if (!canvas || !width || !height) return;
     const dpr = window.devicePixelRatio || 1;
     canvas.width = width * dpr; canvas.height = height * dpr;
@@ -26,6 +28,7 @@
       ctx.fillStyle = colors[altitudeBin(a.alt)];
       ctx.beginPath(); ctx.arc(x, y, 1.6, 0, Math.PI * 2); ctx.fill();
     }
+    canvas.dataset.drawnTheme = drawnTheme;
   });
 
   function onmove(e: PointerEvent) {

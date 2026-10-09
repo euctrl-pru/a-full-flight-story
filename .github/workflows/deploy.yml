@@ -26,6 +26,11 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
+      - id: pages
+        uses: actions/configure-pages@v5
+      - name: Seed data from the deployed site (fallback if a refresh below fails)
+        run: node scripts/seed-data.mjs "${{ steps.pages.outputs.base_url }}"
+        continue-on-error: true
       - name: Refresh EUROCONTROL snapshot (keeps committed snapshot on failure)
         run: npm run fetch:eurocontrol
         continue-on-error: true
@@ -41,7 +46,7 @@ jobs:
       - name: Build
         run: npm run build
         env:
-          BASE_PATH: /${{ github.event.repository.name }}
+          BASE_PATH: ${{ steps.pages.outputs.base_path }}
       - uses: actions/upload-pages-artifact@v3
         with:
           path: build

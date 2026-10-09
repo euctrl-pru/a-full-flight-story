@@ -85,7 +85,7 @@ export const CHAPTERS: ChapterDef[] = [
       { id: 'er-muac', clock: 0.73, text: 'Above FL245 it belongs to {MUAC}, EUROCONTROL’s Maastricht centre for the upper airspace of Belgium, the Netherlands, Luxembourg and north-west Germany: 1.83 million flights in 2025, more than 16% of Europe’s traffic, about 60% of clearances by datalink ({CPDLC}) [S5, S6].' },
       { id: 'er-handovers', illustrative: true, clock: 0.78, text: 'Then Germany’s Karlsruhe centre, Zurich, and Italy’s Milano and Roma centres. Each hand-over is agreed computer-to-computer with {OLDI} messages before the pilot changes frequency [S43, S30].' },
       { id: 'er-charges', clock: 0.8, text: 'Every country crossed sends a bill. EUROCONTROL’s Central Route Charges Office ({CRCO}) charges per zone: distance ÷ 100 × √({MTOW}/50) × the zone’s unit rate [S32, S33].' },
-      { id: 'er-switzerland', clock: 0.8, text: 'Switzerland charges €167.12 per unit, Italy €73.71 [S34]. On the original route Switzerland is about 18% of the distance but about 31% of the bill. Europe-wide, €11.8 billion of en-route charges were billed in 2025 [S1].' }
+      { id: 'er-switzerland', clock: 0.8, text: 'Switzerland charges €167.12 per unit, Italy €73.71 [S34]. On the original route Switzerland is about 19% of the distance but about 33% of the bill. Europe-wide, €11.8 billion of en-route charges were billed in 2025 [S1].' }
     ]
   },
   {
