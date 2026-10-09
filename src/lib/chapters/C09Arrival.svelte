@@ -38,7 +38,7 @@
       {:else}
         <Figure title="Rome Fiumicino punctuality" subtitle="% within 15 minutes of schedule, last 12 months" sources={['D-eurocontrol']} detail="Rome Fiumicino (LIRF)" freshness={ec.freshness.LIRF ?? null} dataDate={lirf?.dataDate}
           table={linesTable(lines, 'Date', dayNumLabel, (v) => fmtDec(v, 1), 'Rome Fiumicino punctuality')}>
-          <LineChart series={lines} label="Rome Fiumicino departure and arrival punctuality" xFormat={dayNumLabel} yFormat={(v) => `${Math.round(v)}%`} yDomain={[0, 100]} />
+          <LineChart series={lines} label="Rome Fiumicino departure and arrival punctuality" xFormat={dayNumLabel} xTickWidth={130} yFormat={(v) => `${Math.round(v)}%`} yDomain={[0, 100]} />
         </Figure>
       {/if}
     </div>

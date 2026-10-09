@@ -18,7 +18,7 @@
 </figure>
 
 <style>
-  .figure { min-width: 0; margin: 0; padding: 16px; height: 100%; display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; }
+  .figure { min-width: 0; margin: 0; padding: 16px; max-height: 100%; overflow: auto; display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; }
   h3 { font-family: var(--font-sans); font-size: 16px; font-weight: 650; margin: 0; }
   figcaption p { margin: 2px 0 8px; font-size: 13px; color: var(--ink-2); }
   .plot { position: relative; flex: 1; min-height: 0; }

@@ -10,9 +10,9 @@
   $effect(() => { pos.target = story.clock; });
 </script>
 
-<div class="clock" role="progressbar" aria-label="Where we are in the flight's life" aria-valuemin="0" aria-valuemax="100" aria-valuenow={Math.round(story.clock * 100)} aria-valuetext={story.clockLabel || 'Start'}>
-  <span class="now">{story.clockLabel || 'FFS101'}</span>
-  <div class="rail">
+<div class="clock">
+  <span class="now" aria-hidden="true">{story.clockLabel || 'FFS101'}</span>
+  <div class="rail" role="progressbar" aria-label="Where we are in the flight's life" aria-valuemin="0" aria-valuemax="100" aria-valuenow={Math.round(story.clock * 100)} aria-valuetext={story.clockLabel || 'Start'}>
     {#each CLOCK_TICKS as t}<span class="tick" style:left="{t.pos * 100}%"><span class="tl">{t.label}</span></span>{/each}
     <span class="fill" style:width="{pos.current * 100}%"></span>
     <span class="plane" style:left="{pos.current * 100}%" aria-hidden="true">✈</span>

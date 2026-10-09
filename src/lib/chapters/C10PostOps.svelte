@@ -25,7 +25,7 @@
       {:else if step === 3}
         <Figure title="CO₂ and departures, indexed" subtitle="EUROCONTROL Data app monthly indices" sources={['D-eurocontrol']} freshness={ec.freshness.network ?? null} dataDate={net?.dataDate}
           table={linesTable(co2Lines(net), 'Month', dayNumLabel, (v) => fmtDec(v, 1), 'CO2 and departures indices')}>
-          <LineChart series={co2Lines(net)} label="CO2 index and departures index" xFormat={dayNumLabel} yFormat={(v) => fmtDec(v, 0)} />
+          <LineChart series={co2Lines(net)} label="CO2 index and departures index" xFormat={dayNumLabel} xTickWidth={130} yFormat={(v) => fmtDec(v, 0)} />
         </Figure>
       {:else}
         <div class="sm">

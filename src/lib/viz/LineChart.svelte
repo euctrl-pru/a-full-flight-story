@@ -6,10 +6,10 @@
   import { nearestIndex } from './chart-utils';
 
   let { series, label, height = 300, xDomain, yDomain, xTicks, yTicks = 5, xFormat = (x: number) => String(x),
-    yFormat = (y: number) => y.toLocaleString('en-GB'), reveal = 1, markers = [], directLabels = true }: {
+    yFormat = (y: number) => y.toLocaleString('en-GB'), reveal = 1, markers = [], directLabels = true, xTickWidth = 80 }: {
     series: LineSeries[]; label: string; height?: number; xDomain?: [number, number]; yDomain?: [number, number];
     xTicks?: number[]; yTicks?: number; xFormat?: (x: number) => string; yFormat?: (y: number) => string;
-    reveal?: number; markers?: { x: number; label: string }[]; directLabels?: boolean;
+    reveal?: number; markers?: { x: number; label: string }[]; directLabels?: boolean; xTickWidth?: number;
   } = $props();
 
   const uid = $props.id();
@@ -45,7 +45,7 @@
         <line class="grid" x1={m.left} x2={width - m.right} y1={y(t)} y2={y(t)} />
         <text class="tick" x={m.left - 6} y={y(t)} dy="0.32em" text-anchor="end">{yFormat(t)}</text>
       {/each}
-      {#each xTicks ?? x.ticks(Math.max(2, Math.floor(width / 80))) as t}<text class="tick" x={x(t)} y={height - 6} text-anchor="middle">{xFormat(t)}</text>{/each}
+      {#each xTicks ?? x.ticks(Math.max(2, Math.floor(width / xTickWidth))) as t}<text class="tick" x={x(t)} y={height - 6} text-anchor="middle">{xFormat(t)}</text>{/each}
       <line class="axis" x1={m.left} x2={width - m.right} y1={y(y.domain()[0])} y2={y(y.domain()[0])} />
       {#each markers as mk}
         <line class="marker" x1={x(mk.x)} x2={x(mk.x)} y1={m.top} y2={height - m.bottom} />
@@ -56,7 +56,7 @@
           <path d={gen(s.points)} fill="none" stroke={s.color} stroke-width={s.width ?? 2} stroke-dasharray={s.dash} stroke-linejoin="round" stroke-linecap="round" />
         {/each}
       </g>
-      {#if directLabels && series.length <= 4 && reveal >= 1}
+      {#if directLabels && series.length <= 4 && reveal >= 1 && width >= 600}
         {#each series as s (s.id)}
           {@const last = s.points.at(-1)}
           {#if last}<text class="dl" x={x(last.x) + 6} y={y(last.y)} dy="0.32em">{s.label}</text>{/if}

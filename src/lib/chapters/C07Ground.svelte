@@ -24,7 +24,7 @@
       {:else}
         <Figure title="Brussels Airport punctuality" subtitle="% of flights within 15 minutes of schedule, last 12 months" sources={['D-eurocontrol']} detail="Brussels (EBBR)" freshness={ec.freshness.EBBR ?? null} dataDate={ebbr?.dataDate}
           table={linesTable(lines, 'Date', dayNumLabel, (v) => fmtDec(v, 1), 'Brussels punctuality')}>
-          <LineChart series={lines} label="Brussels departure and arrival punctuality" xFormat={dayNumLabel} yFormat={(v) => `${Math.round(v)}%`} yDomain={[0, 100]} />
+          <LineChart series={lines} label="Brussels departure and arrival punctuality" xFormat={dayNumLabel} xTickWidth={130} yFormat={(v) => `${Math.round(v)}%`} yDomain={[0, 100]} />
         </Figure>
       {/if}
     </div>

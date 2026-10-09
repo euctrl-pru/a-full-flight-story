@@ -1,12 +1,5 @@
-import { test, expect, type Page } from '@playwright/test';
-
-/** Put the top of `selector` at `frac` of the viewport height (above scrollama's 0.6 offset line). */
-async function scrollStepTo(page: Page, selector: string, frac = 0.3) {
-  await page.evaluate(([sel, f]) => {
-    const el = document.querySelector(sel as string)!;
-    window.scrollTo(0, el.getBoundingClientRect().top + window.scrollY - window.innerHeight * (f as number));
-  }, [selector, frac]);
-}
+import { test, expect } from '@playwright/test';
+import { scrollStepTo } from './helpers';
 
 test('steps activate on scroll and drive the mission clock', async ({ page }) => {
   await page.goto('/dev/scroll/');

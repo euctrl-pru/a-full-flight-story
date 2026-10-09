@@ -45,8 +45,8 @@
   .steps-wrap { position: relative; z-index: 2; margin-top: calc(-100svh + var(--clock-h)); pointer-events: none; }
   .step { min-height: 95svh; display: flex; align-items: center; padding: 0 24px; }
   .step:last-child { min-height: 110svh; }
-  .step :global(.card) { pointer-events: auto; width: min(100%, 380px); opacity: 0.35; transition: opacity 300ms; }
-  .step.active :global(.card) { opacity: 1; }
+  .step :global(.card) { pointer-events: auto; width: min(100%, 380px); transition: border-color 300ms; }
+  .step.active :global(.card) { border-color: color-mix(in srgb, var(--accent) 60%, transparent); }
   @media (max-width: 1023px) {
     .step { align-items: flex-end; padding: 0 16px 6svh; }
     .step :global(.card) { width: 100%; background: color-mix(in srgb, var(--surface) 94%, transparent); backdrop-filter: blur(6px); }

@@ -26,7 +26,7 @@
       {#each bars as b, i (b.key)}
         <path d={roundedTopBar(x(b.key)!, y(b.value), x.bandwidth(), y(0) - y(b.value), 4)} fill={b.color ?? color} opacity={hi === null || hi === i ? 1 : 0.55} stroke={b.emphasis ? 'var(--ink)' : 'none'} stroke-width="1.5" />
         <rect role="presentation" x={x(b.key)! - (x.step() - x.bandwidth()) / 2} y={m.top} width={x.step()} height={height - m.top - m.bottom} fill="transparent" onpointerenter={() => (hi = i)} onpointerleave={() => (hi = null)} />
-        {#if i % labelEvery === 0}<text class="tick" x={x(b.key)! + x.bandwidth() / 2} y={height - 6} text-anchor="middle">{b.label}</text>{/if}
+        {#if i % labelEvery === 0}<text class="tick" x={x(b.key)! + x.bandwidth() / 2} y={height - 6} text-anchor="middle">{x.step() < 72 ? b.label.split(' ')[0] : b.label}</text>{/if}
       {/each}
       <line class="axis" x1={m.left} x2={width - m.right} y1={y(0)} y2={y(0)} />
       {#if refLine}
