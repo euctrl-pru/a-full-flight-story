@@ -1,0 +1,359 @@
+[
+  {
+    "id": "S1",
+    "title": "European Aviation Overview – 2025 Review (23 Jan 2026)",
+    "publisher": "EUROCONTROL",
+    "url": "https://www.eurocontrol.int/sites/default/files/2026-01/eurocontrol-european-aviation-overview-20260123-2025-review.pdf",
+    "accessed": "2026-10-09"
+  },
+  {
+    "id": "S2",
+    "title": "About us",
+    "publisher": "EUROCONTROL",
+    "url": "https://www.eurocontrol.int/about-us",
+    "accessed": "2026-10-09"
+  },
+  {
+    "id": "S3",
+    "title": "Network Manager Annual Report 2025",
+    "publisher": "EUROCONTROL",
+    "url": "https://www.eurocontrol.int/publication/eurocontrol-network-manager-annual-report-2025",
+    "accessed": "2026-10-09"
+  },
+  {
+    "id": "S4",
+    "title": "Annual Network Operations Report 2025",
+    "publisher": "EUROCONTROL",
+    "url": "https://www.eurocontrol.int/publication/annual-network-operations-report-2025",
+    "accessed": "2026-10-09"
+  },
+  {
+    "id": "S5",
+    "title": "MUAC Annual Report 2025",
+    "publisher": "EUROCONTROL MUAC",
+    "url": "https://www.eurocontrol.int/archive_download/all/node/16131",
+    "accessed": "2026-10-09"
+  },
+  {
+    "id": "S6",
+    "title": "MUAC reports strong performance in 2025, safely handling over 1.8 million flights",
+    "publisher": "EUROCONTROL",
+    "url": "https://www.eurocontrol.int/press-release/eurocontrol-muac-reports-strong-performance-2025-safely-handling-over-18-million",
+    "accessed": "2026-10-09"
+  },
+  {
+    "id": "S7",
+    "title": "ATFCM Users Manual (edition 22-04-2026)",
+    "publisher": "EUROCONTROL NM",
+    "url": "https://www.eurocontrol.int/publication/atfcm-users-manual",
+    "accessed": "2026-10-09"
+  },
+  {
+    "id": "S8",
+    "title": "ATFCM Operations Manual (Wave 2.3, 22-04-2026)",
+    "publisher": "EUROCONTROL NM",
+    "url": "https://www.eurocontrol.int/publication/atfcm-operations-manual",
+    "accessed": "2026-10-09"
+  },
+  {
+    "id": "S9",
+    "title": "IFPS Users Manual (Wave 2.3, Apr 2026)",
+    "publisher": "EUROCONTROL NM",
+    "url": "https://www.eurocontrol.int/sites/default/files/2026-04/eurocontrol-ifps-user-manual-wave-2-3-external.pdf",
+    "accessed": "2026-10-09"
+  },
+  {
+    "id": "S10",
+    "title": "EUROCONTROL centralises all flight plan processing in Brussels",
+    "publisher": "EUROCONTROL",
+    "url": "https://www.eurocontrol.int/news/eurocontrol-centralises-all-flight-plan-processing-brussels",
+    "accessed": "2026-10-09"
+  },
+  {
+    "id": "S11",
+    "title": "AIP Ireland ENR 1.9 – ATFM",
+    "publisher": "AirNav Ireland",
+    "url": "https://www.airnav.ie/AIRAC_MAY_2026/2026-05-14-AIRAC/html/eAIP/EI-ENR-1.9-en-IE.html",
+    "accessed": "2026-10-09"
+  },
+  {
+    "id": "S12",
+    "title": "AIP Ireland ENR 1.10 – Flight Planning",
+    "publisher": "AirNav Ireland",
+    "url": "https://www.airnav.ie/AIRAC_MAY_2026/2026-05-14-AIRAC/html/eAIP/EI-ENR-1.10-en-IE.html",
+    "accessed": "2026-10-09"
+  },
+  {
+    "id": "S13",
+    "title": "Airport CDM Implementation Manual v5.0",
+    "publisher": "EUROCONTROL",
+    "url": "https://www.eurocontrol.int/archive_download/all/node/10373",
+    "accessed": "2026-10-09"
+  },
+  {
+    "id": "S14",
+    "title": "Airport collaborative decision-making (concept page)",
+    "publisher": "EUROCONTROL",
+    "url": "https://www.eurocontrol.int/concept/airport-collaborative-decision-making",
+    "accessed": "2026-10-09"
+  },
+  {
+    "id": "S15",
+    "title": "Airport Corner – A-CDM / Advanced Tower implementation",
+    "publisher": "EUROCONTROL",
+    "url": "https://ext.eurocontrol.int/airport_corner_public/strategic/airport_cdm_adv_twr_impl",
+    "accessed": "2026-10-09"
+  },
+  {
+    "id": "S16",
+    "title": "Press release: A-CDM at Roma Fiumicino (ENAV–ADR)",
+    "publisher": "ENAV",
+    "url": "https://www.enav.it/en/node/15190",
+    "accessed": "2026-10-09"
+  },
+  {
+    "id": "S17",
+    "title": "Route Availability Document (RAD)",
+    "publisher": "EUROCONTROL NM",
+    "url": "https://www.nm.eurocontrol.int/RAD/",
+    "accessed": "2026-10-09"
+  },
+  {
+    "id": "S18",
+    "title": "Free route airspace (FRA) implementation projection charts",
+    "publisher": "EUROCONTROL",
+    "url": "https://www.eurocontrol.int/publication/free-route-airspace-fra-implementation-projection-charts",
+    "accessed": "2026-10-09"
+  },
+  {
+    "id": "S19",
+    "title": "Flexible Use of Airspace (FUA) AMC/CADF Operations Manual",
+    "publisher": "EUROCONTROL",
+    "url": "https://www.eurocontrol.int/publication/flexible-use-airspace-fua-amccadf-operations-manual",
+    "accessed": "2026-10-09"
+  },
+  {
+    "id": "S20",
+    "title": "Commission Implementing Regulation (EU) 2019/123 (ATM network functions)",
+    "publisher": "EUR-Lex",
+    "url": "https://eur-lex.europa.eu/eli/reg_impl/2019/123/oj/eng",
+    "accessed": "2026-10-09"
+  },
+  {
+    "id": "S21",
+    "title": "Council Regulation (EEC) No 95/93 (slot allocation)",
+    "publisher": "EUR-Lex / legislation.gov.uk copy",
+    "url": "https://eur-lex.europa.eu/eli/reg/1993/95/oj",
+    "accessed": "2026-10-09"
+  },
+  {
+    "id": "S22",
+    "title": "Worldwide Airport Slot Guidelines (WASG)",
+    "publisher": "IATA / ACI / WWACG",
+    "url": "https://www.iata.org/en/programs/ops-infra/slots/slot-guidelines/",
+    "accessed": "2026-10-09"
+  },
+  {
+    "id": "S23",
+    "title": "Fact Sheet – Airport Slots (June 2026)",
+    "publisher": "IATA",
+    "url": "https://www.iata.org/en/iata-repository/pressroom/fact-sheets/fact-sheet-airport-slots",
+    "accessed": "2026-10-09"
+  },
+  {
+    "id": "S24",
+    "title": "158th IATA Slot Conference (event page; SC159 linked)",
+    "publisher": "IATA",
+    "url": "https://www.iata.org/en/events/all/iata-slot-conference-158",
+    "accessed": "2026-10-09"
+  },
+  {
+    "id": "S25",
+    "title": "Working Procedure Slot Allocation S25",
+    "publisher": "Airport Coordination Netherlands (ACNL)",
+    "url": "https://slotcoordination.nl/wp-content/uploads/2024/09/20240911-WP-Slot-Allocation-S25-v1.0.pdf",
+    "accessed": "2026-10-09"
+  },
+  {
+    "id": "S26",
+    "title": "Slot coordination at Brussels Airport (BSC)",
+    "publisher": "FPS Mobility and Transport (Belgium)",
+    "url": "https://mobilit.belgium.be/de/node/1427",
+    "accessed": "2026-10-09"
+  },
+  {
+    "id": "S27",
+    "title": "Bande orarie (slot) – Assoclearance",
+    "publisher": "ENAC (Italian CAA)",
+    "url": "https://www.enac.gov.it/trasporto-aereo/compagnie-aeree/bande-orarie-slot/",
+    "accessed": "2026-10-09"
+  },
+  {
+    "id": "S28",
+    "title": "5 things you (probably) didn't know about air traffic control",
+    "publisher": "skeyes",
+    "url": "https://www.skeyes.be/w/5-things-you-probably-didn-t-know-about-air-traffic-control",
+    "accessed": "2026-10-09"
+  },
+  {
+    "id": "S29",
+    "title": "MUAC raises division flight level in BE/LUX upper airspace",
+    "publisher": "EUROCONTROL",
+    "url": "https://www.eurocontrol.int/news/muac-raises-division-flight-level-be-lux-upper-airspace",
+    "accessed": "2026-10-09"
+  },
+  {
+    "id": "S30",
+    "title": "We manage Italian airspace",
+    "publisher": "ENAV",
+    "url": "https://www.enav.it/en/what-we-do/we-manage-italian-airspace",
+    "accessed": "2026-10-09"
+  },
+  {
+    "id": "S31",
+    "title": "Skyguide (secondary)",
+    "publisher": "Wikipedia",
+    "url": "https://en.wikipedia.org/wiki/Skyguide",
+    "accessed": "2026-10-09"
+  },
+  {
+    "id": "S32",
+    "title": "Information circular 2025/01 – EUROCONTROL Route Charges System",
+    "publisher": "EUROCONTROL CRCO",
+    "url": "https://www.eurocontrol.int/sites/default/files/2024-12/circ-2025-01-eurocontrol-route-charges-system.pdf",
+    "accessed": "2026-10-09"
+  },
+  {
+    "id": "S33",
+    "title": "Commission Implementing Regulation (EU) 2019/317, Annex (charging scheme formula)",
+    "publisher": "EUR-Lex / legislation.gov.uk copy",
+    "url": "https://eur-lex.europa.eu/eli/reg_impl/2019/317/oj",
+    "accessed": "2026-10-09"
+  },
+  {
+    "id": "S34",
+    "title": "Adjusted unit rates applicable to October 2026 flights",
+    "publisher": "EUROCONTROL CRCO",
+    "url": "https://www.eurocontrol.int/sites/default/files/2026-10/ur2610.pdf",
+    "accessed": "2026-10-09"
+  },
+  {
+    "id": "S35",
+    "title": "A320neo specifications",
+    "publisher": "Airbus",
+    "url": "https://aircraft.airbus.com/en/aircraft/a320-family/a320neo",
+    "accessed": "2026-10-09"
+  },
+  {
+    "id": "S36",
+    "title": "All-Causes Delays to Air Transport in Europe – Annual 2024 (CODA Digest)",
+    "publisher": "EUROCONTROL",
+    "url": "https://www.eurocontrol.int/publication/all-causes-delays-air-transport-europe-annual-2024",
+    "accessed": "2026-10-09"
+  },
+  {
+    "id": "S37",
+    "title": "Performance Review Commission",
+    "publisher": "EUROCONTROL PRU (ansperformance.eu)",
+    "url": "https://ansperformance.eu/about/prc/",
+    "accessed": "2026-10-09"
+  },
+  {
+    "id": "S38",
+    "title": "Aviation Intelligence Portal",
+    "publisher": "EUROCONTROL",
+    "url": "https://ansperformance.eu/",
+    "accessed": "2026-10-09"
+  },
+  {
+    "id": "S39",
+    "title": "New functionalities added to EUROCONTROL Data app",
+    "publisher": "EUROCONTROL",
+    "url": "https://www.eurocontrol.int/news/new-functionalities-added-eurocontrol-data-app-including-top-airline-metrics",
+    "accessed": "2026-10-09"
+  },
+  {
+    "id": "S40",
+    "title": "24.4 million passengers at Brussels Airport in 2025",
+    "publisher": "Brussels Airport Company",
+    "url": "https://www.brusselsairport.be/en/pressroom/news/traffic-results-2025",
+    "accessed": "2026-10-09"
+  },
+  {
+    "id": "S41",
+    "title": "Fiumicino exceeds 50 million passengers in one year for the first time",
+    "publisher": "Il Sole 24 Ore (secondary; ADR announcement)",
+    "url": "https://en.ilsole24ore.com/art/fiumicino-exceeds-50-million-passengers-one-year-and-first-time-AIEZBSW",
+    "accessed": "2026-10-09"
+  },
+  {
+    "id": "S42",
+    "title": "Datalink FAQs (Reg. 29/2009)",
+    "publisher": "EASA",
+    "url": "https://www.easa.europa.eu/en/the-agency/faqs/datalink",
+    "accessed": "2026-10-09"
+  },
+  {
+    "id": "S43",
+    "title": "Guidelines for On-Line Data Interchange (OLDI) 1.2",
+    "publisher": "EUROCONTROL",
+    "url": "https://www.eurocontrol.int/sites/default/files/2023-06/eurocontrol-guidelines-for-on-line-data-interchange-oldi-1.2_0.pdf",
+    "accessed": "2026-10-09"
+  },
+  {
+    "id": "S44",
+    "title": "Flight Dispatcher Days 2025 – FF-ICE regulatory requirements",
+    "publisher": "EUROCONTROL",
+    "url": "https://www.eurocontrol.int/sites/default/files/2025-03/eurocontrol-flight-dispatcher-days-2025-ff-ice-regulatory-requirements.pdf",
+    "accessed": "2026-10-09"
+  },
+  {
+    "id": "S45",
+    "title": "Preferential Runway System (PRS)",
+    "publisher": "Brussels Airport Traffic Control info (batc.be)",
+    "url": "https://batc.be/en/runways-in-use/how-are-runways-selected/preferential-runway-system-prs",
+    "accessed": "2026-10-09"
+  },
+  {
+    "id": "S46",
+    "title": "Belgian AIP Amendment 2025/002 (SIDs EBBR)",
+    "publisher": "skeyes",
+    "url": "https://ops.skeyes.be/html/belgocontrol_static/eaip/eAIP_Main/pdf/EB_Amdt_2025_002_en.pdf",
+    "accessed": "2026-10-09"
+  },
+  {
+    "id": "S47",
+    "title": "Rome Fiumicino Airport (secondary)",
+    "publisher": "Wikipedia",
+    "url": "https://en.wikipedia.org/wiki/Rome_Fiumicino_Airport",
+    "accessed": "2026-10-09"
+  },
+  {
+    "id": "S48",
+    "title": "ATM Cost-Effectiveness (ACE) Benchmarking Report 2024 edition",
+    "publisher": "EUROCONTROL PRU",
+    "url": "https://www.eurocontrol.int/publication/air-traffic-management-cost-effectiveness-ace-benchmarking-report-2024-edition",
+    "accessed": "2026-10-09"
+  },
+  {
+    "id": "S49",
+    "title": "Brazil–Europe ANS comparison: system overview",
+    "publisher": "EUROCONTROL PRU",
+    "url": "https://euctrl-pru.github.io/international-BRA-EUR-2025/02-system-overview.html",
+    "accessed": "2026-10-09"
+  },
+  {
+    "id": "S50",
+    "title": "LIRF–EBBR route distance (secondary)",
+    "publisher": "1FLT",
+    "url": "https://www.1flt.com/routes/lirf-ebbr",
+    "accessed": "2026-10-09"
+  },
+  {
+    "id": "S51",
+    "title": "Brussels Airlines flight 3175 information (secondary)",
+    "publisher": "Travelocity",
+    "url": "https://www.travelocity.com/es/lp/flights-info/sn/3175/Brussels-Airlines-3175-flight-information",
+    "accessed": "2026-10-09"
+  }
+]
