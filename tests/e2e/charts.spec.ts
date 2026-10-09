@@ -15,3 +15,17 @@ test('chart gallery renders from the snapshot with hover tooltips and tables', a
   expect(errors).toEqual([]);
   await page.screenshot({ path: 'screenshots/charts.png', fullPage: true });
 });
+
+test('story visualizations render and the CASA slider recomputes delay', async ({ page }) => {
+  await page.goto('/dev/charts/');
+  await expect(page.getByLabel('ICAO flight plan for FFS101')).toContainText('(FPL-FFS101-IS');
+  const stat = page.locator('.casa .stat');
+  const before = await stat.textContent();
+  await page.locator('.casa input[type=range]').fill('56');
+  await expect(stat).not.toHaveText(before!);
+  await expect(page.getByRole('img', { name: /turnaround and A-CDM/ })).toBeVisible();
+  await expect(page.getByRole('img', { name: /Vertical profile/ })).toBeVisible();
+  await expect(page.locator('.charges .row')).toHaveCount(3);
+  await expect(page.getByRole('img', { name: /Which stakeholder/ })).toBeVisible();
+  await page.screenshot({ path: 'screenshots/story-viz.png', fullPage: true });
+});

@@ -31,7 +31,7 @@
       <line class="axis" x1={m.left} x2={width - m.right} y1={y(0)} y2={y(0)} />
       {#if refLine}
         <line class="ref" x1={m.left} x2={width - m.right} y1={y(refLine.value)} y2={y(refLine.value)} />
-        <text class="reft" x={width - m.right} y={y(refLine.value) - 6} text-anchor="end">{refLine.label}</text>
+        <text class="reft" x={width - m.right - 2} y={y(refLine.value) - 6} text-anchor="end">{refLine.label}</text>
       {/if}
     </svg>
   {/if}

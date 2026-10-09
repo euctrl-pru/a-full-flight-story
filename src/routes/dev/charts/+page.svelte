@@ -12,8 +12,29 @@
   import StackedArea from '$lib/viz/StackedArea.svelte';
   import BarChart from '$lib/viz/BarChart.svelte';
   import HeroNumber from '$lib/viz/HeroNumber.svelte';
+  import FplAnatomy from '$lib/viz/FplAnatomy.svelte';
+  import CasaQueue from '$lib/viz/CasaQueue.svelte';
+  import AcdmTimeline from '$lib/viz/AcdmTimeline.svelte';
+  import ProfileChart from '$lib/viz/ProfileChart.svelte';
+  import ChargesBar from '$lib/viz/ChargesBar.svelte';
+  import StakeholderMatrix from '$lib/viz/StakeholderMatrix.svelte';
+  import { loadCountries } from '$lib/geo/countries';
+  import type { Span } from '$lib/geo/route';
+  import { ROUTE_PLANNED, ROUTE_REROUTED, HERO, anspSpans, countrySpans, type AnspKey } from '$lib/story/flight';
+  import { routeCharges, type ZoneCharge } from '$lib/sim/charges';
+  import { ZONES } from '$lib/story/charges-data';
 
-  onMount(startLoading);
+  let spans: Span<AnspKey>[] = $state([]);
+  let charges: { planned: ZoneCharge[]; rerouted: ZoneCharge[] } | null = $state(null);
+  onMount(async () => {
+    startLoading();
+    const fc = await loadCountries();
+    spans = anspSpans(ROUTE_REROUTED, fc);
+    charges = {
+      planned: routeCharges(await countrySpans(ROUTE_PLANNED, fc), ZONES, HERO.mtowT),
+      rerouted: routeCharges(await countrySpans(ROUTE_REROUTED, fc), ZONES, HERO.mtowT)
+    };
+  });
   const net = $derived(bundle('network'));
   const traffic = $derived(
     (net?.traffic ?? []).filter((s) => s.chartType === 'daily_evolution').map((s) => {
@@ -43,8 +64,28 @@
   <Figure title="Demand vs capacity" sources={['S7']} illustrative>
     <BarChart bars={demand} label="Flights per hour" refLine={{ value: REGULATION.rate, label: `Capacity ${REGULATION.rate}/h` }} />
   </Figure>
+  <Figure title="Flight plan anatomy" sources={['S9', 'S10']} illustrative>
+    <FplAnatomy active={['15']} stage="distribute" />
+  </Figure>
+  <Figure title="CASA simulator" sources={['S7']} illustrative>
+    <CasaQueue stage="explore" />
+  </Figure>
+  <Figure title="A-CDM at Brussels" sources={['S13', 'S7']} illustrative>
+    <AcdmTimeline stage="window" />
+  </Figure>
+  <Figure title="Vertical profile" sources={['S28', 'S5']} illustrative>
+    <ProfileChart route={ROUTE_REROUTED} {spans} progress={1} />
+  </Figure>
+  {#if charges}
+    <Figure title="Route charges" sources={['S32', 'S34']} illustrative>
+      <ChargesBar planned={charges.planned} rerouted={charges.rerouted} mode="compare" />
+    </Figure>
+  {/if}
+  <Figure title="Stakeholders" sources={['S7', 'S13']} illustrative>
+    <StakeholderMatrix upTo="postops" />
+  </Figure>
 </main>
 
 <style>
-  .gallery { display: grid; gap: 24px; padding: 24px 16px; max-width: 1100px; margin: 0 auto; }
+  .gallery { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; padding: 24px 16px; max-width: 1100px; margin: 0 auto; }
 </style>
