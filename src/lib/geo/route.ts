@@ -84,3 +84,11 @@ export function spansByRegion(route: LonLat[], regions: { id: string; feature: G
   }));
   return mergeSamples(samples, routeLengthKm(route));
 }
+
+export function sliceRoute(route: LonLat[], fromKm: number, toKm: number): LonLat[] {
+  const cum = cumulativeKm(route);
+  const out: LonLat[] = [pointAtKm(route, fromKm).lonlat];
+  for (let i = 1; i < route.length - 1; i++) if (cum[i] > fromKm && cum[i] < toKm) out.push(route[i]);
+  out.push(pointAtKm(route, toKm).lonlat);
+  return out;
+}
