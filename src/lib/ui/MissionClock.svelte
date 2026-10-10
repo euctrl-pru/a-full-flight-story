@@ -8,7 +8,9 @@
   import { dur } from '$lib/scroll/motion';
   import { UI } from './ui-strings';
   import ThemeToggle from './ThemeToggle.svelte';
+  import ChapterDrawer from './ChapterDrawer.svelte';
 
+  let { nav = true }: { nav?: boolean } = $props();
   const pos = new Tween(0, { duration: dur(500), easing: cubicOut });
   $effect(() => { pos.target = story.clock; });
   const ranges = phaseClockRanges(CHAPTERS);
@@ -30,6 +32,7 @@
     <span class="fill" style:width="{pos.current * 100}%"></span>
     <span class="plane" style:left="{pos.current * 100}%" aria-hidden="true">✈</span>
   </div>
+  {#if nav}<ChapterDrawer />{/if}
   <ThemeToggle />
 </div>
 

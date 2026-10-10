@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { UI } from '$lib/ui/ui-strings';
   import { SOURCES } from '$lib/story/sources';
   import { GLOSSARY } from '$lib/story/glossary';
   import { ec, sky } from '$lib/data/liveState.svelte';
@@ -30,9 +31,11 @@
       <dt>{g.term}</dt><dd><em>{g.expansion}.</em> {g.definition}</dd>
     {/each}
   </dl>
+  <p class="totop"><a href="#top">{UI.backToTop}</a></p>
 </section>
 
 <style>
+  .totop { margin-top: 48px; }
   .sources { max-width: 820px; margin: 0 auto; padding: 20vh 16px 120px; font-size: 16px; }
   .src { list-style: none; padding: 0; }
   .src li { margin: 0 0 6px; overflow-wrap: anywhere; }

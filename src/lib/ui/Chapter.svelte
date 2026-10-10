@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { replaceState } from '$app/navigation';
   import type { Snippet } from 'svelte';
   import type { ChapterDef } from '$lib/story/types';
   import Scrolly from '$lib/scroll/Scrolly.svelte';
@@ -18,6 +19,9 @@
     story.clock = chapter.steps[i]?.clock ?? chapter.clock;
     story.clockLabel = chapter.clockLabel;
     story.phase = chapter.phase;
+    if (typeof location !== 'undefined' && location.hash !== `#${chapter.id}`) {
+      try { replaceState(`#${chapter.id}`, {}); } catch { /* router not ready yet (very first paint) */ }
+    }
   }
 </script>
 

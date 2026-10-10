@@ -28,7 +28,7 @@
 
 <MissionClock />
 <main>
-  <header class="intro">
+  <header class="intro" id="top">
     <p class="kicker">A data story · with live EUROCONTROL data</p>
     <h1>A Full Flight Story</h1>
     <p class="dek">How a flight becomes a flight in Europe: following FFS101 from Brussels to Rome, from ten months before take-off to long after landing.</p>

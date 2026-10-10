@@ -9,7 +9,7 @@
 </script>
 
 <svelte:head><meta name="robots" content="noindex" /></svelte:head>
-<MissionClock />
+<MissionClock nav={false} />
 {#each chapters as ch (ch.id)}
   <Chapter chapter={ch}>
     {#snippet graphic({ step, progress })}<div class="g" data-testid="graphic-{ch.id}">step {step} · {progress.toFixed(2)}</div>{/snippet}
