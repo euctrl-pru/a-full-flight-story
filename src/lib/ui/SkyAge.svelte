@@ -17,5 +17,5 @@
 
 <style>
   .sky-age { margin: 4px 0 0; font-size: 13px; color: var(--ink-2); }
-  .stale { color: var(--status-warning); }
+  .stale { color: var(--warning-text); } /* text-safe amber per theme (status-warning is 1.7:1 on light) */
 </style>

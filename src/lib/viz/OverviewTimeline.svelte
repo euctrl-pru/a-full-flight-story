@@ -9,6 +9,7 @@
   import SourceLine from './SourceLine.svelte';
   import { reducedMotion } from '$lib/scroll/motion';
   import { replaceState } from '$app/navigation';
+  import { focusHeading } from '$lib/scroll/focus';
 
   let width = $state(0);
   const vertical = $derived(width > 0 && width < 700);
@@ -24,6 +25,7 @@
   function go(id: string) {
     document.getElementById(id)?.scrollIntoView({ behavior: reducedMotion() ? 'auto' : 'smooth' });
     replaceState(`#${id}`, {});
+    focusHeading(id);
   }
   const H = $derived(vertical ? len + 40 : 70 + nRows * 22);
 </script>

@@ -35,7 +35,7 @@
       {#if chapter.phase}<span class="phase-pill">{phaseOf(chapter.phase).label}</span>{/if}
       {chapter.kicker}
     </p>
-    <h2 id="{chapter.id}-title">{chapter.title}</h2>
+    <h2 id="{chapter.id}-title" tabindex="-1">{chapter.title}</h2>
   </header>
   <div class="scrolly">
     <div class="graphic" use:near={() => (awake = true)}>{#if awake}{@render graphic({ step, progress })}{/if}</div>

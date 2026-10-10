@@ -12,6 +12,7 @@ function refreshEurocontrol() {
   loadEurocontrol({
     snapshotUrl: `${base}/data/eurocontrol.json`,
     keys: ENTITY_KEYS,
+    initial: ec.snapshot ? $state.snapshot(ec) : undefined,
     onUpdate: (s) => {
       ec.snapshot = s.snapshot ? { ...s.snapshot, bundles: { ...s.snapshot.bundles } } : null;
       ec.freshness = { ...s.freshness };

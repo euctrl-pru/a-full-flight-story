@@ -98,3 +98,27 @@ describe('degraded live responses', () => {
     expect(b.headline.flights).toBe(100); // live null → keep snapshot's
   });
 });
+
+describe('refreshing over existing data', () => {
+  it('never wipes or downgrades what is already shown when everything fails', async () => {
+    const live: EcState = {
+      snapshot: { generatedAt: 'x', bundles: { network: bundle('network', '2026-10-08', 34275) }, report: { date: '2026-10-06', title: 'W40', blocks: [] } },
+      freshness: { network: 'live' }, reportFreshness: 'live', status: 'ready'
+    };
+    const updates: EcState[] = [];
+    const f = (async () => { throw new TypeError('offline'); }) as typeof fetch;
+    const final = await loadEurocontrol({ snapshotUrl: '/data/eurocontrol.json', keys: ['network'], fetchFn: f, initial: live, onUpdate: (s) => updates.push(structuredClone(s)) });
+    expect(final.status).toBe('ready');
+    expect(final.freshness).toEqual({ network: 'live' });
+    expect(final.snapshot!.bundles.network!.headline.flights).toBe(34275);
+    expect(final.reportFreshness).toBe('live');
+    for (const u of updates) { expect(u.snapshot).not.toBeNull(); expect(u.status).not.toBe('error'); }
+  });
+  it('does not re-read the snapshot file when data is already shown', async () => {
+    const urls: string[] = [];
+    const f = (async (u: string) => { urls.push(u); throw new TypeError('offline'); }) as typeof fetch;
+    await loadEurocontrol({ snapshotUrl: '/data/eurocontrol.json', keys: ['network'], fetchFn: f, onUpdate: () => {},
+      initial: { snapshot: snapshot, freshness: { network: 'snapshot' }, reportFreshness: 'snapshot', status: 'ready' } });
+    expect(urls.some((u) => u.endsWith('/data/eurocontrol.json'))).toBe(false);
+  });
+});

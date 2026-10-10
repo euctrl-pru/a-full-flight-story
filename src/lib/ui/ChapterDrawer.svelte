@@ -3,32 +3,37 @@
   import { ATM_PHASES } from '$lib/story/phases';
   import { story } from '$lib/scroll/storyState.svelte';
   import { UI } from './ui-strings';
+  import { focusHeading } from '$lib/scroll/focus';
 
   let dlg: HTMLDialogElement;
   let btn: HTMLButtonElement;
   const numbered = CHAPTERS.filter((c) => c.kicker.startsWith('Chapter'));
   const current = $derived(numbered.findIndex((c) => c.id === story.chapterId) + 1);
-  function close() { dlg.close(); btn.focus(); }
+  let jumping = false;
+  function close() { dlg.close(); }
+  /** link activation: close without returning focus to the button, then focus the chapter heading */
+  function jump(id: string) { jumping = true; dlg.close(); focusHeading(id); }
+  function onclose() { if (!jumping) btn?.focus(); jumping = false; }
 </script>
 
-<button type="button" class="open" bind:this={btn} onclick={() => dlg.showModal()} aria-haspopup="dialog">☰ {UI.chapters}</button>
-<dialog bind:this={dlg} aria-labelledby="drawer-title" onclose={() => btn?.focus()}>
+<button type="button" class="open" bind:this={btn} onclick={() => dlg.showModal()} aria-haspopup="dialog" aria-label={UI.chapters}>☰<span class="lbl"> {UI.chapters}</span></button>
+<dialog bind:this={dlg} aria-labelledby="drawer-title" {onclose}>
   <div class="head">
     <h2 id="drawer-title">{UI.chapters}</h2>
     {#if current > 0}<span class="n">{UI.chapterOf(current, numbered.length)}</span>{/if}
     <button type="button" class="x" onclick={close} aria-label={UI.close}>✕</button>
   </div>
   <nav>
-    <a href="#cold-open" onclick={close}>{UI.prologue} · The sky over Europe</a>
+    <a href="#cold-open" onclick={() => jump('cold-open')}>{UI.prologue} · The sky over Europe</a>
     {#each ATM_PHASES as p (p.id)}
       <h3 style:--c={p.color}>{p.label}</h3>
       <ul>
         {#each CHAPTERS.filter((c) => c.phase === p.id) as c (c.id)}
-          <li><a href="#{c.id}" onclick={close} aria-current={story.chapterId === c.id ? 'location' : undefined}>{c.title}</a></li>
+          <li><a href="#{c.id}" onclick={() => jump(c.id)} aria-current={story.chapterId === c.id ? 'location' : undefined}>{c.title}</a></li>
         {/each}
       </ul>
     {/each}
-    <a href="#sources" onclick={close}>{UI.sourcesAndMethod}</a>
+    <a href="#sources" onclick={() => jump('sources')}>{UI.sourcesAndMethod}</a>
   </nav>
 </dialog>
 
@@ -36,6 +41,7 @@
   .open { all: unset; cursor: pointer; font-size: 12px; font-weight: 600; padding: 4px 8px; border-radius: 6px; border: 1px solid var(--border); white-space: nowrap; }
   .open:focus-visible, .x:focus-visible { outline: 2px solid var(--accent); }
   dialog { margin: 0 0 0 auto; height: 100svh; max-height: 100svh; width: min(380px, 100vw); border: 0; border-left: 1px solid var(--border); background: var(--surface); color: var(--ink); padding: 16px 20px; }
+  @media (max-width: 700px) { .lbl { display: none; } }
   dialog::backdrop { background: rgb(0 0 0 / 0.45); }
   .head { display: flex; align-items: baseline; gap: 10px; }
   .head h2 { font-size: 24px; margin: 0; }

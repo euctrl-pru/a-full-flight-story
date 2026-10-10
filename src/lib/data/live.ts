@@ -28,14 +28,18 @@ export async function loadEurocontrol(opts: {
   keys: EntityKey[];
   fetchFn?: typeof fetch;
   liveTimeoutMs?: number;
+  /** What is already on screen: a refresh only ever adds newer data on top of it. */
+  initial?: EcState;
   onUpdate: (s: EcState) => void;
 }): Promise<EcState> {
   const f = opts.fetchFn ?? fetch;
   const timeout = opts.liveTimeoutMs ?? 8_000;
-  const state: EcState = { snapshot: null, freshness: {}, reportFreshness: null, status: 'loading' };
+  const state: EcState = opts.initial?.snapshot
+    ? { snapshot: { ...opts.initial.snapshot, bundles: { ...opts.initial.snapshot.bundles } }, freshness: { ...opts.initial.freshness }, reportFreshness: opts.initial.reportFreshness, status: 'ready' }
+    : { snapshot: null, freshness: {}, reportFreshness: null, status: 'loading' };
   const emit = () => opts.onUpdate(state);
 
-  try {
+  if (!state.snapshot) try {
     const r = await f(opts.snapshotUrl);
     if (!r.ok) throw new Error(`snapshot HTTP ${r.status}`);
     state.snapshot = (await r.json()) as EurocontrolSnapshot;
