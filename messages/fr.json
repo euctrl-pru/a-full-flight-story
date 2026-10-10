@@ -47,7 +47,7 @@
   "ch_delay_title": "Pourquoi l’Europe attend",
   "ch_delay_clock": "Vue d’ensemble · Europe",
   "step_de_yesterday": "FFS101 n’est pas seul. Sur l’ensemble du réseau, le retard dû à la gestion des flux ([[ATFM]]) a totalisé le nombre de minutes affiché [[date:network]] [D-eurocontrol].",
-  "step_de_causes": "Et ce n’est surtout pas la faute de la météo : en 2025, la capacité et les effectifs du contrôle aérien ont causé 58 % du retard ATFM en route, la météo 28 % [S1]. La répartition pour ce jour-là est affichée à l’écran [D-eurocontrol].",
+  "step_de_causes": "Le plus souvent, ce n’est pas la météo.",
   "step_de_year": "Sur l’année, le schéma se répète — orages d’été et pics de tension sur les effectifs. La France a représenté 36 % du retard en route en 2025 [S1, D-eurocontrol].",
   "step_de_report": "Chaque semaine, le Gestionnaire de réseau dresse le bilan. Voici son dernier rapport de situation du réseau, [[live:report]] [D-situation].",
   "ch_reroute_kicker": "Chapitre 6 · Jour J, 03:20 UTC",

@@ -47,7 +47,7 @@
   "ch_delay_title": "Por qué Europa espera",
   "ch_delay_clock": "Visión de conjunto · Europa",
   "step_de_yesterday": "El FFS101 no está solo. El retraso por gestión de afluencia ([[ATFM]]) en toda la red sumó los minutos que aparecen en pantalla [[date:network]] [D-eurocontrol].",
-  "step_de_causes": "Y no, sobre todo, por el tiempo: en 2025, la capacidad y la dotación de personal del control de tránsito aéreo causaron el 58 % del retraso ATFM en ruta, y la meteorología, el 28 % [S1]. El reparto de ese día aparece en pantalla [D-eurocontrol].",
+  "step_de_causes": "En su mayoría, no por el tiempo: en 2025, la capacidad y la dotación de personal del control de tránsito aéreo causaron el 58 % del retraso ATFM en ruta, y la meteorología, el 28 % [S1]. El reparto de ese día aparece en pantalla [D-eurocontrol].",
   "step_de_year": "A lo largo del año el patrón se repite: tormentas de verano y picos de falta de personal. Francia generó el 36 % del retraso en ruta en 2025 [S1, D-eurocontrol].",
   "step_de_report": "Cada semana, el Gestor de Red resume lo ocurrido. Este es su último informe de situación de la red, [[live:report]] [D-situation].",
   "ch_reroute_kicker": "Capítulo 6 · Día D, 03:20 UTC",
