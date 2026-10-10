@@ -4,9 +4,13 @@ import { minutesAgo } from '$lib/data/sky';
 
 const utcDay = (d: Date) => d.toISOString().slice(0, 10);
 
-export const fmtDayShort = (iso: string) =>
-  new Intl.DateTimeFormat(intlLocale(), { weekday: 'short', day: 'numeric', month: 'short', timeZone: 'UTC' })
-    .format(new Date(`${iso.slice(0, 10)}T00:00:00Z`)).replace(',', '');
+const dayFmt = new Map<string, Intl.DateTimeFormat>();
+export function fmtDayShort(iso: string): string {
+  const l = intlLocale();
+  let f = dayFmt.get(l);
+  if (!f) dayFmt.set(l, (f = new Intl.DateTimeFormat(l, { weekday: 'short', day: 'numeric', month: 'short', timeZone: 'UTC' })));
+  return f.format(new Date(`${iso.slice(0, 10)}T00:00:00Z`)).replace(',', '');
+}
 
 export function dayPhrase(dataDate: string | null | undefined, now = new Date()): string {
   if (!dataDate) return msg('fresh_unknown');

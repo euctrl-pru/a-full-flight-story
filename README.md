@@ -39,7 +39,7 @@ Text is handled with [Paraglide JS](https://inlang.com/m/gerre34r/library-inlang
 
 ## Performance budgets (checked by `tests/e2e/perf.spec.ts`)
 
-Initial JavaScript ≤ 250 KB gzip (on `/` and `/de/`) · first contentful paint ≤ 2.5 s on slow 4G · no long task > 275 ms while scrolling at 4× CPU throttle (see the comment in the spec for the measured baseline). Chapter graphics mount only when they come within one screen.
+Initial JavaScript ≤ 250 KB gzip (on `/` and `/de/`) · first contentful paint ≤ 2.5 s on slow 4G · no long task > 260 ms while scrolling at 4× CPU throttle (the original 200 ms target is already exceeded by the pre-multilingual build on the reference machine, 208–233 ms isolated; the multilingual build measures the same, and ~245 ms inside the parallel full e2e run, see the comment in the spec). Chapter graphics mount only when they come within one screen.
 
 ## Method
 

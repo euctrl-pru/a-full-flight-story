@@ -25,10 +25,12 @@ test('FCP ≤ 2.5 s on slow 4G', async ({ page }) => {
   expect(fcp).toBeLessThanOrEqual(2500);
 });
 
-// Budget raised from 200 to 275 ms: on this machine the pre-multilingual build (main) already measures 211-233 ms
-// (6 runs) and this branch 232-255 ms (8 runs). The worst tasks are the same chapter-graphic mounts at the same scroll
-// offsets in both builds; the branch adds roughly 10-20 ms (message lookups), i.e. environmental drift, not a new hotspot.
-test('no long task > 275 ms while scrolling at 4× CPU throttle', async ({ page }) => {
+// Budget raised from 200 to 260 ms. On this machine `main` (before the multilingual work) already exceeds 200 ms at
+// this throttle: 208-233 ms over 18 isolated runs. The worst tasks are chapter-graphic mounts. The multilingual branch
+// first measured +10-20 ms over main because Intl.DateTimeFormat/NumberFormat instances were built on every call in
+// chart labels; they are now cached per locale and the branch measures 208-222 ms isolated, i.e. the same as main.
+// Inside the parallel full e2e run the other workers add load: the branch then measured 241-245 ms, hence 260.
+test('no long task > 260 ms while scrolling at 4× CPU throttle', async ({ page }) => {
   await page.route('https://api-data-app.eurocontrol.int/**', (r) => r.abort());
   const cdp = await page.context().newCDPSession(page);
   await page.goto('/');
@@ -38,5 +40,5 @@ test('no long task > 275 ms while scrolling at 4× CPU throttle', async ({ page 
   const H = await page.evaluate(() => document.documentElement.scrollHeight);
   for (let y = 0; y < H; y += 500) { await page.evaluate((yy) => window.scrollTo(0, yy), y); await page.waitForTimeout(120); }
   const worst = await page.evaluate(() => Math.max(0, ...(window as any).__lt));
-  expect(worst).toBeLessThanOrEqual(275);
+  expect(worst).toBeLessThanOrEqual(260);
 });
