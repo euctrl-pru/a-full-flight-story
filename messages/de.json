@@ -520,5 +520,11 @@
   "fresh_on": "on {date}",
   "fresh_unknown": "on the latest day available",
   "live_live": "fetched live",
-  "live_snapshot": "from the latest snapshot"
+  "live_snapshot": "from the latest snapshot",
+  "ui_language": "Sprache",
+  "hint_question": "Diese Geschichte auf Deutsch lesen?",
+  "hint_yes": "Ja",
+  "hint_no": "Nein",
+  "seo_title": "Ein ganzer Flug — wie in Europa aus einem Plan ein Flug wird",
+  "seo_description": "Begleiten Sie FFS101 von Brüssel nach Rom — von den Flughafen-Slots zehn Monate im Voraus über die vier Planungsphasen bis zur Nachbetrachtung — mit Live-Daten von EUROCONTROL."
 }

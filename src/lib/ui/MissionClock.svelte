@@ -9,6 +9,7 @@
   import { msg } from '$lib/i18n/msg';
   import ThemeToggle from './ThemeToggle.svelte';
   import ChapterDrawer from './ChapterDrawer.svelte';
+  import LanguageMenu from './LanguageMenu.svelte';
 
   let { nav = true }: { nav?: boolean } = $props();
   const pos = new Tween(0, { duration: dur(500), easing: cubicOut });
@@ -32,7 +33,7 @@
     <span class="fill" style:width="{pos.current * 100}%"></span>
     <span class="plane" style:left="{pos.current * 100}%" aria-hidden="true">✈</span>
   </div>
-  {#if nav}<ChapterDrawer />{/if}
+  {#if nav}<ChapterDrawer /><LanguageMenu />{/if}
   <ThemeToggle />
 </div>
 

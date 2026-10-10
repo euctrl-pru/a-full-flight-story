@@ -520,5 +520,11 @@
   "fresh_on": "on {date}",
   "fresh_unknown": "on the latest day available",
   "live_live": "fetched live",
-  "live_snapshot": "from the latest snapshot"
+  "live_snapshot": "from the latest snapshot",
+  "ui_language": "Lingua",
+  "hint_question": "Leggere questa storia in italiano?",
+  "hint_yes": "Sì",
+  "hint_no": "No",
+  "seo_title": "Storia di un volo — come un volo diventa un volo in Europa",
+  "seo_description": "Segui FFS101 da Bruxelles a Roma — dagli slot aeroportuali dieci mesi prima, attraverso le quattro fasi di pianificazione, fino all’analisi post-operativa — con dati EUROCONTROL in tempo reale."
 }

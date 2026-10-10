@@ -520,5 +520,11 @@
   "fresh_on": "on {date}",
   "fresh_unknown": "on the latest day available",
   "live_live": "fetched live",
-  "live_snapshot": "from the latest snapshot"
+  "live_snapshot": "from the latest snapshot",
+  "ui_language": "Język",
+  "hint_question": "Przeczytać tę historię po polsku?",
+  "hint_yes": "Tak",
+  "hint_no": "Nie",
+  "seo_title": "Historia jednego lotu — jak w Europie plan staje się lotem",
+  "seo_description": "Śledź lot FFS101 z Brukseli do Rzymu — od slotów lotniskowych dziesięć miesięcy wcześniej, przez cztery fazy planowania, po analizę po operacjach — z danymi EUROCONTROL na żywo."
 }

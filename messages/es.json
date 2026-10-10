@@ -520,5 +520,11 @@
   "fresh_on": "on {date}",
   "fresh_unknown": "on the latest day available",
   "live_live": "fetched live",
-  "live_snapshot": "from the latest snapshot"
+  "live_snapshot": "from the latest snapshot",
+  "ui_language": "Idioma",
+  "hint_question": "¿Leer esta historia en español?",
+  "hint_yes": "Sí",
+  "hint_no": "No",
+  "seo_title": "La historia de un vuelo — cómo un vuelo se convierte en un vuelo en Europa",
+  "seo_description": "Sigue el FFS101 de Bruselas a Roma — desde las franjas aeroportuarias diez meses antes, pasando por las cuatro fases de planificación, hasta el análisis posoperativo — con datos de EUROCONTROL en directo."
 }

@@ -520,5 +520,11 @@
   "fresh_on": "on {date}",
   "fresh_unknown": "on the latest day available",
   "live_live": "fetched live",
-  "live_snapshot": "from the latest snapshot"
+  "live_snapshot": "from the latest snapshot",
+  "ui_language": "Langue",
+  "hint_question": "Lire cette histoire en français ?",
+  "hint_yes": "Oui",
+  "hint_no": "Non",
+  "seo_title": "Histoire d’un vol — comment un vol devient un vol en Europe",
+  "seo_description": "Suivez FFS101 de Bruxelles à Rome — des créneaux aéroportuaires dix mois à l’avance, en passant par les quatre phases de planification, jusqu’à l’analyse post-opérationnelle — avec des données EUROCONTROL en direct."
 }

@@ -4,7 +4,9 @@
   import { startLoading } from '$lib/data/liveState.svelte';
   import MissionClock from '$lib/ui/MissionClock.svelte';
   import OverviewTimeline from '$lib/viz/OverviewTimeline.svelte';
-  import { SITE_URL, SITE_TITLE, SITE_DESCRIPTION } from '$lib/site';
+  import { SITE_URL } from '$lib/site';
+  import { LOCALES } from '$lib/i18n/locales';
+  import LanguageHint from '$lib/ui/LanguageHint.svelte';
   import C00ColdOpen from '$lib/chapters/C00ColdOpen.svelte';
   import C01Strategic from '$lib/chapters/C01Strategic.svelte';
   import C02Airspace from '$lib/chapters/C02Airspace.svelte';
@@ -19,30 +21,40 @@
   import C09Arrival from '$lib/chapters/C09Arrival.svelte';
   import C10PostOps from '$lib/chapters/C10PostOps.svelte';
   import C11Sources from '$lib/chapters/C11Sources.svelte';
+  let { data } = $props();
+  const url = (l: string) => (l === 'en' ? SITE_URL : `${SITE_URL}${l}/`);
+  const OG: Record<string, string> = { en: 'en_GB', de: 'de_DE', fr: 'fr_FR', it: 'it_IT', es: 'es_ES', pl: 'pl_PL' };
+  const title = $derived(msg('seo_title'));
+  const description = $derived(msg('seo_description'));
   onMount(startLoading);
 </script>
 
 <svelte:head>
-  <title>{SITE_TITLE}</title>
-  <meta name="description" content={SITE_DESCRIPTION} />
-  <link rel="canonical" href={SITE_URL} />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={url(data.locale)} />
+  {#each LOCALES as l (l.code)}<link rel="alternate" hreflang={l.code} href={url(l.code)} />{/each}
+  <link rel="alternate" hreflang="x-default" href={SITE_URL} />
   <meta property="og:type" content="article" />
-  <meta property="og:title" content={SITE_TITLE} />
-  <meta property="og:description" content={SITE_DESCRIPTION} />
-  <meta property="og:url" content={SITE_URL} />
+  <meta property="og:locale" content={OG[data.locale]} />
+  {#each LOCALES.filter((l) => l.code !== data.locale) as l (l.code)}<meta property="og:locale:alternate" content={OG[l.code]} />{/each}
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={url(data.locale)} />
   <meta property="og:image" content="{SITE_URL}og.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content={SITE_TITLE} />
-  <meta name="twitter:description" content={SITE_DESCRIPTION} />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
   <meta name="twitter:image" content="{SITE_URL}og.png" />
   {@html `<script type="application/ld+json">${JSON.stringify({
-    '@context': 'https://schema.org', '@type': 'Article', headline: SITE_TITLE, description: SITE_DESCRIPTION,
-    url: SITE_URL, image: `${SITE_URL}og.png`, datePublished: '2026-10-10', author: { '@type': 'Organization', name: 'EUROCONTROL Performance Review Unit (euctrl-pru)' }
+    '@context': 'https://schema.org', '@type': 'Article', headline: title, description,
+    url: url(data.locale), inLanguage: data.locale, image: `${SITE_URL}og.png`, datePublished: '2026-10-10', author: { '@type': 'Organization', name: 'EUROCONTROL Performance Review Unit (euctrl-pru)' }
   }).replace(/</g, '\\u003c')}</script>`}
 </svelte:head>
 
+<LanguageHint />
 <MissionClock />
 <main>
   <header class="intro" id="top">

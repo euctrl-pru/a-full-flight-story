@@ -520,5 +520,11 @@
   "fresh_on": "on {date}",
   "fresh_unknown": "on the latest day available",
   "live_live": "fetched live",
-  "live_snapshot": "from the latest snapshot"
+  "live_snapshot": "from the latest snapshot",
+  "ui_language": "Language",
+  "hint_question": "Read this story in English?",
+  "hint_yes": "Yes",
+  "hint_no": "No",
+  "seo_title": "A Full Flight Story — how a flight becomes a flight in Europe",
+  "seo_description": "Follow FFS101 from Brussels to Rome — from airport slots ten months ahead through the four planning phases to post-ops — with live EUROCONTROL data."
 }
