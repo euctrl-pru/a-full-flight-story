@@ -49,8 +49,9 @@ let started = false;
 export function startLoading() {
   if (started || typeof window === 'undefined') return;
   started = true;
-  refreshEurocontrol();
-  pollSky();
+  // let the first paint happen before fetching ~1 MB of data
+  const idle = (fn: () => void) => ('requestIdleCallback' in window ? (window as any).requestIdleCallback(fn, { timeout: 1500 }) : setTimeout(fn, 0));
+  idle(() => { refreshEurocontrol(); pollSky(); });
   startPolling();
 }
 

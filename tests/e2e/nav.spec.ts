@@ -47,3 +47,9 @@ test('back to top link at the end', async ({ page }) => {
   await page.getByRole('link', { name: 'Back to top ↑' }).click();
   await expect(page.locator('#top')).toBeInViewport();
 });
+
+test('deep link into a lazily loaded chapter renders its graphic and phase', async ({ page }) => {
+  await page.goto('/#enroute');
+  await expect(page.locator('#enroute .graphic svg').first()).toBeVisible();
+  await expect(page.locator('.clock .now')).toContainText('Tactical');
+});

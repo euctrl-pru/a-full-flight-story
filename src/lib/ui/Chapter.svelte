@@ -7,9 +7,12 @@
   import { story } from '$lib/scroll/storyState.svelte';
   import { phaseOf } from '$lib/story/phases';
   import { reveal } from '$lib/scroll/reveal';
+  import { near } from '$lib/scroll/near';
 
   let { chapter, graphic }: { chapter: ChapterDef; graphic: Snippet<[{ step: number; progress: number }]> } = $props();
   let step = $state(0);
+  // mount the (heavy) graphic only once the chapter comes within one viewport
+  let awake = $state(false);
   let progress = $state(0);
 
   function onstep(i: number) {
@@ -35,7 +38,7 @@
     <h2 id="{chapter.id}-title">{chapter.title}</h2>
   </header>
   <div class="scrolly">
-    <div class="graphic">{@render graphic({ step, progress })}</div>
+    <div class="graphic" use:near={() => (awake = true)}>{#if awake}{@render graphic({ step, progress })}{/if}</div>
     <div class="steps-wrap">
       <Scrolly {onstep} onprogress={(i, p) => { if (i === step) progress = p; }}>
         {#each chapter.steps as s, i (s.id)}
