@@ -56,3 +56,28 @@ export function ageLabel(iso: string, now = Date.now()): string {
   if (m < 48 * 60) return `${Math.floor(m / 60)} h${m % 60 ? ` ${m % 60} min` : ''} ago`;
   return `${Math.floor(m / 1440)} days ago`;
 }
+
+export function newerSky(cur: SkySnapshot | null, next: unknown): next is SkySnapshot {
+  const n = next as SkySnapshot | null;
+  if (!n || typeof n.fetchedAt !== 'string' || !Array.isArray(n.aircraft) || !(n.count > 0)) return false;
+  const t = Date.parse(n.fetchedAt);
+  if (!Number.isFinite(t)) return false;
+  return !cur || t > Date.parse(cur.fetchedAt);
+}
+
+export async function fetchAdsbLolTiles(fetchFn: typeof fetch, tiles: { lat: number; lon: number }[], delayMs = 800) {
+  const aircraft: Aircraft[] = [];
+  let ok = 0, failed = 0;
+  for (const t of tiles) {
+    try {
+      const r = await fetchFn(`https://api.adsb.lol/v2/point/${t.lat}/${t.lon}/250`, { signal: AbortSignal.timeout(20_000) });
+      if (!r.ok) throw new Error(`HTTP ${r.status}`);
+      aircraft.push(...parseAdsbLol(await r.json()));
+      ok++;
+    } catch {
+      failed++;
+    }
+    if (delayMs) await new Promise((res) => setTimeout(res, delayMs));
+  }
+  return { aircraft, ok, failed };
+}

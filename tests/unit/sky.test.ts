@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { parseOpenSky, parseAdsbLol, makeSnapshot, adsbLolTiles, minutesAgo, ageLabel, EUROPE_BBOX } from '$lib/data/sky';
+import { parseOpenSky, parseAdsbLol, makeSnapshot, adsbLolTiles, minutesAgo, ageLabel, EUROPE_BBOX, newerSky, fetchAdsbLolTiles } from '$lib/data/sky';
 
 const os = {
   time: 1791559444,
@@ -54,5 +54,36 @@ describe('tiles and age', () => {
     expect(ageLabel('2026-10-09T14:47:00Z', now)).toBe('13 min ago');
     expect(ageLabel('2026-10-09T11:30:00Z', now)).toBe('3 h 30 min ago');
     expect(ageLabel('2026-10-07T15:00:00Z', now)).toBe('2 days ago');
+  });
+});
+
+
+describe('newerSky', () => {
+  const snap = (fetchedAt: string, count = 1) => ({ fetchedAt, source: 'opensky' as const, count, aircraft: [] });
+  it('accepts a newer, well-formed snapshot', () => {
+    expect(newerSky(snap('2026-10-10T10:00:00Z'), snap('2026-10-10T10:10:00Z'))).toBe(true);
+    expect(newerSky(null, snap('2026-10-10T10:10:00Z'))).toBe(true);
+  });
+  it('rejects older, equal, empty or malformed payloads', () => {
+    const cur = snap('2026-10-10T10:10:00Z');
+    expect(newerSky(cur, snap('2026-10-10T10:00:00Z'))).toBe(false);
+    expect(newerSky(cur, snap('2026-10-10T10:10:00Z'))).toBe(false);
+    expect(newerSky(cur, snap('2026-10-10T10:20:00Z', 0))).toBe(false);
+    expect(newerSky(cur, { nope: true })).toBe(false);
+    expect(newerSky(cur, null)).toBe(false);
+  });
+});
+
+describe('fetchAdsbLolTiles', () => {
+  it('keeps going when one tile throws', async () => {
+    let n = 0;
+    const f = (async () => {
+      n++;
+      if (n === 2) throw new TypeError('network');
+      return new Response(JSON.stringify({ ac: [{ hex: `h${n}`, flight: 'X', lat: 50, lon: 4, alt_baro: 30000, track: 0, gs: 400 }] }));
+    }) as typeof fetch;
+    const r = await fetchAdsbLolTiles(f, [{ lat: 1, lon: 1 }, { lat: 2, lon: 2 }, { lat: 3, lon: 3 }], 0);
+    expect(r).toMatchObject({ ok: 2, failed: 1 });
+    expect(r.aircraft.map((a) => a.id)).toEqual(['h1', 'h3']);
   });
 });

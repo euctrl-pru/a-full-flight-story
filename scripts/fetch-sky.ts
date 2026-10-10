@@ -1,8 +1,8 @@
 import { writeFileSync, existsSync, mkdirSync } from 'node:fs';
-import { EUROPE_BBOX, parseOpenSky, parseAdsbLol, makeSnapshot, adsbLolTiles, type Aircraft } from '../src/lib/data/sky.ts';
+import { EUROPE_BBOX, parseOpenSky, makeSnapshot, adsbLolTiles, fetchAdsbLolTiles, type Aircraft } from '../src/lib/data/sky.ts';
 
 const OUT = 'static/data/sky.json';
-const UA = { 'user-agent': 'a-full-flight-story (https://github.com/quinten-goens/a-full-flight-story)' };
+const UA = { 'user-agent': 'a-full-flight-story (https://github.com/euctrl-pru/a-full-flight-story)' };
 
 async function openskyToken(): Promise<string | null> {
   const id = process.env.OPENSKY_CLIENT_ID, secret = process.env.OPENSKY_CLIENT_SECRET;
@@ -28,13 +28,9 @@ async function fromOpenSky(): Promise<Aircraft[]> {
 }
 
 async function fromAdsbLol(): Promise<Aircraft[]> {
-  const all: Aircraft[] = [];
-  for (const t of adsbLolTiles(EUROPE_BBOX)) {
-    const r = await fetch(`https://api.adsb.lol/v2/point/${t.lat}/${t.lon}/250`, { headers: UA, signal: AbortSignal.timeout(20_000) });
-    if (r.ok) all.push(...parseAdsbLol(await r.json()));
-    await new Promise((res) => setTimeout(res, 800));
-  }
-  return all;
+  const r = await fetchAdsbLolTiles((u, init) => fetch(u, { ...init, headers: UA }), adsbLolTiles(EUROPE_BBOX));
+  console.log(`[sky] adsb.lol tiles ok=${r.ok} failed=${r.failed}`);
+  return r.aircraft;
 }
 
 const now = new Date().toISOString();

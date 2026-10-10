@@ -6,12 +6,23 @@
   import Tooltip from './Tooltip.svelte';
   import { fmtInt } from './chart-utils';
   import { theme } from '$lib/ui/theme.svelte';
+  import { Tween } from 'svelte/motion';
+  import { dur } from '$lib/scroll/motion';
 
   let { aircraft, projection, width, height, dim = 0 }: { aircraft: Aircraft[]; projection: GeoProjection; width: number; height: number; dim?: number } = $props();
   let canvas: HTMLCanvasElement;
   let hover: { a: Aircraft; x: number; y: number } | null = $state(null);
 
   const pts = $derived(aircraft.flatMap((a) => { const p = projection([a.lon, a.lat]); return p ? [{ a, x: p[0], y: p[1] }] : []; }));
+  let prevPts: typeof pts = [];
+  let lastDrawn: typeof pts = [];
+  let lastAircraft: Aircraft[] | null = null;
+  const fadeIn = new Tween(1, { duration: dur(600) });
+  $effect.pre(() => {
+    // `pts` is already recomputed for the new aircraft here, so remember what was last *drawn*
+    if (lastAircraft && aircraft !== lastAircraft) { prevPts = lastDrawn; fadeIn.set(0, { duration: 0 }); fadeIn.target = 1; }
+    lastAircraft = aircraft;
+  });
   const qt = $derived(quadtree<{ a: Aircraft; x: number; y: number }>().x((d) => d.x).y((d) => d.y).addAll(pts));
 
   $effect(() => {
@@ -23,11 +34,19 @@
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.clearRect(0, 0, width, height);
     const colors = ALT_VARS.map((v) => cssVar(v));
-    ctx.globalAlpha = 1 - dim * 0.8;
-    for (const { a, x, y } of pts) {
-      ctx.fillStyle = colors[altitudeBin(a.alt)];
-      ctx.beginPath(); ctx.arc(x, y, 1.6, 0, Math.PI * 2); ctx.fill();
-    }
+    const k = fadeIn.current;
+    const base = 1 - dim * 0.8;
+    const dot = (list: typeof pts, alpha: number) => {
+      if (alpha <= 0) return;
+      ctx.globalAlpha = alpha;
+      for (const { a, x, y } of list) {
+        ctx.fillStyle = colors[altitudeBin(a.alt)];
+        ctx.beginPath(); ctx.arc(x, y, 1.6, 0, Math.PI * 2); ctx.fill();
+      }
+    };
+    dot(prevPts, base * (1 - k));
+    dot(pts, base * k);
+    lastDrawn = pts;
     canvas.dataset.drawnTheme = drawnTheme;
   });
 

@@ -1,5 +1,7 @@
 <script lang="ts">
   import Swap from '$lib/ui/Swap.svelte';
+  import SkyAge from '$lib/ui/SkyAge.svelte';
+  import { UI } from '$lib/ui/ui-strings';
   import Chapter from '$lib/ui/Chapter.svelte';
   import BaseMap from '$lib/viz/BaseMap.svelte';
   import SkyCanvas from '$lib/viz/SkyCanvas.svelte';
@@ -7,14 +9,12 @@
   import HeroNumber from '$lib/viz/HeroNumber.svelte';
   import SourceLine from '$lib/viz/SourceLine.svelte';
   import { sky, ec, bundle } from '$lib/data/liveState.svelte';
-  import { ageLabel, minutesAgo } from '$lib/data/sky';
   import { ROUTE_PLANNED } from '$lib/story/flight';
   import { chapter } from '$lib/story/chapters';
   import { dayPhrase } from '$lib/story/freshness';
 
   const ch = chapter('cold-open');
   const net = $derived(bundle('network'));
-  const stale = $derived(sky.snap ? minutesAgo(sky.snap.fetchedAt) > 360 : false);
 </script>
 
 <Chapter chapter={ch}>
@@ -35,9 +35,10 @@
         {#if step === 0}
           <Swap>
             {#if sky.snap && sky.snap.count > 0}
-              <HeroNumber value={sky.snap.count} label="aircraft airborne over Europe" sub="snapshot {ageLabel(sky.snap.fetchedAt)}{stale ? ' — the live feed may be paused' : ''}" />
+              <HeroNumber value={sky.snap.count} label="aircraft airborne over Europe" />
+              <SkyAge />
             {:else if sky.status !== 'loading'}
-              <p class="empty" data-testid="sky-empty">The live sky snapshot is unavailable right now — the rest of the story is unaffected.</p>
+              <p class="empty" data-testid="sky-empty">{UI.skyUnavailable}</p>
             {/if}
             <SourceLine ids={[sky.snap?.source === 'adsb.lol' ? 'D-adsblol' : 'D-opensky', 'D-naturalearth']} />
           </Swap>

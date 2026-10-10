@@ -25,7 +25,7 @@ test('slow API (beyond 8 s timeout) still shows the snapshot', async ({ page }) 
 });
 
 test('empty sky snapshot → honest empty state', async ({ page }) => {
-  await page.route('**/data/sky.json', (r) => r.fulfill({ contentType: 'application/json', body: JSON.stringify({ fetchedAt: new Date().toISOString(), source: 'none', count: 0, aircraft: [] }) }));
+  await page.route('**/data/sky.json*', (r) => r.fulfill({ contentType: 'application/json', body: JSON.stringify({ fetchedAt: new Date().toISOString(), source: 'none', count: 0, aircraft: [] }) }));
   await page.goto('/');
   await scrollStepTo(page, '#cold-open [data-step="0"]');
   await expect(page.getByTestId('sky-empty')).toBeVisible();
@@ -33,9 +33,9 @@ test('empty sky snapshot → honest empty state', async ({ page }) => {
 
 test('stale sky snapshot → says how old it is', async ({ page }) => {
   const old = new Date(Date.now() - 3 * 86_400_000).toISOString();
-  await page.route('**/data/sky.json', (r) => r.fulfill({ contentType: 'application/json', body: JSON.stringify({ fetchedAt: old, source: 'opensky', count: 1, aircraft: [{ id: 'a', cs: 'TEST1', lon: 4.5, lat: 50.9, alt: 35000, trk: 90, gs: 450 }] }) }));
+  await page.route('**/data/sky.json*', (r) => r.fulfill({ contentType: 'application/json', body: JSON.stringify({ fetchedAt: old, source: 'opensky', count: 1, aircraft: [{ id: 'a', cs: 'TEST1', lon: 4.5, lat: 50.9, alt: 35000, trk: 90, gs: 450 }] }) }));
   await page.goto('/');
   await scrollStepTo(page, '#cold-open [data-step="0"]');
-  await expect(page.locator('#cold-open .hud')).toContainText('3 days ago');
-  await expect(page.locator('#cold-open .hud')).toContainText('may be paused');
+  await expect(page.getByTestId('sky-age')).toContainText('3 days ago');
+  await expect(page.getByTestId('sky-age')).toContainText('may be delayed');
 });
