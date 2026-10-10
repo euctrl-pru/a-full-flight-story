@@ -55,7 +55,7 @@
 <style>
   .phase-divider { min-height: 90svh; max-width: 980px; margin: 0 auto; padding: 18vh 16px 10vh; display: flex; flex-direction: column; justify-content: center; }
   .eyebrow { text-transform: uppercase; letter-spacing: 0.14em; font-size: 13px; color: var(--ink-2); margin: 0; }
-  h2 { font-size: clamp(48px, 9vw, 104px); margin: 0.1em 0; color: var(--ink); text-decoration: underline; text-decoration-color: var(--c); text-decoration-thickness: 6px; text-underline-offset: 10px; }
+  h2 { font-size: clamp(36px, 9vw, 104px); overflow-wrap: break-word; hyphens: auto; margin: 0.1em 0; color: var(--ink); text-decoration: underline; text-decoration-color: var(--c); text-decoration-thickness: 6px; text-underline-offset: 10px; }
   .horizon { font-size: 22px; color: var(--ink-2); margin: 0 0 18px; }
   .strip { width: 100%; height: 10px; margin-bottom: 28px; }
   .cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }

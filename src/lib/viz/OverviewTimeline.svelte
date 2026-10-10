@@ -20,7 +20,7 @@
   const len = $derived(vertical ? 760 : Math.max(1, width - 32));
   const s = $derived(scaleLinear().domain(domain).range([16, 16 + len]));
   const chapters = CHAPTERS.filter((c) => c.id in CHAPTER_ANCHORS).map((c) => ({ c, at: timeScale(EVENTS.find((e) => e.id === CHAPTER_ANCHORS[c.id])!.at) }));
-  const labelPos = $derived(vertical ? spreadAlong(chapters.map((d) => s(d.at)), 24) : chapters.map((d) => s(d.at)));
+  const labelPos = $derived(vertical ? spreadAlong(chapters.map((d) => s(d.at)), 46) : chapters.map((d) => s(d.at)));
   const rows = $derived(vertical ? chapters.map(() => 0) : stackRows(chapters.map((d) => ({ x: s(d.at) - 4, w: d.c.title.length * 7 + 8 })), 8));
   const nRows = $derived(Math.max(...rows) + 1);
   let hi: (typeof EVENTS)[number] | null = $state(null);
@@ -64,7 +64,7 @@
     </svg>
     <ol class="labels" aria-label={msg('timeline_chapters_aria')}>
       {#each chapters as d, i (d.c.id)}
-        <li style:left={vertical ? '176px' : `${labelPos[i] - 4}px`} style:top={vertical ? `${labelPos[i] - 10}px` : `${52 + rows[i] * 22}px`}>
+        <li class:wrap={vertical} style:left={vertical ? '176px' : `${labelPos[i] - 4}px`} style:top={vertical ? `${labelPos[i] - 10}px` : `${52 + rows[i] * 22}px`}>
           <button type="button" onclick={() => go(d.c.id)} style:--c={d.c.phase ? phaseOf(d.c.phase).color : 'var(--accent)'}>{d.c.title}</button>
         </li>
       {/each}
@@ -85,6 +85,8 @@
   .lead { stroke: var(--axis); stroke-width: 1; }
   .labels { list-style: none; margin: 0; padding: 0; position: absolute; inset: 0; pointer-events: none; }
   .labels li { position: absolute; pointer-events: auto; }
+  .labels li.wrap { right: 8px; }
+  .labels li.wrap button { display: block; white-space: normal; }
   .labels button { all: unset; cursor: pointer; font-size: 13px; padding: 1px 6px; border-radius: 6px; border-left: 3px solid var(--c); background: var(--surface); white-space: nowrap; }
   .labels button:hover, .labels button:focus-visible { background: var(--surface-2); outline: 2px solid var(--accent); }
 </style>

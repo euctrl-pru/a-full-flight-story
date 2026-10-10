@@ -63,7 +63,10 @@
         {@const y0 = top + i * rowH}
         {#if narrow}
           {@const late = x(hm(t.start)) > width * 0.45}
-          <text class="task" x={late ? x(hm(t.end)) : x(hm(t.start))} y={y0 + 10} text-anchor={late ? 'end' : 'start'}>{t.label}</text>
+          {@const tw = t.label.length * 6.4}
+          {@const fit = tw > width - 8}
+          <text class="task" x={fit ? 4 : Math.min(Math.max(late ? x(hm(t.end)) - tw : x(hm(t.start)), 4), width - tw - 4)} y={y0 + 10}
+            textLength={fit ? width - 8 : undefined} lengthAdjust="spacingAndGlyphs">{t.label}</text>
           <rect class="bar" class:dim={stage === 'milestones'} x={x(hm(t.start))} y={y0 + 14} width={Math.max(2, x(hm(t.end)) - x(hm(t.start)))} height={rowH - 20} rx="3" />
         {:else}
           <text class="task" x="0" y={y0 + 15}>{t.label}</text>

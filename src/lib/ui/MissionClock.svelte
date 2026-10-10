@@ -51,5 +51,5 @@
   .tl { position: absolute; top: 9px; transform: translateX(-50%); color: var(--muted); font-size: 10px; white-space: nowrap; }
   .plane { position: absolute; top: -8px; transform: translateX(-50%) rotate(90deg); color: var(--phase-color); font-size: 14px; }
   @media (max-width: 900px) { .tl { display: none; } }
-  @media (max-width: 700px) { .sl { display: none; } .now { min-width: 0; max-width: 34%; } .full { display: none; } .short { display: inline; } }
+  @media (max-width: 700px) { .sl { display: none; } .clock { gap: 8px; } .now { min-width: 0; max-width: none; flex-shrink: 0; } .rail { min-width: 72px; } .full { display: none; } .short { display: inline; } }
 </style>
