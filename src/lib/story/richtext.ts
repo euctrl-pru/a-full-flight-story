@@ -7,7 +7,7 @@ export type Run =
 export const CITE_ID = /^(S\d+|D-[a-z-]+)$/;
 const ID = String.raw`(?:S\d+|D-[a-z-]+)`;
 const TOKEN = new RegExp(
-  String.raw`\{\{([a-z]+):([A-Za-z0-9-]+)\}\}|\*\*(.+?)\*\*|\*(.+?)\*|\{([A-Za-z0-9-]+)(?:\|([^}]+))?\}|\[(${ID}(?:\s*,\s*${ID})*)\]`,
+  String.raw`\[\[([a-z]+):([A-Za-z0-9-]+)\]\]|\[\[([A-Za-z0-9-]+)(?:\|([^\]]+))?\]\]|\*\*(.+?)\*\*|\*(.+?)\*|\[(${ID}(?:\s*,\s*${ID})*)\]`,
   'g'
 );
 
@@ -23,9 +23,9 @@ export function parseRich(s: string): Run[] {
   for (const m of s.matchAll(TOKEN)) {
     pushText(s.slice(last, m.index));
     if (m[1] !== undefined) runs.push({ kind: 'var', name: m[1], arg: m[2] });
-    else if (m[3] !== undefined) runs.push({ kind: 'strong', text: m[3] });
-    else if (m[4] !== undefined) runs.push({ kind: 'em', text: m[4] });
-    else if (m[5] !== undefined) runs.push({ kind: 'term', id: m[5], text: m[6] ?? m[5] });
+    else if (m[3] !== undefined) runs.push({ kind: 'term', id: m[3], text: m[4] ?? m[3] });
+    else if (m[5] !== undefined) runs.push({ kind: 'strong', text: m[5] });
+    else if (m[6] !== undefined) runs.push({ kind: 'em', text: m[6] });
     else runs.push({ kind: 'cite', ids: m[7].split(',').map((x) => x.trim()) });
     last = m.index! + m[0].length;
   }

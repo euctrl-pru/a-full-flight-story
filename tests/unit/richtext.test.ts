@@ -3,7 +3,7 @@ import { parseRich, citedIds, termIds, varIds } from '$lib/story/richtext';
 
 describe('parseRich', () => {
   it('splits text, emphasis, terms and citations', () => {
-    expect(parseRich('The **airline** files with {IFPS} *days* ahead [S3, D-eurocontrol].')).toEqual([
+    expect(parseRich('The **airline** files with [[IFPS]] *days* ahead [S3, D-eurocontrol].')).toEqual([
       { kind: 'text', text: 'The ' },
       { kind: 'strong', text: 'airline' },
       { kind: 'text', text: ' files with ' },
@@ -16,27 +16,37 @@ describe('parseRich', () => {
     ]);
   });
   it('supports a display label for terms', () => {
-    expect(parseRich('{CTOT|a slot}')).toEqual([{ kind: 'term', id: 'CTOT', text: 'a slot' }]);
+    expect(parseRich('[[CTOT|a slot]]')).toEqual([{ kind: 'term', id: 'CTOT', text: 'a slot' }]);
   });
   it('leaves non-citation brackets as text', () => {
     expect(parseRich('[see below]')).toEqual([{ kind: 'text', text: '[see below]' }]);
   });
   it('collects ids', () => {
-    const s = 'A [S1] b {TOBT} c [S2, S1] {CTOT|slot}';
+    const s = 'A [S1] b [[TOBT]] c [S2, S1] [[CTOT|slot]]';
     expect(citedIds(s)).toEqual(['S1', 'S2']);
     expect(termIds(s)).toEqual(['TOBT', 'CTOT']);
+  });
+  it('leaves curly braces as plain text (safe inside Paraglide messages)', () => {
+    expect(parseRich('a {x} b')).toEqual([{ kind: 'text', text: 'a {x} b' }]);
+  });
+  it('does not confuse a term with a citation or a data token', () => {
+    expect(parseRich('[[CTOT]] [S7] [[date:network]]')).toEqual([
+      { kind: 'term', id: 'CTOT', text: 'CTOT' }, { kind: 'text', text: ' ' },
+      { kind: 'cite', ids: ['S7'] }, { kind: 'text', text: ' ' },
+      { kind: 'var', name: 'date', arg: 'network' }
+    ]);
   });
 });
 
 describe('data tokens', () => {
-  it('parses {{name:arg}} without touching {TERM}', () => {
-    expect(parseRich('Handled {{date:network}} via {IFPS}.')).toEqual([
+  it('parses [[name:arg]] without touching [[TERM]]', () => {
+    expect(parseRich('Handled [[date:network]] via [[IFPS]].')).toEqual([
       { kind: 'text', text: 'Handled ' },
       { kind: 'var', name: 'date', arg: 'network' },
       { kind: 'text', text: ' via ' },
       { kind: 'term', id: 'IFPS', text: 'IFPS' },
       { kind: 'text', text: '.' }
     ]);
-    expect(varIds('{{live:report}} and {{date:EBBR}}')).toEqual([{ name: 'live', arg: 'report' }, { name: 'date', arg: 'EBBR' }]);
+    expect(varIds('[[live:report]] and [[date:EBBR]]')).toEqual([{ name: 'live', arg: 'report' }, { name: 'date', arg: 'EBBR' }]);
   });
 });

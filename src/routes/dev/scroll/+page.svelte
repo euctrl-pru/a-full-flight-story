@@ -4,7 +4,7 @@
   import type { ChapterDef } from '$lib/story/types';
   const chapters: ChapterDef[] = ['one', 'two'].map((id, c) => ({
     id, kicker: `Chapter ${c + 1}`, phase: null, title: `Test ${id}`, clockLabel: `C${c + 1}`, clock: c * 0.5,
-    steps: [0, 1, 2].map((s) => ({ id: `${id}-${s}`, text: `Step ${s} of ${id} [D-eurocontrol] with {IFPS}.`, clock: c * 0.5 + s * 0.1 }))
+    steps: [0, 1, 2].map((s) => ({ id: `${id}-${s}`, text: `Step ${s} of ${id} [D-eurocontrol] with [[IFPS]].`, clock: c * 0.5 + s * 0.1 }))
   }));
 </script>
 

@@ -21,7 +21,7 @@ describe('story content', () => {
   it('every citation resolves and every term is in the glossary', () => {
     for (const { s } of steps) {
       for (const id of citedIds(s.text)) expect(SOURCES[id], `${s.id} → ${id}`).toBeDefined();
-      for (const t of termIds(s.text)) expect(GLOSSARY[t], `${s.id} → {${t}}`).toBeDefined();
+      for (const t of termIds(s.text)) expect(GLOSSARY[t], `${s.id} → [[${t}]]`).toBeDefined();
     }
   });
   it('mission clock never runs backwards', () => {

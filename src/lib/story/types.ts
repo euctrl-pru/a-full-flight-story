@@ -4,7 +4,7 @@ export type AtmPhase = 'strategic' | 'pretactical' | 'tactical' | 'postops';
 
 export interface StepDef {
   id: string;
-  /** Rich text: **bold**, *em*, {TERM} or {TERM|label}, citations [S1, D-eurocontrol]. Paragraphs split by blank line. */
+  /** Rich text: **bold**, *em*, [[TERM]] or [[TERM|label]], [[name:arg]] data tokens, citations [S1, D-eurocontrol]. Paragraphs split by blank line. */
   text: string;
   illustrative?: boolean;
   /** Mission-clock position 0..1 for this step; defaults to the chapter's. */
