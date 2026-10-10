@@ -4,6 +4,7 @@
   import Scrolly from '$lib/scroll/Scrolly.svelte';
   import StepCard from './StepCard.svelte';
   import { story } from '$lib/scroll/storyState.svelte';
+  import { phaseOf } from '$lib/story/phases';
 
   let { chapter, graphic }: { chapter: ChapterDef; graphic: Snippet<[{ step: number; progress: number }]> } = $props();
   let step = $state(0);
@@ -16,12 +17,16 @@
     story.chapterTitle = chapter.title;
     story.clock = chapter.steps[i]?.clock ?? chapter.clock;
     story.clockLabel = chapter.clockLabel;
+    story.phase = chapter.phase;
   }
 </script>
 
-<section class="chapter" id={chapter.id} aria-labelledby="{chapter.id}-title" data-active-step={step}>
+<section class="chapter" id={chapter.id} aria-labelledby="{chapter.id}-title" data-active-step={step} style:--phase-color={chapter.phase ? phaseOf(chapter.phase).color : 'var(--accent)'}>
   <header class="head">
-    <p class="kicker">{chapter.kicker}</p>
+    <p class="kicker">
+      {#if chapter.phase}<span class="phase-pill">{phaseOf(chapter.phase).label}</span>{/if}
+      {chapter.kicker}
+    </p>
     <h2 id="{chapter.id}-title">{chapter.title}</h2>
   </header>
   <div class="scrolly">
@@ -46,7 +51,8 @@
   .step { min-height: 95svh; display: flex; align-items: center; padding: 0 24px; }
   .step:last-child { min-height: 110svh; }
   .step :global(.card) { pointer-events: auto; width: min(100%, 380px); transition: border-color 300ms; }
-  .step.active :global(.card) { border-color: color-mix(in srgb, var(--accent) 60%, transparent); }
+  .step.active :global(.card) { border-color: var(--phase-color); }
+  .phase-pill { display: inline-block; margin-right: 10px; padding: 2px 10px; border-radius: 999px; border: 1px solid var(--phase-color); color: var(--ink); background: color-mix(in srgb, var(--phase-color) 22%, transparent); letter-spacing: 0.06em; }
   @media (max-width: 1023px) {
     .step { align-items: flex-end; padding: 0 16px 6svh; }
     .step :global(.card) { width: 100%; background: color-mix(in srgb, var(--surface) 94%, transparent); backdrop-filter: blur(6px); }
