@@ -1,26 +1,31 @@
+import { msg, keyOf } from '$lib/i18n/msg';
 import type { Actor, Phase, FlightEvent } from './flight';
 
-export const PHASES: { id: Phase; label: string }[] = [
-  { id: 'strategic', label: 'Strategic' }, { id: 'pretactical', label: 'Pre-tactical' }, { id: 'filing', label: 'Filing' },
-  { id: 'tactical', label: 'Tactical' }, { id: 'ground', label: 'Ground' }, { id: 'departure', label: 'Departure' },
-  { id: 'enroute', label: 'En route' }, { id: 'arrival', label: 'Arrival' }, { id: 'postops', label: 'Post-ops' }
-];
+const phase = (id: Phase) => ({ id, get label() { return msg(`sp_${id}`); } });
+export const PHASES: { id: Phase; label: string }[] = (
+  ['strategic', 'pretactical', 'filing', 'tactical', 'ground', 'departure', 'enroute', 'arrival', 'postops'] as Phase[]
+).map(phase);
 
 /** Roles from research §11. */
+const actor = (id: Actor, sources: string[]) => ({
+  id, sources,
+  get label() { return msg(`ac_${keyOf(id)}_label`); },
+  get role() { return msg(`ac_${keyOf(id)}_role`); }
+});
 export const ACTORS: { id: Actor; label: string; role: string; sources: string[] }[] = [
-  { id: 'airline', label: 'Airline (OCC & dispatch)', role: 'Plans the schedule, requests slots, files and updates the flight plan, answers SAM/RRP, pays route charges.', sources: ['S7', 'S9'] },
-  { id: 'slot-coordinator', label: 'Slot coordinators', role: 'BSC (Brussels) and Assoclearance (Rome) allocate airport slots under EU Regulation 95/93.', sources: ['S21', 'S26', 'S27'] },
-  { id: 'network-manager', label: 'Network Manager (EUROCONTROL)', role: 'Designs the route network, plans and manages flow, issues ATFM slots.', sources: ['S7', 'S20'] },
-  { id: 'ifps', label: 'IFPS', role: 'Validates and distributes every flight plan from Brussels.', sources: ['S9', 'S10'] },
-  { id: 'fmp', label: 'Flow Management Positions', role: 'Each ANSP’s flow unit; agrees regulations with the Network Manager.', sources: ['S7', 'S8'] },
-  { id: 'military', label: 'Military (AMC)', role: 'Books reserved airspace day by day through the Airspace Use Plan.', sources: ['S19', 'S28'] },
-  { id: 'airport', label: 'Airport operators', role: 'Brussels Airport and Aeroporti di Roma run the infrastructure and the A-CDM platform.', sources: ['S13', 'S16'] },
-  { id: 'ground-handler', label: 'Ground handlers', role: 'Turn the aircraft around and keep the TOBT honest.', sources: ['S13'] },
-  { id: 'passengers', label: 'Passengers', role: 'Board on time — and feel every minute of delay.', sources: ['S1'] },
-  { id: 'pilots', label: 'Pilots', role: 'Brief, request start-up, fly the clearance and the slot.', sources: ['S7'] },
-  { id: 'ansp', label: 'Air navigation service providers', role: 'skeyes, MUAC, DSNA/DFS, skyguide and ENAV control the flight sector by sector.', sources: ['S5', 'S28', 'S30'] },
-  { id: 'crco', label: 'CRCO (EUROCONTROL)', role: 'Bills the en-route charges for every state crossed.', sources: ['S32'] },
-  { id: 'prc', label: 'Performance Review Commission', role: 'Independently reviews how Europe’s ATM system performed.', sources: ['S37'] }
+  actor('airline', ['S7', 'S9']),
+  actor('slot-coordinator', ['S21', 'S26', 'S27']),
+  actor('network-manager', ['S7', 'S20']),
+  actor('ifps', ['S9', 'S10']),
+  actor('fmp', ['S7', 'S8']),
+  actor('military', ['S19', 'S28']),
+  actor('airport', ['S13', 'S16']),
+  actor('ground-handler', ['S13']),
+  actor('passengers', ['S1']),
+  actor('pilots', ['S7']),
+  actor('ansp', ['S5', 'S28', 'S30']),
+  actor('crco', ['S32']),
+  actor('prc', ['S37'])
 ];
 
 export function matrix(events: FlightEvent[]) {

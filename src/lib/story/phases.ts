@@ -1,14 +1,23 @@
 import type { AtmPhase, ChapterDef } from './types';
 import type { Phase } from './flight';
 
+import { msg } from '$lib/i18n/msg';
+
 export interface PhaseDef { id: AtmPhase; label: string; horizon: string; decides: string; sources: string[]; color: string }
+
+const atmPhase = (id: AtmPhase, sources: string[], color: string): PhaseDef => ({
+  id, sources, color,
+  get label() { return msg(`ph_${id}_label`); },
+  get horizon() { return msg(`ph_${id}_horizon`); },
+  get decides() { return msg(`ph_${id}_decides`); }
+});
 
 /** ATFCM phases (research §1–2, §9; ATFCM Operations Manual [S8]). */
 export const ATM_PHASES: PhaseDef[] = [
-  { id: 'strategic', label: 'Strategic', horizon: '~18 months to ~1 week before', decides: 'Airport slots, airline schedules, the route network and how much capacity each piece of sky will offer.', sources: ['S8', 'S21', 'S25'], color: 'var(--phase-strategic)' },
-  { id: 'pretactical', label: 'Pre-tactical', horizon: 'D−6 to D−1', decides: 'Each day’s demand against capacity, military airspace bookings and the next day’s flow plan.', sources: ['S8', 'S19'], color: 'var(--phase-pretactical)' },
-  { id: 'tactical', label: 'Tactical', horizon: 'Day of operation', decides: 'Regulations and take-off slots, reroutes, the airport turnaround and every control hand-over.', sources: ['S7', 'S13'], color: 'var(--phase-tactical)' },
-  { id: 'postops', label: 'Post-operations', horizon: 'After the flight', decides: 'Delay attribution, route-charge billing, performance review and lessons for the next season.', sources: ['S8', 'S32', 'S37'], color: 'var(--phase-postops)' }
+  atmPhase('strategic', ['S8', 'S21', 'S25'], 'var(--phase-strategic)'),
+  atmPhase('pretactical', ['S8', 'S19'], 'var(--phase-pretactical)'),
+  atmPhase('tactical', ['S7', 'S13'], 'var(--phase-tactical)'),
+  atmPhase('postops', ['S8', 'S32', 'S37'], 'var(--phase-postops)')
 ];
 
 export const phaseIndex = (id: AtmPhase) => ATM_PHASES.findIndex((p) => p.id === id);
