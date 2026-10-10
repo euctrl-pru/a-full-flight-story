@@ -1,5 +1,7 @@
 export interface Source { id: string; title: string; publisher: string; url: string; accessed: string }
 
+export type AtmPhase = 'strategic' | 'pretactical' | 'tactical' | 'postops';
+
 export interface StepDef {
   id: string;
   /** Rich text: **bold**, *em*, {TERM} or {TERM|label}, citations [S1, D-eurocontrol]. Paragraphs split by blank line. */
@@ -15,5 +17,7 @@ export interface ChapterDef {
   title: string;
   clockLabel: string;
   clock: number;
+  /** ATFCM phase this chapter belongs to; null for the cold open. */
+  phase: AtmPhase | null;
   steps: StepDef[];
 }

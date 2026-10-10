@@ -2,7 +2,7 @@ import type { ChapterDef } from './types';
 
 export const CHAPTERS: ChapterDef[] = [
   {
-    id: 'cold-open', kicker: 'Prologue', title: 'The sky over Europe', clockLabel: 'Now', clock: 0,
+    id: 'cold-open', kicker: 'Prologue', phase: null, title: 'The sky over Europe', clockLabel: 'Now', clock: 0,
     steps: [
       { id: 'co-sky', text: 'Every dot is an aircraft over Europe, captured from the positions they broadcast shortly before this page was last built [D-opensky].' },
       { id: 'co-yesterday', text: 'Yesterday the European network handled the number on screen. In 2025 it handled 11.1 million flights, and on its busiest day — 18 July 2025 — 37,034: one new flight every 2.3 seconds [S1, D-eurocontrol].' },
@@ -10,7 +10,7 @@ export const CHAPTERS: ChapterDef[] = [
     ]
   },
   {
-    id: 'strategic', kicker: 'Chapter 1 · Strategic phase', title: 'A flight is born on paper', clockLabel: 'T−10 months', clock: 0.02,
+    id: 'strategic', kicker: 'Chapter 1', phase: 'strategic', title: 'A flight is born on paper', clockLabel: 'T−10 months', clock: 0.02,
     steps: [
       { id: 'st-schedule', illustrative: true, clock: 0.02, text: 'FFS101 first exists in an airline network plan, almost a year before it flies: a 07:00 local departure from Brussels for the Summer 2026 season, which runs from the last Sunday of March to the last Saturday of October [S25].' },
       { id: 'st-slots', clock: 0.08, text: 'Brussels Airport has been slot-coordinated since 2003: nobody takes off or lands there without an airport slot from Belgium Slot Coordination ({BSC}) [S26]. Rome Fiumicino’s come from Assoclearance [S27]. EU Regulation 95/93 and the {WASG} set the rules — including “use it or lose it” at 80% [S21, S22].' },
@@ -20,16 +20,21 @@ export const CHAPTERS: ChapterDef[] = [
     ]
   },
   {
-    id: 'airspace', kicker: 'Chapter 2 · The sky in between', title: 'Thirty-seven landlords', clockLabel: 'Months → D−1', clock: 0.2,
+    id: 'airspace', kicker: 'Chapter 2', phase: 'strategic', title: 'Thirty-seven landlords', clockLabel: 'Months → D−1', clock: 0.2,
     steps: [
       { id: 'as-patchwork', clock: 0.2, text: 'Europe’s sky is a patchwork: 37 en-route air navigation service providers share 11.5 million km² of continental airspace [S49]. FFS101’s straight line crosses Belgium, Luxembourg, France, Switzerland and Italy.' },
-      { id: 'as-rad', clock: 0.23, text: 'Airlines can’t just draw a line. The Route Availability Document ({RAD}) says which routes are open when, renewed every 28-day {AIRAC} cycle [S17]. Inside Free Route Airspace ({FRA}) — about 76 control centres by the end of 2025 — they may fly direct between entry and exit points [S18].' },
+      { id: 'as-rad', clock: 0.23, text: 'Airlines can’t just draw a line. The Route Availability Document ({RAD}) says which routes are open when, renewed every 28-day {AIRAC} cycle [S17]. Inside Free Route Airspace ({FRA}) — about 76 control centres by the end of 2025 — they may fly direct between entry and exit points [S18].' }
+    ]
+  },
+  {
+    id: 'week-before', kicker: 'Chapter 3', phase: 'pretactical', title: 'The week before', clockLabel: 'D−6 → D−1', clock: 0.3,
+    steps: [
       { id: 'as-military', clock: 0.3, text: 'Part of the sky belongs to the military, part of the time: training zones cover about half of Belgian airspace [S28]. Under Flexible Use of Airspace ({FUA}) each country publishes tomorrow’s bookings in an Airspace Use Plan ({AUP}), which the Network Manager merges for all of Europe [S19].' },
       { id: 'as-pretactical', clock: 0.37, text: 'Six days out, the Network Manager starts comparing forecast demand with expected capacity. On the eve of the flight, at 16:00 UTC in summer, the plan moves into the live system, {ETFMS}: tomorrow becomes today [S8].' }
     ]
   },
   {
-    id: 'filing', kicker: 'Chapter 3 · D−1, 17:00 UTC', title: 'The flight plan', clockLabel: 'D−1 · filing', clock: 0.42,
+    id: 'filing', kicker: 'Chapter 4 · D−1, 17:00 UTC', phase: 'pretactical', title: 'The flight plan', clockLabel: 'D−1 · filing', clock: 0.42,
     steps: [
       { id: 'fp-file', illustrative: true, text: 'The evening before, a dispatcher files FFS101’s flight plan. It may be filed up to 120 hours ahead and, where possible, at least three hours before off-block [S9].' },
       { id: 'fp-ident', text: 'Item 7 is the callsign; item 8 says the flight follows instrument rules and is scheduled; items 9 and 10 give the aircraft type and what it can do — radios, navigation, datalink [S9].' },
@@ -41,7 +46,7 @@ export const CHAPTERS: ChapterDef[] = [
     ]
   },
   {
-    id: 'twist', kicker: 'Chapter 4 · D-day, before dawn', title: 'Too many flights, one sector', clockLabel: 'D-day · 03:00 UTC', clock: 0.5,
+    id: 'twist', kicker: 'Chapter 5 · D-day, before dawn', phase: 'tactical', title: 'Too many flights, one sector', clockLabel: 'D-day · 03:00 UTC', clock: 0.5,
     steps: [
       { id: 'tw-demand', illustrative: true, text: 'Overnight the flow managers spot trouble: in a Reims sector group on FFS101’s path, more flights want to pass between 05:00 and 07:00 than its controllers can safely handle [S7].' },
       { id: 'tw-regulation', text: 'When demand exceeds capacity, the Network Manager and the local Flow Management Position ({FMP}) impose a regulation: a place, a time window and an entry rate. Four hours at 28 flights an hour make 112 slots, about two minutes apart [S7].' },
@@ -51,7 +56,7 @@ export const CHAPTERS: ChapterDef[] = [
     ]
   },
   {
-    id: 'delay', kicker: 'Zoom out', title: 'Why Europe waits', clockLabel: 'Zoom out · Europe', clock: 0.5,
+    id: 'delay', kicker: 'Zoom out', phase: 'tactical', title: 'Why Europe waits', clockLabel: 'Zoom out · Europe', clock: 0.5,
     steps: [
       { id: 'de-yesterday', text: 'FFS101 is not alone. Yesterday, flow-management ({ATFM}) delay across the network added up to the minutes on screen [D-eurocontrol].' },
       { id: 'de-causes', text: 'Mostly not because of weather: in 2025, ATC capacity and staffing caused 58% of en-route ATFM delay, weather 28% [S1]. Yesterday’s split is on screen [D-eurocontrol].' },
@@ -60,7 +65,7 @@ export const CHAPTERS: ChapterDef[] = [
     ]
   },
   {
-    id: 'reroute', kicker: 'Chapter 5 · D-day, 03:20 UTC', title: 'The way around', clockLabel: 'D-day · 03:20 UTC', clock: 0.53,
+    id: 'reroute', kicker: 'Chapter 6 · D-day, 03:20 UTC', phase: 'tactical', title: 'The way around', clockLabel: 'D-day · 03:20 UTC', clock: 0.53,
     steps: [
       { id: 'rr-path', illustrative: true, text: 'The regulated sector sits right on FFS101’s planned path over north-east France — the country that generated the most en-route delay in 2025 [S1].' },
       { id: 'rr-rrp', illustrative: true, text: 'At 03:20 the Network Manager offers a Rerouting Proposal ({RRP}): east over Germany and Zurich, about 20 NM longer, with a new CTOT of 05:22 [S7]. In 2025 such reroutes saved 277,000 minutes of delay [S3].' },
@@ -69,7 +74,7 @@ export const CHAPTERS: ChapterDef[] = [
     ]
   },
   {
-    id: 'ground', kicker: 'Chapter 6 · Brussels Airport', title: 'Everyone on one clock', clockLabel: 'Brussels · 04:00–05:24 UTC', clock: 0.56,
+    id: 'ground', kicker: 'Chapter 7 · Brussels Airport', phase: 'tactical', title: 'Everyone on one clock', clockLabel: 'Brussels · 04:00–05:24 UTC', clock: 0.56,
     steps: [
       { id: 'gr-acdm', clock: 0.56, text: 'Brussels runs Airport Collaborative Decision Making ({A-CDM}): the airport, airline, ground handlers, air traffic control and the Network Manager share one timeline of milestones [S13, S14].' },
       { id: 'gr-tobt', illustrative: true, clock: 0.58, text: 'Cleaners, caterers, fuel and baggage teams work around the aircraft while passengers board. Handler and airline commit to a Target Off-Block Time — the {TOBT} — when it will really be ready [S13].' },
@@ -79,7 +84,7 @@ export const CHAPTERS: ChapterDef[] = [
     ]
   },
   {
-    id: 'enroute', kicker: 'Chapter 7 · Airborne', title: 'Five hand-overs to Rome', clockLabel: 'Airborne · 05:24–07:04 UTC', clock: 0.7,
+    id: 'enroute', kicker: 'Chapter 8 · Airborne', phase: 'tactical', title: 'Five hand-overs to Rome', clockLabel: 'Airborne · 05:24–07:04 UTC', clock: 0.7,
     steps: [
       { id: 'er-skeyes', clock: 0.7, text: 'FFS101 climbs out under skeyes, the Belgian air navigation service provider, which controls the airspace up to {FL} 245 — about 7,500 m [S28].' },
       { id: 'er-muac', clock: 0.73, text: 'Above FL245 it belongs to {MUAC}, EUROCONTROL’s Maastricht centre for the upper airspace of Belgium, the Netherlands, Luxembourg and north-west Germany: 1.83 million flights in 2025, more than 16% of Europe’s traffic, about 60% of clearances by datalink ({CPDLC}) [S5, S6].' },
@@ -89,7 +94,7 @@ export const CHAPTERS: ChapterDef[] = [
     ]
   },
   {
-    id: 'arrival', kicker: 'Chapter 8 · Rome Fiumicino', title: 'On blocks', clockLabel: 'Rome · 07:04 UTC', clock: 0.86,
+    id: 'arrival', kicker: 'Chapter 9 · Rome Fiumicino', phase: 'tactical', title: 'On blocks', clockLabel: 'Rome · 07:04 UTC', clock: 0.86,
     steps: [
       { id: 'ar-descent', illustrative: true, text: 'Some 200 km out, FFS101 starts down. ENAV’s Roma controllers fit it into Fiumicino’s arrival sequence [S30].' },
       { id: 'ar-onblocks', illustrative: true, text: 'Landing at 07:04, on blocks at 07:12 — seven minutes after schedule. By the industry’s 15-minute definition that counts as on time, like 76.1% of arrivals in 2025 [S1].' },
@@ -97,7 +102,7 @@ export const CHAPTERS: ChapterDef[] = [
     ]
   },
   {
-    id: 'postops', kicker: 'Chapter 9 · After landing', title: 'The flight becomes data', clockLabel: 'T+1 day → T+1 year', clock: 0.92,
+    id: 'postops', kicker: 'Chapter 10 · After landing', phase: 'postops', title: 'The flight becomes data', clockLabel: 'T+1 day → T+1 year', clock: 0.92,
     steps: [
       { id: 'po-analysis', clock: 0.92, text: 'The flight is over; its data life begins. Post-operations analysis compares plan with reality and feeds the lessons into the next season’s plan [S8].' },
       { id: 'po-billing', clock: 0.95, text: 'Delay is attributed to the regulation and its cause, and all-causes delay is collected by {CODA} [S36]. The {CRCO} bills the route actually flown [S32]. The Performance Review Commission ({PRC}) reports on the year [S37].' },
