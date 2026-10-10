@@ -1,0 +1,3 @@
+User-agent: *
+Disallow: /a-full-flight-story/dev/
+Sitemap: https://euctrl-pru.github.io/a-full-flight-story/sitemap.xml

@@ -13,7 +13,8 @@
     "fetch:eurocontrol": "tsx scripts/fetch-eurocontrol.ts",
     "fetch:sky": "tsx scripts/fetch-sky.ts",
     "sources": "tsx scripts/extract-sources.ts",
-    "geo": "tsx scripts/build-geo.ts"
+    "geo": "tsx scripts/build-geo.ts",
+    "og": "tsx scripts/og-image.ts"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",
