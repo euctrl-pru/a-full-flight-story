@@ -1,5 +1,6 @@
 <script lang="ts">
   import { msg } from '$lib/i18n/msg';
+  import { getLocale } from '$lib/paraglide/runtime.js';
   import { fmtDateTime } from '$lib/viz/chart-utils';
   import { SOURCES } from '$lib/story/sources';
   import { GLOSSARY } from '$lib/story/glossary';
@@ -19,6 +20,7 @@
     <li><strong>{msg('method_live_lead')}</strong> {msg('method_live', { date: ec.snapshot ? `${fmtDateTime(ec.snapshot.generatedAt)} ${msg('ui_utc')}` : '—' })}</li>
     <li><strong>{msg('method_sky_lead')}</strong> {msg('method_sky', { age: sky.snap ? ageLabel(sky.snap.fetchedAt) : msg('method_sky_unavailable') })}</li>
     <li><strong>{msg('method_simpl_lead')}</strong> {msg('method_simpl')}</li>
+    {#if getLocale() !== 'en'}<li>{msg('method_ai_note')}</li>{/if}
   </ul>
   <h3>{msg('method_title_sources')}</h3>
   <ol class="src">

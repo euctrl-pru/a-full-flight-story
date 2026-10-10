@@ -23,5 +23,6 @@ describe('content reads from messages', () => {
   it('getters follow the active locale', () => {
     const de = withLocale('de', () => CHAPTERS[0].title);
     expect(typeof de).toBe('string');
+    expect(de).not.toBe(withLocale('en', () => CHAPTERS[0].title));
   });
 });
