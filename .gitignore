@@ -6,3 +6,4 @@ playwright-report
 screenshots
 .DS_Store
 .superpowers
+src/lib/paraglide

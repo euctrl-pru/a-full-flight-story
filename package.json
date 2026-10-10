@@ -5,10 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite dev",
-    "build": "vite build",
+    "i18n": "paraglide-js compile --project ./project.inlang --outdir ./src/lib/paraglide --strategy globalVariable baseLocale",
+    "build": "npm run i18n && vite build",
     "preview": "vite preview",
-    "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-    "test": "vitest run",
+    "check": "npm run i18n && svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+    "test": "npm run i18n && vitest run",
     "test:e2e": "playwright test",
     "fetch:eurocontrol": "tsx scripts/fetch-eurocontrol.ts",
     "fetch:sky": "tsx scripts/fetch-sky.ts",
@@ -18,6 +19,7 @@
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",
+    "@inlang/paraglide-js": "^2.27.0",
     "@playwright/test": "^1.64.0",
     "@sveltejs/adapter-static": "^3.0.10",
     "@sveltejs/kit": "^2.70.3",

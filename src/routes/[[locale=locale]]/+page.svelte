@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
+  import { msg } from '$lib/i18n/msg';
   import { startLoading } from '$lib/data/liveState.svelte';
   import MissionClock from '$lib/ui/MissionClock.svelte';
   import OverviewTimeline from '$lib/viz/OverviewTimeline.svelte';
@@ -47,7 +48,7 @@
 <main>
   <header class="intro" id="top">
     <p class="kicker">A data story · with live EUROCONTROL data</p>
-    <h1>A Full Flight Story</h1>
+    <h1>{msg('site_title')}</h1>
     <p class="dek">How a flight becomes a flight in Europe: following FFS101 from Brussels to Rome, from ten months before take-off to long after landing.</p>
     <p class="note">FFS101 is fictional; the procedures, the stakeholders and every number are real and sourced. Times are UTC. <a href="#sources">Sources & method</a></p>
     <p class="hint" aria-hidden="true">Scroll ↓</p>
