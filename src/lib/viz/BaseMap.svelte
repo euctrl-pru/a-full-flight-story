@@ -1,5 +1,7 @@
 <script lang="ts">
   import { onMount, type Snippet } from 'svelte';
+  import { Tween } from 'svelte/motion';
+  import { dur } from '$lib/scroll/motion';
   import { geoPath, geoGraticule10, type GeoProjection, type GeoPath } from 'd3-geo';
   import { loadCountries, type CountryFC } from '$lib/geo/countries';
   import { EUROPE_FRAME, lerpProjection, makeProjection } from '$lib/geo/projection';
@@ -13,7 +15,8 @@
   let width = $state(0), height = $state(0);
   let countries: CountryFC | null = $state(null);
   onMount(() => { loadCountries().then((fc) => (countries = fc)); });
-  const projection = $derived(frameTo ? lerpProjection(width, height, frame, frameTo, t) : makeProjection(width, height, frame));
+  const tt = Tween.of(() => t, { duration: dur(300) });
+  const projection = $derived(frameTo ? lerpProjection(width, height, frame, frameTo, tt.current) : makeProjection(width, height, frame));
   const path = $derived(geoPath(projection));
   const ctx = $derived({ projection, path, width, height });
 </script>

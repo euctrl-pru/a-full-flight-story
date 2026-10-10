@@ -1,4 +1,5 @@
 <script lang="ts">
+  import Swap from '$lib/ui/Swap.svelte';
   import Chapter from '$lib/ui/Chapter.svelte';
   import Figure from '$lib/viz/Figure.svelte';
   import LineChart from '$lib/viz/LineChart.svelte';
@@ -17,25 +18,33 @@
 <Chapter chapter={ch}>
   {#snippet graphic({ step, progress })}
     <div class="stage">
+      <div class="swaps">
       {#if step <= 2}
-        <Figure title="Two airport slots, months ahead" sources={['S26', 'S27', 'S7']} illustrative>
-          <div class="tickets">
-            <div class="ticket"><span class="k">Airport slot · Brussels</span><strong>Departure {HERO.std} UTC</strong><span>Belgium Slot Coordination</span></div>
-            <div class="ticket"><span class="k">Airport slot · Rome Fiumicino</span><strong>Arrival {HERO.sta} UTC</strong><span>Assoclearance</span></div>
-            {#if step >= 2}<div class="ticket ctot"><span class="k">ATFM slot (CTOT)</span><strong>Not yet</strong><span>Issued on the day by the Network Manager</span></div>{/if}
-          </div>
-        </Figure>
+        <Swap>
+          <Figure title="Two airport slots, months ahead" sources={['S26', 'S27', 'S7']} illustrative>
+            <div class="tickets">
+              <div class="ticket"><span class="k">Airport slot · Brussels</span><strong>Departure {HERO.std} UTC</strong><span>Belgium Slot Coordination</span></div>
+              <div class="ticket"><span class="k">Airport slot · Rome Fiumicino</span><strong>Arrival {HERO.sta} UTC</strong><span>Assoclearance</span></div>
+              {#if step >= 2}<div class="ticket ctot"><span class="k">ATFM slot (CTOT)</span><strong>Not yet</strong><span>Issued on the day by the Network Manager</span></div>{/if}
+            </div>
+          </Figure>
+        </Swap>
       {:else if step === 3}
-        <Figure title="Flights per day in the European network" subtitle="7-day average, by year" sources={['D-eurocontrol']} freshness={ec.freshness.network ?? null} dataDate={net?.dataDate}
-          table={linesTable(lines, 'Day', doyLabel, fmtInt, 'Daily flights by year')}>
-          <LineChart series={lines} label="Daily flights in the European network by year" xFormat={doyLabel} yFormat={fmtInt} reveal={0.25 + progress * 1.5} />
-        </Figure>
+        <Swap>
+          <Figure title="Flights per day in the European network" subtitle="7-day average, by year" sources={['D-eurocontrol']} freshness={ec.freshness.network ?? null} dataDate={net?.dataDate}
+            table={linesTable(lines, 'Day', doyLabel, fmtInt, 'Daily flights by year')}>
+            <LineChart series={lines} label="Daily flights in the European network by year" xFormat={doyLabel} yFormat={fmtInt} reveal={0.25 + progress * 1.5} />
+          </Figure>
+        </Swap>
       {:else}
-        <Figure title="Flights per year: actual and forecast" subtitle="Million IFR flights, EUROCONTROL forecast scenarios" sources={['D-eurocontrol']} freshness={ec.freshness.network ?? null} dataDate={net?.dataDate}
-          table={linesTable(fc, 'Year', String, (v) => fmtDec(v, 2), 'Annual flights, actual and forecast (millions)')}>
-          <LineChart series={fc} label="Annual flights actual and forecast" xFormat={(x) => String(Math.round(x))} yFormat={(v) => `${fmtDec(v, 1)} M`} />
-        </Figure>
+        <Swap>
+          <Figure title="Flights per year: actual and forecast" subtitle="Million IFR flights, EUROCONTROL forecast scenarios" sources={['D-eurocontrol']} freshness={ec.freshness.network ?? null} dataDate={net?.dataDate}
+            table={linesTable(fc, 'Year', String, (v) => fmtDec(v, 2), 'Annual flights, actual and forecast (millions)')}>
+            <LineChart series={fc} label="Annual flights actual and forecast" xFormat={(x) => String(Math.round(x))} yFormat={(v) => `${fmtDec(v, 1)} M`} />
+          </Figure>
+        </Swap>
       {/if}
+      </div>
     </div>
   {/snippet}
 </Chapter>

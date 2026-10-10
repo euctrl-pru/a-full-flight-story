@@ -6,6 +6,7 @@
   import StepCard from './StepCard.svelte';
   import { story } from '$lib/scroll/storyState.svelte';
   import { phaseOf } from '$lib/story/phases';
+  import { reveal } from '$lib/scroll/reveal';
 
   let { chapter, graphic }: { chapter: ChapterDef; graphic: Snippet<[{ step: number; progress: number }]> } = $props();
   let step = $state(0);
@@ -26,7 +27,7 @@
 </script>
 
 <section class="chapter" id={chapter.id} aria-labelledby="{chapter.id}-title" data-active-step={step} style:--phase-color={chapter.phase ? phaseOf(chapter.phase).color : 'var(--accent)'}>
-  <header class="head">
+  <header class="head" use:reveal>
     <p class="kicker">
       {#if chapter.phase}<span class="phase-pill">{phaseOf(chapter.phase).label}</span>{/if}
       {chapter.kicker}
@@ -46,7 +47,8 @@
 </section>
 
 <style>
-  .head { max-width: 760px; margin: 0 auto; padding: 28vh 16px 8vh; }
+  .head { max-width: 760px; margin: 0 auto; padding: 28vh 16px 8vh; opacity: 0; transform: translateY(20px); transition: opacity 700ms ease, transform 700ms ease; }
+  .head:global(.revealed) { opacity: 1; transform: none; }
   .kicker { text-transform: uppercase; letter-spacing: 0.12em; font-size: 13px; color: var(--ink-2); margin: 0 0 8px; }
   h2 { font-size: clamp(32px, 5vw, 56px); margin: 0; }
   .scrolly { position: relative; }

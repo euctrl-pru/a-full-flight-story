@@ -5,6 +5,9 @@
   import { fmtHm, fmtInt } from './chart-utils';
   import BarChart from './BarChart.svelte';
   import Tooltip from './Tooltip.svelte';
+  import { Tween } from 'svelte/motion';
+  import { cubicInOut } from 'svelte/easing';
+  import { dur } from '$lib/scroll/motion';
 
   let { stage }: { stage: 'demand' | 'regulation' | 'queue' | 'hero' | 'explore' } = $props();
   let rate = $state(REGULATION.rate);
@@ -17,6 +20,9 @@
   const h = 170, m = { l: 12, r: 28 };
   const x = $derived(scaleLinear().domain([REGULATION.start - 10, REGULATION.end + 60]).range([m.l, Math.max(m.l + 1, width - m.r)]));
   let hi: (typeof regulated)[number] | null = $state(null);
+  const slide = new Tween(0, { duration: dur(900), easing: cubicInOut });
+  $effect(() => { slide.target = stage === 'queue' || stage === 'hero' || stage === 'explore' ? 1 : 0; });
+  const given = (a: { eto: number; entry: number }) => x(a.eto + (a.entry - a.eto) * slide.current);
 </script>
 
 <div class="casa">
@@ -29,14 +35,14 @@
           <text class="rl" x={m.l} y={h - 52}>Given slot</text>
           {#each regulated as a (a.id)}
             {@const hero = a.id === HERO_CASA.id}
-            <line x1={x(a.eto)} y1="30" x2={x(a.entry)} y2={h - 64} class="link" class:hero opacity={stage === 'hero' && !hero ? 0.25 : 0.7} />
+            <line x1={x(a.eto)} y1="30" x2={given(a)} y2={h - 64} class="link" class:hero opacity={stage === 'hero' && !hero ? 0.25 : 0.7} />
             <circle cx={x(a.eto)} cy="30" r={hero ? 6 : 3} class="dot" class:hero />
-            <circle cx={x(a.entry)} cy={h - 64} r={hero ? 6 : 3} class="dot" class:hero role="presentation" onpointerenter={() => (hi = a)} onpointerleave={() => (hi = null)} />
+            <circle cx={given(a)} cy={h - 64} r={hero ? 6 : 3} class="dot" class:hero role="presentation" onpointerenter={() => (hi = a)} onpointerleave={() => (hi = null)} />
           {/each}
           {#each [300, 360, 420, 480, 540, 600] as t}<text class="tick" x={x(t)} y={h - 30} text-anchor="middle">{fmtHm(t)}</text>{/each}
         </svg>
       {/if}
-      <Tooltip visible={!!hi} x={hi ? x(hi.entry) : 0} y={h - 64} containerWidth={width}>
+      <Tooltip visible={!!hi} x={hi ? given(hi) : 0} y={h - 64} containerWidth={width}>
         {#if hi}<strong>{hi.id}</strong><div class="row">wanted {fmtHm(hi.eto)}<span class="v">+{hi.delay} min</span></div>{/if}
       </Tooltip>
     </div>

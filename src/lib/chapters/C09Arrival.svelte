@@ -1,4 +1,5 @@
 <script lang="ts">
+  import Swap from '$lib/ui/Swap.svelte';
   import Chapter from '$lib/ui/Chapter.svelte';
   import BaseMap from '$lib/viz/BaseMap.svelte';
   import RouteMap from '$lib/viz/RouteMap.svelte';
@@ -22,25 +23,33 @@
 <Chapter chapter={ch}>
   {#snippet graphic({ step, progress })}
     <div class="stage">
+      <div class="swaps">
       {#if step === 0}
-        <div class="map-wrap">
-          <BaseMap label="FFS101 descending into Rome Fiumicino" frame={ROUTE_FRAME} frameTo={ROME_FRAME} t={progress}>
-            {#snippet children({ projection, path })}
-              <RouteMap {projection} {path} progress={0.85 + 0.149 * progress} routes={[{ id: 'flown', coords: ROUTE_REROUTED, style: 'active' }]} />
-            {/snippet}
-          </BaseMap>
-        </div>
-        <SourceLine ids={['S30', 'D-naturalearth']} illustrative />
+        <Swap>
+          <div class="map-wrap">
+            <BaseMap label="FFS101 descending into Rome Fiumicino" frame={ROUTE_FRAME} frameTo={ROME_FRAME} t={progress}>
+              {#snippet children({ projection, path })}
+                <RouteMap {projection} {path} progress={0.85 + 0.149 * progress} routes={[{ id: 'flown', coords: ROUTE_REROUTED, style: 'active' }]} />
+              {/snippet}
+            </BaseMap>
+          </div>
+          <SourceLine ids={['S30', 'D-naturalearth']} illustrative />
+        </Swap>
       {:else if step === 1}
-        <Figure title="Arrival vs schedule" sources={['S1']} illustrative>
-          <HeroNumber value={hm(ACDM.aibt) - hm(ACDM.sta)} label="minutes after the scheduled 07:05 — on time" format={(n) => `+${Math.round(n)}`} sub="In-block {ACDM.aibt} UTC · 76.1% of European arrivals were on time in 2025" />
-        </Figure>
+        <Swap>
+          <Figure title="Arrival vs schedule" sources={['S1']} illustrative>
+            <HeroNumber value={hm(ACDM.aibt) - hm(ACDM.sta)} label="minutes after the scheduled 07:05 — on time" format={(n) => `+${Math.round(n)}`} sub="In-block {ACDM.aibt} UTC · 76.1% of European arrivals were on time in 2025" />
+          </Figure>
+        </Swap>
       {:else}
-        <Figure title="Rome Fiumicino punctuality" subtitle="% within 15 minutes of schedule, last 12 months" sources={['D-eurocontrol']} detail="Rome Fiumicino (LIRF)" freshness={ec.freshness.LIRF ?? null} dataDate={lirf?.dataDate}
-          table={linesTable(lines, 'Date', dayNumLabel, (v) => fmtDec(v, 1), 'Rome Fiumicino punctuality')}>
-          <LineChart series={lines} label="Rome Fiumicino departure and arrival punctuality" xFormat={dayNumLabel} xTickWidth={130} yFormat={(v) => `${Math.round(v)}%`} yDomain={[0, 100]} />
-        </Figure>
+        <Swap>
+          <Figure title="Rome Fiumicino punctuality" subtitle="% within 15 minutes of schedule, last 12 months" sources={['D-eurocontrol']} detail="Rome Fiumicino (LIRF)" freshness={ec.freshness.LIRF ?? null} dataDate={lirf?.dataDate}
+            table={linesTable(lines, 'Date', dayNumLabel, (v) => fmtDec(v, 1), 'Rome Fiumicino punctuality')}>
+            <LineChart series={lines} label="Rome Fiumicino departure and arrival punctuality" xFormat={dayNumLabel} xTickWidth={130} yFormat={(v) => `${Math.round(v)}%`} yDomain={[0, 100]} />
+          </Figure>
+        </Swap>
       {/if}
+      </div>
     </div>
   {/snippet}
 </Chapter>

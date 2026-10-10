@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { fade } from 'svelte/transition';
+  import { dur } from '$lib/scroll/motion';
   import type { GeoProjection, GeoPath } from 'd3-geo';
   import { pointAtKm, routeLengthKm, sliceRoute, type LonLat, type Span } from '$lib/geo/route';
   import { ANSP_LABEL, type AnspKey } from '$lib/story/flight';
@@ -24,9 +26,9 @@
 </script>
 
 {#if military}
-  {#each MILITARY_AREAS as f, i (i)}<path class="mil" d={path(f)} />{/each}
+  <g transition:fade={{ duration: dur(500) }}>{#each MILITARY_AREAS as f, i (i)}<path class="mil" d={path(f)} />{/each}</g>
 {/if}
-{#if regulated}<path class="reg" d={path(REGULATED_SECTOR)} />{/if}
+{#if regulated}<g transition:fade={{ duration: dur(500) }}><path class="reg" d={path(REGULATED_SECTOR)} /></g>{/if}
 
 {#each routes as r (r.id)}
   {#if r.style !== 'active'}

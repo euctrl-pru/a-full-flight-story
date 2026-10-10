@@ -1,4 +1,5 @@
 <script lang="ts">
+  import Swap from '$lib/ui/Swap.svelte';
   import { onMount } from 'svelte';
   import Chapter from '$lib/ui/Chapter.svelte';
   import BaseMap from '$lib/viz/BaseMap.svelte';
@@ -33,23 +34,29 @@
 <Chapter chapter={ch}>
   {#snippet graphic({ step, progress })}
     <div class="stage">
+      <div class="swaps">
       {#if step <= 2}
-        <div class="map-wrap">
-          <BaseMap label="FFS101 en route, coloured by the air navigation service provider in control" frame={ROUTE_FRAME}>
-            {#snippet children({ projection, path })}
-              <RouteMap {projection} {path} showAnsp progress={along(step, progress)} routes={[{ id: 'flown', coords: ROUTE_REROUTED, spans, style: 'active' }]} />
-            {/snippet}
-          </BaseMap>
-        </div>
-        <ProfileChart route={ROUTE_REROUTED} {spans} progress={along(step, progress)} />
-        <SourceLine ids={['S28', 'S5', 'S30', 'D-naturalearth']} illustrative detail="ANSP assignment approximated from country and flight level" />
+        <Swap>
+          <div class="map-wrap">
+            <BaseMap label="FFS101 en route, coloured by the air navigation service provider in control" frame={ROUTE_FRAME}>
+              {#snippet children({ projection, path })}
+                <RouteMap {projection} {path} showAnsp progress={along(step, progress)} routes={[{ id: 'flown', coords: ROUTE_REROUTED, spans, style: 'active' }]} />
+              {/snippet}
+            </BaseMap>
+          </div>
+          <ProfileChart route={ROUTE_REROUTED} {spans} progress={along(step, progress)} />
+          <SourceLine ids={['S28', 'S5', 'S30', 'D-naturalearth']} illustrative detail="ANSP assignment approximated from country and flight level" />
+        </Swap>
       {:else if charges}
-        <Figure title="Who gets paid: en-route charges by zone" subtitle="A320neo (MTOW 79 t), unit rates for October 2026" sources={['S32', 'S33', 'S34', 'S35']} illustrative
-          table={{ caption: 'Route charges by zone', columns: [{ key: 'route', label: 'Route' }, { key: 'zone', label: 'Zone' }, { key: 'km', label: 'km' }, { key: 'charge', label: '€' }],
-            rows: [...charges.planned.map((z) => ({ route: 'Planned', zone: z.zone.label, km: z.km, charge: z.charge })), ...charges.rerouted.map((z) => ({ route: 'Rerouted', zone: z.zone.label, km: z.km, charge: z.charge }))] }}>
-          <ChargesBar planned={charges.planned} rerouted={charges.rerouted} mode={step === 3 ? 'distance' : 'compare'} />
-        </Figure>
+        <Swap>
+          <Figure title="Who gets paid: en-route charges by zone" subtitle="A320neo (MTOW 79 t), unit rates for October 2026" sources={['S32', 'S33', 'S34', 'S35']} illustrative
+            table={{ caption: 'Route charges by zone', columns: [{ key: 'route', label: 'Route' }, { key: 'zone', label: 'Zone' }, { key: 'km', label: 'km' }, { key: 'charge', label: '€' }],
+              rows: [...charges.planned.map((z) => ({ route: 'Planned', zone: z.zone.label, km: z.km, charge: z.charge })), ...charges.rerouted.map((z) => ({ route: 'Rerouted', zone: z.zone.label, km: z.km, charge: z.charge }))] }}>
+            <ChargesBar planned={charges.planned} rerouted={charges.rerouted} mode={step === 3 ? 'distance' : 'compare'} />
+          </Figure>
+        </Swap>
       {/if}
+      </div>
     </div>
   {/snippet}
 </Chapter>

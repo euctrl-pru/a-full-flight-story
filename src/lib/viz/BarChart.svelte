@@ -3,6 +3,10 @@
   import type { Bar } from './types';
   import Tooltip from './Tooltip.svelte';
   import { roundedTopBar } from './chart-utils';
+  import { Tween } from 'svelte/motion';
+  import { untrack } from 'svelte';
+  import { cubicOut } from 'svelte/easing';
+  import { dur } from '$lib/scroll/motion';
 
   let { bars, label, height = 260, refLine, yFormat = (v: number) => String(Math.round(v)), color = 'var(--series-1)', labelEvery = 1 }: {
     bars: Bar[]; label: string; height?: number; refLine?: { value: number; label: string };
@@ -14,9 +18,24 @@
   const x = $derived(scaleBand().domain(bars.map((b) => b.key)).range([m.left, Math.max(m.left + 1, width - m.right)]).padding(0.22));
   const y = $derived(scaleLinear().domain([0, Math.max(max(bars, (b) => b.value) ?? 1, refLine?.value ?? 0) * 1.1]).nice().range([height - m.bottom, m.top]));
   let hi: number | null = $state(null);
+  const shown = new Tween<number[]>([], { duration: dur(600), easing: cubicOut });
+  // grow only once the chart is actually on screen (graphics mount ahead of view)
+  let inView = $state(false);
+  function watch(node: HTMLElement) {
+    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { inView = true; io.disconnect(); } }, { threshold: 0.3 });
+    io.observe(node);
+    return { destroy: () => io.disconnect() };
+  }
+  $effect(() => {
+    const v = bars.map((b) => b.value);
+    // read the tween untracked: with reduced motion it updates synchronously and would re-trigger this effect
+    if (untrack(() => shown.current.length) !== v.length) shown.set(v.map(() => 0), { duration: 0 });
+    shown.target = inView ? v : v.map(() => 0);
+  });
+  const h = (i: number) => shown.current[i] ?? 0;
 </script>
 
-<div class="chart" bind:clientWidth={width}>
+<div class="chart" bind:clientWidth={width} use:watch>
   {#if width > 0}
     <svg {width} {height} role="img" aria-label={label}>
       {#each y.ticks(4) as t}
@@ -24,7 +43,7 @@
         <text class="tick" x={m.left - 6} y={y(t)} dy="0.32em" text-anchor="end">{yFormat(t)}</text>
       {/each}
       {#each bars as b, i (b.key)}
-        <path d={roundedTopBar(x(b.key)!, y(b.value), x.bandwidth(), y(0) - y(b.value), 4)} fill={b.color ?? color} opacity={hi === null || hi === i ? 1 : 0.55} stroke={b.emphasis ? 'var(--ink)' : 'none'} stroke-width="1.5" />
+        <path d={roundedTopBar(x(b.key)!, y(h(i)), x.bandwidth(), y(0) - y(h(i)), 4)} fill={b.color ?? color} opacity={hi === null || hi === i ? 1 : 0.55} stroke={b.emphasis ? 'var(--ink)' : 'none'} stroke-width="1.5" />
         <rect role="presentation" x={x(b.key)! - (x.step() - x.bandwidth()) / 2} y={m.top} width={x.step()} height={height - m.top - m.bottom} fill="transparent" onpointerenter={() => (hi = i)} onpointerleave={() => (hi = null)} />
         {#if i % labelEvery === 0}<text class="tick" x={x(b.key)! + x.bandwidth() / 2} y={height - 6} text-anchor="middle">{x.step() < 72 ? b.label.split(' ')[0] : b.label}</text>{/if}
       {/each}

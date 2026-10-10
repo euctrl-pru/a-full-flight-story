@@ -1,4 +1,5 @@
 <script lang="ts">
+  import Swap from '$lib/ui/Swap.svelte';
   import Chapter from '$lib/ui/Chapter.svelte';
   import Figure from '$lib/viz/Figure.svelte';
   import AcdmTimeline from '$lib/viz/AcdmTimeline.svelte';
@@ -17,16 +18,22 @@
 <Chapter chapter={ch}>
   {#snippet graphic({ step })}
     <div class="stage">
+      <div class="swaps">
       {#if step <= 3}
-        <Figure title="FFS101 at Brussels: turnaround and A-CDM milestones" subtitle="Times UTC" sources={['S13', 'S7']} illustrative>
-          <AcdmTimeline stage={STAGES[step]} />
-        </Figure>
+        <Swap>
+          <Figure title="FFS101 at Brussels: turnaround and A-CDM milestones" subtitle="Times UTC" sources={['S13', 'S7']} illustrative>
+            <AcdmTimeline stage={STAGES[step]} />
+          </Figure>
+        </Swap>
       {:else}
-        <Figure title="Brussels Airport punctuality" subtitle="% of flights within 15 minutes of schedule, last 12 months" sources={['D-eurocontrol']} detail="Brussels (EBBR)" freshness={ec.freshness.EBBR ?? null} dataDate={ebbr?.dataDate}
-          table={linesTable(lines, 'Date', dayNumLabel, (v) => fmtDec(v, 1), 'Brussels punctuality')}>
-          <LineChart series={lines} label="Brussels departure and arrival punctuality" xFormat={dayNumLabel} xTickWidth={130} yFormat={(v) => `${Math.round(v)}%`} yDomain={[0, 100]} />
-        </Figure>
+        <Swap>
+          <Figure title="Brussels Airport punctuality" subtitle="% of flights within 15 minutes of schedule, last 12 months" sources={['D-eurocontrol']} detail="Brussels (EBBR)" freshness={ec.freshness.EBBR ?? null} dataDate={ebbr?.dataDate}
+            table={linesTable(lines, 'Date', dayNumLabel, (v) => fmtDec(v, 1), 'Brussels punctuality')}>
+            <LineChart series={lines} label="Brussels departure and arrival punctuality" xFormat={dayNumLabel} xTickWidth={130} yFormat={(v) => `${Math.round(v)}%`} yDomain={[0, 100]} />
+          </Figure>
+        </Swap>
       {/if}
+      </div>
     </div>
   {/snippet}
 </Chapter>
