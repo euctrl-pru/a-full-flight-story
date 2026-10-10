@@ -1,26 +1,24 @@
 import type { Freshness } from '$lib/data/live';
-import { msg } from '$lib/i18n/msg';
+import { msg, intlLocale } from '$lib/i18n/msg';
 import { minutesAgo } from '$lib/data/sky';
 
-const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const utcDay = (d: Date) => d.toISOString().slice(0, 10);
 
-export function fmtDayShort(iso: string): string {
-  const d = new Date(`${iso.slice(0, 10)}T00:00:00Z`);
-  return `${DAYS[d.getUTCDay()]} ${d.getUTCDate()} ${MONTHS[d.getUTCMonth()]}`;
-}
+export const fmtDayShort = (iso: string) =>
+  new Intl.DateTimeFormat(intlLocale(), { weekday: 'short', day: 'numeric', month: 'short', timeZone: 'UTC' })
+    .format(new Date(`${iso.slice(0, 10)}T00:00:00Z`)).replace(',', '');
 
 export function dayPhrase(dataDate: string | null | undefined, now = new Date()): string {
-  if (!dataDate) return 'on the latest day available';
+  if (!dataDate) return msg('fresh_unknown');
   const today = utcDay(now);
   const yesterday = utcDay(new Date(now.getTime() - 86_400_000));
-  if (dataDate === yesterday) return `yesterday (${fmtDayShort(dataDate)})`;
-  if (dataDate === today) return `today (${fmtDayShort(dataDate)})`;
-  return `on ${fmtDayShort(dataDate)}`;
+  const date = fmtDayShort(dataDate);
+  if (dataDate === yesterday) return msg('fresh_yesterday', { date });
+  if (dataDate === today) return msg('fresh_today', { date });
+  return msg('fresh_on', { date });
 }
 
-export const livePhrase = (f: Freshness | null) => (f === 'live' ? 'fetched live' : 'from the latest snapshot');
+export const livePhrase = (f: Freshness | null) => msg(f === 'live' ? 'live_live' : 'live_snapshot');
 export const currentYear = (dataDate?: string | null, now = new Date()) => (dataDate ? +dataDate.slice(0, 4) : now.getUTCFullYear());
 
 export function ageLabel(iso: string, now = Date.now()): string {

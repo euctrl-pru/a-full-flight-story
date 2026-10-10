@@ -3,10 +3,10 @@
   import type { LineSeries, XY } from './types';
   import Tooltip from './Tooltip.svelte';
   import Legend from './Legend.svelte';
-  import { nearestIndex } from './chart-utils';
+  import { nearestIndex, fmtInt } from './chart-utils';
 
   let { series, label, height = 300, xDomain, yDomain, xTicks, yTicks = 5, xFormat = (x: number) => String(x),
-    yFormat = (y: number) => y.toLocaleString('en-GB'), reveal = 1, markers = [], directLabels = true, xTickWidth = 80 }: {
+    yFormat = (y: number) => fmtInt(y), reveal = 1, markers = [], directLabels = true, xTickWidth = 80 }: {
     series: LineSeries[]; label: string; height?: number; xDomain?: [number, number]; yDomain?: [number, number];
     xTicks?: number[]; yTicks?: number; xFormat?: (x: number) => string; yFormat?: (y: number) => string;
     reveal?: number; markers?: { x: number; label: string }[]; directLabels?: boolean; xTickWidth?: number;

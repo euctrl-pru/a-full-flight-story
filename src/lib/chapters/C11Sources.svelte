@@ -1,5 +1,6 @@
 <script lang="ts">
   import { msg } from '$lib/i18n/msg';
+  import { fmtDateTime } from '$lib/viz/chart-utils';
   import { SOURCES } from '$lib/story/sources';
   import { GLOSSARY } from '$lib/story/glossary';
   import { ec, sky } from '$lib/data/liveState.svelte';
@@ -15,7 +16,7 @@
   <h3>{msg('method_title_how')}</h3>
   <ul>
     <li><strong>{msg('method_fictional_lead')}</strong> {msg('method_fictional')}</li>
-    <li><strong>{msg('method_live_lead')}</strong> {msg('method_live', { date: ec.snapshot ? new Date(ec.snapshot.generatedAt).toUTCString() : '—' })}</li>
+    <li><strong>{msg('method_live_lead')}</strong> {msg('method_live', { date: ec.snapshot ? `${fmtDateTime(ec.snapshot.generatedAt)} ${msg('ui_utc')}` : '—' })}</li>
     <li><strong>{msg('method_sky_lead')}</strong> {msg('method_sky', { age: sky.snap ? ageLabel(sky.snap.fetchedAt) : msg('method_sky_unavailable') })}</li>
     <li><strong>{msg('method_simpl_lead')}</strong> {msg('method_simpl')}</li>
   </ul>

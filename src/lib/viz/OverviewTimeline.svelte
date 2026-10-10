@@ -6,6 +6,7 @@
   import { timeScale, phaseSpans, TIME_TICKS, scaleHours, CHAPTER_ANCHORS } from '$lib/story/timescale';
   import { stackRows, spreadAlong } from './label-layout';
   import { msg } from '$lib/i18n/msg';
+  import { fmtDateTime } from './chart-utils';
   import Tooltip from './Tooltip.svelte';
   import SourceLine from './SourceLine.svelte';
   import { reducedMotion } from '$lib/scroll/motion';
@@ -69,7 +70,7 @@
       {/each}
     </ol>
     <Tooltip visible={!!hi} x={hi ? (vertical ? 114 : s(timeScale(hi.at))) : 0} y={hi ? (vertical ? s(timeScale(hi.at)) : 30) : 0} containerWidth={width}>
-      {#if hi}<strong>{hi.label}</strong><div class="row">{new Date(hi.at).toUTCString().slice(5, 22)} {msg('ui_utc')}</div>{/if}
+      {#if hi}<strong>{hi.label}</strong><div class="row">{fmtDateTime(hi.at)} {msg('ui_utc')}</div>{/if}
     </Tooltip>
   {/if}
   <SourceLine ids={['S8', 'S7']} illustrative detail={msg('timeline_detail')} />

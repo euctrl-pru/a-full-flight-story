@@ -3,10 +3,10 @@
   import { msg } from '$lib/i18n/msg';
   import Tooltip from './Tooltip.svelte';
   import Legend from './Legend.svelte';
-  import { nearestIndex } from './chart-utils';
+  import { nearestIndex, fmtInt } from './chart-utils';
 
   type Row = { x: number; values: Record<string, number> };
-  let { rows, keys, colors, labels, label, height = 300, xFormat = (x: number) => String(x), yFormat = (y: number) => y.toLocaleString('en-GB'), xTicks, reveal = 1 }: {
+  let { rows, keys, colors, labels, label, height = 300, xFormat = (x: number) => String(x), yFormat = (y: number) => fmtInt(y), xTicks, reveal = 1 }: {
     rows: Row[]; keys: string[]; colors: Record<string, string>; labels: Record<string, string>; label: string;
     height?: number; xFormat?: (x: number) => string; yFormat?: (y: number) => string; xTicks?: number[]; reveal?: number;
   } = $props();

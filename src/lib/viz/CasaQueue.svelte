@@ -44,7 +44,7 @@
         </svg>
       {/if}
       <Tooltip visible={!!hi} x={hi ? given(hi) : 0} y={h - 64} containerWidth={width}>
-        {#if hi}<strong>{hi.id}</strong><div class="row">{msg('fig_casa_tip_wanted', { time: fmtHm(hi.eto) })}<span class="v">+{hi.delay} min</span></div>{/if}
+        {#if hi}<strong>{hi.id}</strong><div class="row">{msg('fig_casa_tip_wanted', { time: fmtHm(hi.eto) })}<span class="v">{msg('unit_min', { n: `+${hi.delay}` })}</span></div>{/if}
       </Tooltip>
     </div>
     <p class="stat">

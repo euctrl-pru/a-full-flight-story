@@ -25,7 +25,7 @@
       <line class="fl" x1={m.l} x2={width - m.r} y1={y(24500)} y2={y(24500)} />
       <text class="flt" x={width - m.r} y={y(24500) - 4} text-anchor="end">{msg('fig_profile_fl245')}</text>
       {#each [0, 10000, 20000, 30000, 40000] as t}<text class="tick" x={m.l - 6} y={y(t)} dy="0.32em" text-anchor="end">{t === 0 ? '0' : `FL${t / 100}`}</text>{/each}
-      {#each [0, 300, 600, 900, 1200].filter((k) => k <= L) as k}<text class="tick" x={x(k)} y={height - 8} text-anchor="middle">{fmtInt(k)} km</text>{/each}
+      {#each [0, 300, 600, 900, 1200].filter((k) => k <= L) as k}<text class="tick" x={x(k)} y={height - 8} text-anchor="middle">{msg('unit_km', { n: fmtInt(k) })}</text>{/each}
     </svg>
     <ul class="legend">{#each spans as s (s.id + s.startKm)}<li><span class="sw" style:background={ANSP_COLOR[s.id]}></span>{ANSP_LABEL[s.id]}</li>{/each}</ul>
   {/if}

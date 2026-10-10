@@ -45,8 +45,8 @@
             <caption>{msg('fig_reroute_caption')}</caption>
             <thead><tr><th></th><th>{msg('fig_reroute_via_reims')}</th><th>{msg('fig_reroute_via_karlsruhe')}</th></tr></thead>
             <tbody>
-              <tr><th scope="row">{msg('fig_reroute_row_delay')}</th><td>+{HERO.ctotDelayMin} min</td><td>+{HERO.rerouteCtotDelayMin} min</td></tr>
-              <tr><th scope="row">{msg('fig_reroute_row_distance')}</th><td>—</td><td>+{extraKm} km</td></tr>
+              <tr><th scope="row">{msg('fig_reroute_row_delay')}</th><td>{msg('unit_min', { n: `+${HERO.ctotDelayMin}` })}</td><td>{msg('unit_min', { n: `+${HERO.rerouteCtotDelayMin}` })}</td></tr>
+              <tr><th scope="row">{msg('fig_reroute_row_distance')}</th><td>—</td><td>{msg('unit_km', { n: `+${extraKm}` })}</td></tr>
               <tr><th scope="row">{msg('fig_reroute_row_charges')}</th><td>€{fmtInt(sum(charges.planned))}</td><td>€{fmtInt(sum(charges.rerouted))}</td></tr>
             </tbody>
           </table>

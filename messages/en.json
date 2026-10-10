@@ -512,5 +512,13 @@
   "method_simpl": "The slot simulator is a first-planned-first-served model of CASA. Route charges use along-track distances on the illustrative route; real billing uses the route recorded by the Network Manager. Control-centre assignment is approximated from country and flight level. Prior years' traffic is aligned by day of year; daily values are 7-day averages.",
   "method_title_sources": "Sources",
   "method_accessed": "Accessed {date}.",
-  "method_title_glossary": "Glossary"
+  "method_title_glossary": "Glossary",
+  "unit_min": "{n} min",
+  "unit_km": "{n} km",
+  "fresh_yesterday": "yesterday ({date})",
+  "fresh_today": "today ({date})",
+  "fresh_on": "on {date}",
+  "fresh_unknown": "on the latest day available",
+  "live_live": "fetched live",
+  "live_snapshot": "from the latest snapshot"
 }

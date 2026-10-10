@@ -18,11 +18,11 @@
   {#each rows as r (r.id)}
     {@const total = sum(r.zones, r.k)}
     <div class="row">
-      <div class="lbl">{r.label} <span class="tot">{r.unit === '€' ? `€${fmtInt(total)}` : `${fmtInt(total)} km`}</span></div>
+      <div class="lbl">{r.label} <span class="tot">{r.unit === '€' ? `€${fmtInt(total)}` : msg('unit_km', { n: fmtInt(total) })}</span></div>
       <div class="track" style:width={r.k === 'charge' ? `${(total / maxTotal) * 100}%` : '100%'}>
         {#each r.zones as z (z.zone.id)}
           {@const share = z[r.k] / total}
-          <div class="seg" style:flex-grow={share} style:background={ZONE_COLOR[z.zone.id]} title="{z.zone.label}: {r.unit === '€' ? `€${fmtInt(z.charge)}` : `${fmtInt(z.km)} km`} ({Math.round(share * 100)}%)">
+          <div class="seg" style:flex-grow={share} style:background={ZONE_COLOR[z.zone.id]} title="{z.zone.label}: {r.unit === '€' ? `€${fmtInt(z.charge)}` : msg('unit_km', { n: fmtInt(z.km) })} ({Math.round(share * 100)}%)">
             {#if share > 0.09}<span>{SHORT[z.zone.id] ?? z.zone.id} {Math.round(share * 100)}%</span>{/if}
           </div>
         {/each}
