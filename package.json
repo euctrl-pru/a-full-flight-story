@@ -12,7 +12,8 @@
     "test:e2e": "playwright test",
     "fetch:eurocontrol": "tsx scripts/fetch-eurocontrol.ts",
     "fetch:sky": "tsx scripts/fetch-sky.ts",
-    "sources": "tsx scripts/extract-sources.ts"
+    "sources": "tsx scripts/extract-sources.ts",
+    "geo": "tsx scripts/build-geo.ts"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",
@@ -24,8 +25,12 @@
     "@types/geojson": "^7946.0.16",
     "@types/node": "^26.6.4",
     "@types/topojson-client": "^3.1.5",
+    "@types/topojson-server": "^3.0.4",
+    "@types/topojson-simplify": "^3.0.3",
     "svelte": "^5.57.2",
     "svelte-check": "^4.7.6",
+    "topojson-server": "^3.0.1",
+    "topojson-simplify": "^3.0.3",
     "tsx": "^4.23.15",
     "typescript": "~5.9",
     "vite": "^7.3.7",

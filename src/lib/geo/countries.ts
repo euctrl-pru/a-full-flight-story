@@ -5,12 +5,10 @@ export type CountryFC = GeoJSON.FeatureCollection<GeoJSON.Polygon | GeoJSON.Mult
 
 let cache: Promise<CountryFC> | null = null;
 export function loadCountries(): Promise<CountryFC> {
-  cache ??= Promise.all([import('topojson-client'), import('world-atlas/countries-50m.json')]).then(
-    ([{ feature }, world]) => {
-      const topo = ((world as any).default ?? world) as Topology;
-      return feature(topo, topo.objects.countries) as unknown as CountryFC;
-    }
-  );
+  cache ??= Promise.all([import('topojson-client'), import('./europe.topo.json')]).then(([{ feature }, mod]) => {
+    const topo = ((mod as any).default ?? mod) as Topology;
+    return feature(topo, topo.objects.countries) as unknown as CountryFC;
+  });
   return cache;
 }
 
