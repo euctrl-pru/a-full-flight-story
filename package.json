@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite dev",
+    "i18n:lock": "tsx scripts/i18n-lock.ts",
     "i18n": "paraglide-js compile --project ./project.inlang --outdir ./src/lib/paraglide --strategy globalVariable baseLocale",
     "build": "npm run i18n && vite build",
     "preview": "vite preview",
