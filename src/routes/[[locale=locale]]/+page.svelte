@@ -4,7 +4,6 @@
   import { startLoading } from '$lib/data/liveState.svelte';
   import MissionClock from '$lib/ui/MissionClock.svelte';
   import OverviewTimeline from '$lib/viz/OverviewTimeline.svelte';
-  import { UI } from '$lib/ui/ui-strings';
   import { SITE_URL, SITE_TITLE, SITE_DESCRIPTION } from '$lib/site';
   import C00ColdOpen from '$lib/chapters/C00ColdOpen.svelte';
   import C01Strategic from '$lib/chapters/C01Strategic.svelte';
@@ -47,14 +46,14 @@
 <MissionClock />
 <main>
   <header class="intro" id="top">
-    <p class="kicker">A data story · with live EUROCONTROL data</p>
+    <p class="kicker">{msg('intro_kicker')}</p>
     <h1>{msg('site_title')}</h1>
-    <p class="dek">How a flight becomes a flight in Europe: following FFS101 from Brussels to Rome, from ten months before take-off to long after landing.</p>
-    <p class="note">FFS101 is fictional; the procedures, the stakeholders and every number are real and sourced. Times are UTC. <a href="#sources">Sources & method</a></p>
-    <p class="hint" aria-hidden="true">Scroll ↓</p>
+    <p class="dek">{msg('intro_dek')}</p>
+    <p class="note">{msg('intro_note')} <a href="#sources">{msg('ui_sources_and_method')}</a></p>
+    <p class="hint" aria-hidden="true">{msg('intro_scroll')}</p>
   </header>
   <section class="overview" id="overview" aria-labelledby="overview-title">
-    <h2 id="overview-title">{UI.overviewTitle}</h2>
+    <h2 id="overview-title">{msg('ui_overview_title')}</h2>
     <OverviewTimeline />
   </section>
   <C00ColdOpen />

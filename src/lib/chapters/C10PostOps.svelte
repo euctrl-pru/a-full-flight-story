@@ -1,5 +1,6 @@
 <script lang="ts">
   import Swap from '$lib/ui/Swap.svelte';
+  import { msg } from '$lib/i18n/msg';
   import Chapter from '$lib/ui/Chapter.svelte';
   import Figure from '$lib/viz/Figure.svelte';
   import StakeholderMatrix from '$lib/viz/StakeholderMatrix.svelte';
@@ -8,7 +9,7 @@
   import { ec, bundle } from '$lib/data/liveState.svelte';
   import { co2Lines, trafficLines, linesTable, dayNumLabel } from '$lib/story/derive';
   import { doyLabel, fmtInt, fmtDec } from '$lib/viz/chart-utils';
-  import { ENTITIES, type EntityKey } from '$lib/data/eurocontrol';
+  import type { EntityKey } from '$lib/data/eurocontrol';
   import { chapter } from '$lib/story/chapters';
   import { currentYear } from '$lib/story/freshness';
 
@@ -24,15 +25,15 @@
       <div class="swaps">
       {#if step <= 2}
         <Swap>
-          <Figure title="Who touched FFS101, and when" subtitle="Each dot: a stakeholder acting in a phase (hover for details)" sources={['S7', 'S13', 'S8']} illustrative>
+          <Figure title={msg('fig_who_title')} subtitle={msg('fig_who_sub')} sources={['S7', 'S13', 'S8']} illustrative>
             <StakeholderMatrix upTo={step === 0 ? 'arrival' : 'postops'} />
           </Figure>
         </Swap>
       {:else if step === 3}
         <Swap>
-          <Figure title="CO₂ and departures, indexed" subtitle="EUROCONTROL Data app monthly indices" sources={['D-eurocontrol']} freshness={ec.freshness.network ?? null} dataDate={net?.dataDate}
-            table={linesTable(co2Lines(net), 'Month', dayNumLabel, (v) => fmtDec(v, 1), 'CO2 and departures indices')}>
-            <LineChart series={co2Lines(net)} label="CO2 index and departures index" xFormat={dayNumLabel} xTickWidth={130} yFormat={(v) => fmtDec(v, 0)} />
+          <Figure title={msg('fig_co2_title')} subtitle={msg('fig_co2_sub')} sources={['D-eurocontrol']} freshness={ec.freshness.network ?? null} dataDate={net?.dataDate}
+            table={linesTable(co2Lines(net), msg('ui_col_month'), dayNumLabel, (v) => fmtDec(v, 1), msg('fig_co2_caption'))}>
+            <LineChart series={co2Lines(net)} label={msg('fig_co2_label')} xFormat={dayNumLabel} xTickWidth={130} yFormat={(v) => fmtDec(v, 0)} />
           </Figure>
         </Swap>
       {:else}
@@ -41,12 +42,12 @@
             {#each ANSPS as k (k)}
               {@const b = bundle(k)}
               <div class="cell panel">
-                <h4>{ENTITIES[k].label}</h4>
-                <LineChart series={trafficLines(b, [2019, cy], cy)} label="{ENTITIES[k].label} daily flights {cy} vs 2019" height={110} xFormat={doyLabel} yFormat={fmtInt} directLabels={false} xTicks={[1, 182]} yTicks={2} />
+                <h4>{msg(`ent_${k}`)}</h4>
+                <LineChart series={trafficLines(b, [2019, cy], cy)} label={msg('fig_anspgrid_label', { name: msg(`ent_${k}`), year: cy })} height={110} xFormat={doyLabel} yFormat={fmtInt} directLabels={false} xTicks={[1, 182]} yTicks={2} />
               </div>
             {/each}
           </div>
-          <SourceLine ids={['D-eurocontrol']} detail="daily flights handled, 7-day average; blue {cy}, grey 2019" freshness={ec.freshness.MUAC ?? null} dataDate={bundle('MUAC')?.dataDate} />
+          <SourceLine ids={['D-eurocontrol']} detail={msg('fig_anspgrid_detail', { year: cy })} freshness={ec.freshness.MUAC ?? null} dataDate={bundle('MUAC')?.dataDate} />
         </Swap>
       {/if}
       </div>

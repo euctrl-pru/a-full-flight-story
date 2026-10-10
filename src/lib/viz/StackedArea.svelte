@@ -1,5 +1,6 @@
 <script lang="ts">
   import { scaleLinear, stack, area, curveMonotoneX, max } from 'd3';
+  import { msg } from '$lib/i18n/msg';
   import Tooltip from './Tooltip.svelte';
   import Legend from './Legend.svelte';
   import { nearestIndex } from './chart-utils';
@@ -47,7 +48,7 @@
     {#if hi !== null}
       <strong>{xFormat(rows[hi].x)}</strong>
       {#each [...keys].reverse() as k (k)}<div class="row"><span class="sw" style:background={colors[k]}></span>{labels[k]}<span class="v">{yFormat(rows[hi].values[k] ?? 0)}</span></div>{/each}
-      <div class="row"><strong>Total</strong><span class="v">{yFormat(total(rows[hi]))}</span></div>
+      <div class="row"><strong>{msg('ui_total')}</strong><span class="v">{yFormat(total(rows[hi]))}</span></div>
     {/if}
   </Tooltip>
 </div>

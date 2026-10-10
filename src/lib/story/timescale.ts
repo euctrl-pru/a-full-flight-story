@@ -1,3 +1,4 @@
+import { msg } from '$lib/i18n/msg';
 import { HERO } from './flight';
 import type { AtmPhase } from './types';
 
@@ -9,9 +10,10 @@ export const hoursFromEobt = (iso: string) => (Date.parse(iso) - EOBT_MS) / 3_60
 export const scaleHours = (h: number) => Math.sign(h) * Math.log10(1 + Math.abs(h));
 export const timeScale = (iso: string) => scaleHours(hoursFromEobt(iso));
 
+const timeTick = (id: string, h: number) => ({ h, id, get label() { return msg(`timeline_tick_${id}`); } });
 export const TIME_TICKS = [
-  { label: '−10 mo', h: -7300 }, { label: '−1 mo', h: -720 }, { label: '−1 wk', h: -168 }, { label: 'D−1', h: -24 },
-  { label: 'EOBT', h: 0 }, { label: '+2 h', h: 2 }, { label: '+1 d', h: 24 }, { label: '+1 yr', h: 8760 }
+  timeTick('m10', -7300), timeTick('m1', -720), timeTick('w1', -168), timeTick('d1', -24),
+  timeTick('eobt', 0), timeTick('h2', 2), timeTick('d1p', 24), timeTick('y1', 8760)
 ];
 
 /** Phase boundaries in scale units: pre-tactical D−6 00:00, tactical D 00:00, post-ops D+1 00:00. */

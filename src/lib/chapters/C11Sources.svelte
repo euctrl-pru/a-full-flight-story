@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { UI } from '$lib/ui/ui-strings';
+  import { msg } from '$lib/i18n/msg';
   import { SOURCES } from '$lib/story/sources';
   import { GLOSSARY } from '$lib/story/glossary';
   import { ec, sky } from '$lib/data/liveState.svelte';
-  import { ageLabel } from '$lib/data/sky';
+  import { ageLabel } from '$lib/story/freshness';
   const list = Object.values(SOURCES).sort((a, b) => {
     const n = (id: string) => (id.startsWith('S') ? +id.slice(1) : 1000);
     return n(a.id) - n(b.id) || a.id.localeCompare(b.id);
@@ -11,27 +11,27 @@
 </script>
 
 <section class="sources" id="sources" aria-labelledby="sources-title">
-  <h2 id="sources-title">Sources & method</h2>
-  <h3>How this was made</h3>
+  <h2 id="sources-title">{msg('ui_sources_and_method')}</h2>
+  <h3>{msg('method_title_how')}</h3>
   <ul>
-    <li><strong>FFS101 is fictional.</strong> Its callsign, times, route, turnaround and regulation are illustrative, built to follow the real procedures described in the sources below. Every general fact carries a citation.</li>
-    <li><strong>Live data.</strong> European traffic, delay, punctuality and CO₂ come from the EUROCONTROL Data app API. Your browser fetches them live; if that fails, the page uses a snapshot refreshed when the site was built (snapshot: {ec.snapshot ? new Date(ec.snapshot.generatedAt).toUTCString() : '—'}).</li>
-    <li><strong>The sky snapshot</strong> comes from OpenSky Network state vectors (fallback: adsb.lol), fetched by a scheduled build about every 30 minutes ({sky.snap ? ageLabel(sky.snap.fetchedAt) : 'unavailable'}).</li>
-    <li><strong>Simplifications.</strong> The slot simulator is a first-planned-first-served model of CASA. Route charges use along-track distances on the illustrative route; real billing uses the route recorded by the Network Manager. Control-centre assignment is approximated from country and flight level. Prior years' traffic is aligned by day of year; daily values are 7-day averages.</li>
+    <li><strong>{msg('method_fictional_lead')}</strong> {msg('method_fictional')}</li>
+    <li><strong>{msg('method_live_lead')}</strong> {msg('method_live', { date: ec.snapshot ? new Date(ec.snapshot.generatedAt).toUTCString() : '—' })}</li>
+    <li><strong>{msg('method_sky_lead')}</strong> {msg('method_sky', { age: sky.snap ? ageLabel(sky.snap.fetchedAt) : msg('method_sky_unavailable') })}</li>
+    <li><strong>{msg('method_simpl_lead')}</strong> {msg('method_simpl')}</li>
   </ul>
-  <h3>Sources</h3>
+  <h3>{msg('method_title_sources')}</h3>
   <ol class="src">
     {#each list as s (s.id)}
-      <li id="src-{s.id}"><span class="id">{s.id.startsWith('S') ? s.id.slice(1) : 'data'}</span> {s.publisher}, <a href={s.url} target="_blank" rel="noopener noreferrer">{s.title}</a>. Accessed {s.accessed}.</li>
+      <li id="src-{s.id}"><span class="id">{s.id.startsWith('S') ? s.id.slice(1) : msg('ui_cite_data')}</span> {s.publisher}, <a href={s.url} target="_blank" rel="noopener noreferrer">{s.title}</a>. {msg('method_accessed', { date: s.accessed })}</li>
     {/each}
   </ol>
-  <h3>Glossary</h3>
+  <h3>{msg('method_title_glossary')}</h3>
   <dl class="gl">
     {#each Object.values(GLOSSARY).sort((a, b) => a.term.localeCompare(b.term)) as g (g.term)}
       <dt>{g.term}</dt><dd><em>{g.expansion}.</em> {g.definition}</dd>
     {/each}
   </dl>
-  <p class="totop"><a href="#top">{UI.backToTop}</a></p>
+  <p class="totop"><a href="#top">{msg('ui_back_to_top')}</a></p>
 </section>
 
 <style>

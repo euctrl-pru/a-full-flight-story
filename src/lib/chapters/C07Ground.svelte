@@ -1,5 +1,6 @@
 <script lang="ts">
   import Swap from '$lib/ui/Swap.svelte';
+  import { msg } from '$lib/i18n/msg';
   import Chapter from '$lib/ui/Chapter.svelte';
   import Figure from '$lib/viz/Figure.svelte';
   import AcdmTimeline from '$lib/viz/AcdmTimeline.svelte';
@@ -21,15 +22,15 @@
       <div class="swaps">
       {#if step <= 3}
         <Swap>
-          <Figure title="FFS101 at Brussels: turnaround and A-CDM milestones" subtitle="Times UTC" sources={['S13', 'S7']} illustrative>
+          <Figure title={msg('fig_ground_title')} subtitle={msg('fig_ground_sub')} sources={['S13', 'S7']} illustrative>
             <AcdmTimeline stage={STAGES[step]} />
           </Figure>
         </Swap>
       {:else}
         <Swap>
-          <Figure title="Brussels Airport punctuality" subtitle="% of flights within 15 minutes of schedule, last 12 months" sources={['D-eurocontrol']} detail="Brussels (EBBR)" freshness={ec.freshness.EBBR ?? null} dataDate={ebbr?.dataDate}
-            table={linesTable(lines, 'Date', dayNumLabel, (v) => fmtDec(v, 1), 'Brussels punctuality')}>
-            <LineChart series={lines} label="Brussels departure and arrival punctuality" xFormat={dayNumLabel} xTickWidth={130} yFormat={(v) => `${Math.round(v)}%`} yDomain={[0, 100]} />
+          <Figure title={msg('fig_bru_punct_title')} subtitle={msg('fig_bru_punct_sub')} sources={['D-eurocontrol']} detail={msg('fig_bru_punct_detail')} freshness={ec.freshness.EBBR ?? null} dataDate={ebbr?.dataDate}
+            table={linesTable(lines, msg('ui_col_date'), dayNumLabel, (v) => fmtDec(v, 1), msg('fig_bru_punct_caption'))}>
+            <LineChart series={lines} label={msg('fig_bru_punct_label')} xFormat={dayNumLabel} xTickWidth={130} yFormat={(v) => `${Math.round(v)}%`} yDomain={[0, 100]} />
           </Figure>
         </Swap>
       {/if}

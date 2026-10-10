@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { msg } from '$lib/i18n/msg';
   import { scaleLinear } from 'd3';
   import { scenario, REGULATION, HERO_CASA } from '$lib/story/scenario';
   import { hourlyCounts } from '$lib/sim/demand';
@@ -26,13 +27,13 @@
 </script>
 
 <div class="casa">
-  <BarChart {bars} label="Flights wanting to enter the sector, per hour" refLine={stage === 'demand' ? undefined : { value: rate, label: `Capacity ${rate}/h` }} height={200} />
+  <BarChart {bars} label={msg('fig_casa_bars')} refLine={stage === 'demand' ? undefined : { value: rate, label: msg('fig_casa_capacity_ref', { rate }) }} height={200} />
   {#if stage !== 'demand' && stage !== 'regulation'}
     <div class="belt" bind:clientWidth={width}>
       {#if width}
-        <svg {width} height={h} role="img" aria-label="Each flight's wanted versus allocated entry time">
-          <text class="rl" x={m.l} y="18">Wanted (ETO)</text>
-          <text class="rl" x={m.l} y={h - 52}>Given slot</text>
+        <svg {width} height={h} role="img" aria-label={msg('fig_casa_belt_aria')}>
+          <text class="rl" x={m.l} y="18">{msg('fig_casa_wanted')}</text>
+          <text class="rl" x={m.l} y={h - 52}>{msg('fig_casa_given')}</text>
           {#each regulated as a (a.id)}
             {@const hero = a.id === HERO_CASA.id}
             <line x1={x(a.eto)} y1="30" x2={given(a)} y2={h - 64} class="link" class:hero opacity={stage === 'hero' && !hero ? 0.25 : 0.7} />
@@ -43,16 +44,16 @@
         </svg>
       {/if}
       <Tooltip visible={!!hi} x={hi ? given(hi) : 0} y={h - 64} containerWidth={width}>
-        {#if hi}<strong>{hi.id}</strong><div class="row">wanted {fmtHm(hi.eto)}<span class="v">+{hi.delay} min</span></div>{/if}
+        {#if hi}<strong>{hi.id}</strong><div class="row">{msg('fig_casa_tip_wanted', { time: fmtHm(hi.eto) })}<span class="v">+{hi.delay} min</span></div>{/if}
       </Tooltip>
     </div>
     <p class="stat">
-      <strong>FFS101:</strong> +{sc.hero.delay} min → CTOT {fmtHm(sc.hero.ctot)} ·
-      <strong>All regulated flights:</strong> {fmtInt(totalDelay)} delay minutes across {regulated.length} flights
+      <strong>FFS101:</strong> {msg('fig_casa_hero_stat', { delay: sc.hero.delay, ctot: fmtHm(sc.hero.ctot) })} ·
+      <strong>{msg('fig_casa_total_label')}</strong> {msg('fig_casa_total_stat', { minutes: fmtInt(totalDelay), flights: regulated.length })}
     </p>
   {/if}
   {#if stage === 'explore'}
-    <label class="slider">Sector capacity: <strong>{rate} flights/hour</strong>
+    <label class="slider">{msg('fig_casa_slider')} <strong>{msg('fig_casa_slider_value', { rate })}</strong>
       <input type="range" min="20" max="56" step="1" bind:value={rate} />
     </label>
   {/if}

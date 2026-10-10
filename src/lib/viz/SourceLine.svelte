@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { msg } from '$lib/i18n/msg';
   import { getSource } from '$lib/story/sources';
   import Cite from '$lib/ui/Cite.svelte';
   import FreshnessBadge from '$lib/ui/FreshnessBadge.svelte';
@@ -10,12 +11,12 @@
 </script>
 
 <p class="source">
-  <span class="lbl">Source:</span>
+  <span class="lbl">{msg('ui_source')}</span>
   {#each ids as id, i (id)}{getSource(id).publisher} — {getSource(id).title}<Cite ids={[id]} />{i < ids.length - 1 ? '; ' : ''}{/each}
   {#if detail}<span> · {detail}</span>{/if}
-  {#if dataDate}<span> · data to {fmtDate(dataDate)}</span>{/if}
+  {#if dataDate}<span> · {msg('ui_data_to', { date: fmtDate(dataDate) })}</span>{/if}
   {#if freshness}<span> </span><FreshnessBadge {freshness} />{/if}
-  {#if illustrative}<span class="ill"> · Illustrative (fictional flight FFS101)</span>{/if}
+  {#if illustrative}<span class="ill"> · {msg('ui_illustrative_note')}</span>{/if}
 </p>
 
 <style>

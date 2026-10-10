@@ -2,12 +2,13 @@
   import { CHAPTERS } from '$lib/story/chapters';
   import { ATM_PHASES } from '$lib/story/phases';
   import { story } from '$lib/scroll/storyState.svelte';
-  import { UI } from './ui-strings';
+  import { msg } from '$lib/i18n/msg';
   import { focusHeading } from '$lib/scroll/focus';
 
   let dlg: HTMLDialogElement;
   let btn: HTMLButtonElement;
-  const numbered = CHAPTERS.filter((c) => c.kicker.startsWith('Chapter'));
+  // numbered chapters carry their number in the kicker; the prologue and the zoom-out do not
+  const numbered = CHAPTERS.filter((c) => /\d/.test(c.kicker));
   const current = $derived(numbered.findIndex((c) => c.id === story.chapterId) + 1);
   let jumping = false;
   function close() { dlg.close(); }
@@ -16,15 +17,15 @@
   function onclose() { if (!jumping) btn?.focus(); jumping = false; }
 </script>
 
-<button type="button" class="open" bind:this={btn} onclick={() => dlg.showModal()} aria-haspopup="dialog" aria-label={UI.chapters}>☰<span class="lbl"> {UI.chapters}</span></button>
+<button type="button" class="open" bind:this={btn} onclick={() => dlg.showModal()} aria-haspopup="dialog" aria-label={msg('ui_chapters')}>☰<span class="lbl"> {msg('ui_chapters')}</span></button>
 <dialog bind:this={dlg} aria-labelledby="drawer-title" {onclose}>
   <div class="head">
-    <h2 id="drawer-title">{UI.chapters}</h2>
-    {#if current > 0}<span class="n">{UI.chapterOf(current, numbered.length)}</span>{/if}
-    <button type="button" class="x" onclick={close} aria-label={UI.close}>✕</button>
+    <h2 id="drawer-title">{msg('ui_chapters')}</h2>
+    {#if current > 0}<span class="n">{msg('ui_chapter_of', { n: current, total: numbered.length })}</span>{/if}
+    <button type="button" class="x" onclick={close} aria-label={msg('ui_close')}>✕</button>
   </div>
   <nav>
-    <a href="#cold-open" onclick={() => jump('cold-open')}>{UI.prologue} · The sky over Europe</a>
+    <a href="#cold-open" onclick={() => jump('cold-open')}>{msg('ch_cold_open_kicker')} · {msg('ch_cold_open_title')}</a>
     {#each ATM_PHASES as p (p.id)}
       <h3 style:--c={p.color}>{p.label}</h3>
       <ul>
@@ -33,7 +34,7 @@
         {/each}
       </ul>
     {/each}
-    <a href="#sources" onclick={() => jump('sources')}>{UI.sourcesAndMethod}</a>
+    <a href="#sources" onclick={() => jump('sources')}>{msg('ui_sources_and_method')}</a>
   </nav>
 </dialog>
 

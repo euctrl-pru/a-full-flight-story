@@ -1,4 +1,6 @@
 import type { Freshness } from '$lib/data/live';
+import { msg } from '$lib/i18n/msg';
+import { minutesAgo } from '$lib/data/sky';
 
 const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -20,3 +22,10 @@ export function dayPhrase(dataDate: string | null | undefined, now = new Date())
 
 export const livePhrase = (f: Freshness | null) => (f === 'live' ? 'fetched live' : 'from the latest snapshot');
 export const currentYear = (dataDate?: string | null, now = new Date()) => (dataDate ? +dataDate.slice(0, 4) : now.getUTCFullYear());
+
+export function ageLabel(iso: string, now = Date.now()): string {
+  const m = minutesAgo(iso, now);
+  if (m < 60) return msg('ui_age_min', { n: m });
+  if (m < 48 * 60) return m % 60 ? msg('ui_age_hm', { h: Math.floor(m / 60), m: m % 60 }) : msg('ui_age_h', { h: Math.floor(m / 60) });
+  return msg('ui_age_days', { n: Math.floor(m / 1440) });
+}

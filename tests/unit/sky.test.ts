@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { parseOpenSky, parseAdsbLol, makeSnapshot, adsbLolTiles, minutesAgo, ageLabel, EUROPE_BBOX, newerSky, fetchAdsbLolTiles } from '$lib/data/sky';
+import { parseOpenSky, parseAdsbLol, makeSnapshot, adsbLolTiles, minutesAgo, EUROPE_BBOX, newerSky, fetchAdsbLolTiles } from '$lib/data/sky';
+import { ageLabel } from '$lib/story/freshness';
 
 const os = {
   time: 1791559444,

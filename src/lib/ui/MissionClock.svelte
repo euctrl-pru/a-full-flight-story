@@ -6,7 +6,7 @@
   import { CHAPTERS } from '$lib/story/chapters';
   import { ATM_PHASES, phaseClockRanges, phaseOf } from '$lib/story/phases';
   import { dur } from '$lib/scroll/motion';
-  import { UI } from './ui-strings';
+  import { msg } from '$lib/i18n/msg';
   import ThemeToggle from './ThemeToggle.svelte';
   import ChapterDrawer from './ChapterDrawer.svelte';
 
@@ -20,8 +20,8 @@
 
 <div class="clock" style:--phase-color={story.phase ? phaseOf(story.phase).color : 'var(--accent)'}>
   <span class="now" aria-hidden="true"><span class="full">{nowText}</span><span class="short">{phaseLabel ?? (story.clockLabel || 'FFS101')}</span></span>
-  <div class="rail" role="progressbar" aria-label={UI.progressLabel} aria-valuemin="0" aria-valuemax="100"
-    aria-valuenow={Math.round(story.clock * 100)} aria-valuetext={phaseLabel ? nowText : story.clockLabel || UI.start}>
+  <div class="rail" role="progressbar" aria-label={msg('ui_progress_label')} aria-valuemin="0" aria-valuemax="100"
+    aria-valuenow={Math.round(story.clock * 100)} aria-valuetext={phaseLabel ? nowText : story.clockLabel || msg('ui_start')}>
     {#each ranges as r (r.id)}
       <span class="seg" data-phase={r.id} class:current={story.phase === r.id}
         style:left="{r.start * 100}%" style:width="{(r.end - r.start) * 100}%" style:--c={phaseOf(r.id).color}>

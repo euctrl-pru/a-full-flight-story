@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { msg } from '$lib/i18n/msg';
   import { HERO_FPL } from '$lib/story/fpl';
   import { ANSP_LABEL } from '$lib/story/flight';
   let { active, stage }: { active: string[]; stage: 'message' | 'validate' | 'distribute' } = $props();
@@ -14,23 +15,23 @@
     out.push({ text: HERO_FPL.text.slice(i), item: null });
     return out;
   })();
-  const CHECKS = ['Syntax & format', 'Aerodromes & aircraft type', 'Route vs RAD restrictions', 'Airspace availability (AUP)', '4D profile calculated'];
-  const UNITS = ['Brussels TWR/APP', ...['MUAC', 'DSNA', 'Skyguide', 'ENAV'].map((k) => ANSP_LABEL[k as keyof typeof ANSP_LABEL]), 'ETFMS (flow)', 'Airline (ACK)'];
+  const CHECKS = ['syntax', 'aerodromes', 'rad', 'aup', '4d'].map((k) => msg(`fig_fpl_check_${k}`));
+  const UNITS = [msg('fig_fpl_unit_bru'), ...['MUAC', 'DSNA', 'Skyguide', 'ENAV'].map((k) => ANSP_LABEL[k as keyof typeof ANSP_LABEL]), msg('fig_fpl_unit_etfms'), msg('fig_fpl_unit_airline')];
 </script>
 
 <div class="fpl">
-  <pre aria-label="ICAO flight plan for FFS101">{#each chunks as c}{#if c.item}<mark class:on={active.includes(c.item) || active.includes('all')} title="Item {c.item}: {c.label}">{c.text}</mark>{:else}{c.text}{/if}{/each}</pre>
+  <pre aria-label={msg('fig_fpl_aria')}>{#each chunks as c}{#if c.item}<mark class:on={active.includes(c.item) || active.includes('all')} title={msg('fig_fpl_item_tip', { item: c.item, label: msg(`fpl_item_${c.item}`) })}>{c.text}</mark>{:else}{c.text}{/if}{/each}</pre>
   {#each HERO_FPL.spans.filter((x) => active.includes(x.item)) as s (s.item)}
-    <p class="item"><strong>Item {s.item}</strong> — {s.label}</p>
+    <p class="item"><strong>{msg('fig_fpl_item', { item: s.item })}</strong> — {msg(`fpl_item_${s.item}`)}</p>
   {/each}
   {#if stage !== 'message'}
     <ol class="checks">
       {#each CHECKS as c, i}<li style:animation-delay="{i * 180}ms">✓ {c}</li>{/each}
-      <li class="ack" style:animation-delay="{CHECKS.length * 180}ms">ACK — accepted automatically</li>
+      <li class="ack" style:animation-delay="{CHECKS.length * 180}ms">{msg('fig_fpl_ack')}</li>
     </ol>
   {/if}
   {#if stage === 'distribute'}
-    <svg class="fan" viewBox="0 0 430 220" role="img" aria-label="IFPS distributes the flight plan to every unit on the route">
+    <svg class="fan" viewBox="0 0 430 220" role="img" aria-label={msg('fig_fpl_fan_aria')}>
       <circle cx="40" cy="110" r="22" class="hub" /><text x="40" y="114" text-anchor="middle" class="hubt">IFPS</text>
       {#each UNITS as u, i}
         {@const y = 20 + i * (180 / (UNITS.length - 1))}

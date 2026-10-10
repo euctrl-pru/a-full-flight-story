@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { msg } from '$lib/i18n/msg';
   import { scaleLinear } from 'd3';
   import { ACDM, TURNAROUND } from '$lib/story/flight';
   import { SLOT_TOLERANCE } from '$lib/sim/casa';
@@ -46,9 +47,9 @@
 
 <div class="acdm" bind:clientWidth={width}>
   {#if width}
-    <svg {width} height={h} role="img" aria-label="FFS101 turnaround and A-CDM milestones at Brussels">
+    <svg {width} height={h} role="img" aria-label={msg('fig_acdm_aria')}>
       {#each [hm('04:00'), hm('04:30'), hm('05:00'), hm('05:30')] as t}
-        <text class="tick" x={x(t)} y="12" text-anchor={t === hm('04:00') ? 'start' : 'middle'}>{fmtHm(t)}{narrow ? '' : ' UTC'}</text>
+        <text class="tick" x={x(t)} y="12" text-anchor={t === hm('04:00') ? 'start' : 'middle'}>{fmtHm(t)}{narrow ? '' : ` ${msg('ui_utc')}`}</text>
       {/each}
       {#if stage === 'window'}
         {@const c = hm(ACDM.ctotFinal)}
@@ -56,7 +57,7 @@
         <rect class="win" x={x(c - SLOT_TOLERANCE.before)} y={top - 8} width={x(c + SLOT_TOLERANCE.after) - x(c - SLOT_TOLERANCE.before)} height={barsBottom - top + 8} />
         <text class="wt" x={x(c - SLOT_TOLERANCE.before) + 4} y={barsBottom - 6}>−5/+10</text>
         <line class="old" x1={old} x2={old} y1={top - 8} y2={barsBottom + 6 + labelRows * 15} />
-        <text class="oldt" x={old} y={barsBottom + 18 + labelRows * 15} text-anchor="end">first CTOT {ACDM.ctotPlanned} (before reroute)</text>
+        <text class="oldt" x={old} y={barsBottom + 18 + labelRows * 15} text-anchor="end">{msg('fig_acdm_old_ctot', { time: ACDM.ctotPlanned })}</text>
       {/if}
       {#each TURNAROUND as t, i (t.id)}
         {@const y0 = top + i * rowH}

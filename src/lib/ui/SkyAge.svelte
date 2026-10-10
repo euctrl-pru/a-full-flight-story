@@ -1,7 +1,8 @@
 <script lang="ts">
   import { sky } from '$lib/data/liveState.svelte';
-  import { ageLabel, minutesAgo } from '$lib/data/sky';
-  import { UI } from './ui-strings';
+  import { minutesAgo } from '$lib/data/sky';
+  import { ageLabel } from '$lib/story/freshness';
+  import { msg } from '$lib/i18n/msg';
   let now = $state(Date.now());
   $effect(() => { const id = setInterval(() => (now = Date.now()), 15_000); return () => clearInterval(id); });
   const snap = $derived(sky.snap);
@@ -11,7 +12,7 @@
 
 {#if snap && snap.count > 0}
   <p class="sky-age" class:stale data-testid="sky-age">
-    {UI.skyFrom(ageLabel(snap.fetchedAt, now), source)}{#if stale}<span> — {UI.skyDelayed}</span>{/if}
+    {msg('ui_sky_from', { age: ageLabel(snap.fetchedAt, now), source })}{#if stale}<span> — {msg('ui_sky_delayed')}</span>{/if}
   </p>
 {/if}
 

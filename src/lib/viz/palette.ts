@@ -1,12 +1,18 @@
 import type { AnspKey } from '$lib/story/flight';
+import { msg } from '$lib/i18n/msg';
 
 /** EUROCONTROL Data app delay-cause names, in fixed slot order (dataviz: never cycle). */
 export const CAUSES = ['Capacity/Staffing (ATC)', 'Weather', 'Aerodrome capacity', 'Disruptions (ATC)', 'Other'] as const;
 export type Cause = (typeof CAUSES)[number];
-export const CAUSE_LABEL: Record<Cause, string> = {
-  'Capacity/Staffing (ATC)': 'ATC capacity & staffing', Weather: 'Weather', 'Aerodrome capacity': 'Airport capacity',
-  'Disruptions (ATC)': 'ATC disruptions (e.g. strikes)', Other: 'Other'
+const CAUSE_SLUG: Record<Cause, string> = {
+  'Capacity/Staffing (ATC)': 'capacity_staffing_atc', Weather: 'weather', 'Aerodrome capacity': 'aerodrome_capacity',
+  'Disruptions (ATC)': 'disruptions_atc', Other: 'other'
 };
+/** Reader-facing cause names, read lazily so they follow the active locale. */
+const causeLabels = (suffix: 'label' | 'short') =>
+  Object.defineProperties({} as Record<Cause, string>,
+    Object.fromEntries(CAUSES.map((c) => [c, { enumerable: true, get: () => msg(`cause_${CAUSE_SLUG[c]}_${suffix}`) }])));
+export const CAUSE_LABEL = causeLabels('label');
 export const CAUSE_COLOR: Record<Cause, string> = Object.fromEntries(CAUSES.map((c, i) => [c, `var(--series-${i + 1})`])) as Record<Cause, string>;
 
 export const ANSP_COLOR: Record<AnspKey, string> = {
@@ -28,6 +34,4 @@ export const altitudeBin = (ft: number) => ALT_BINS.reduce((b, lo, i) => (ft >= 
 export const ALT_VARS = ['--seq-300', '--seq-400', '--seq-500', '--seq-600', '--seq-700'];
 export const cssVar = (name: string, el: Element = document.documentElement) => getComputedStyle(el).getPropertyValue(name).trim();
 
-export const CAUSE_SHORT: Record<Cause, string> = {
-  'Capacity/Staffing (ATC)': 'ATC capacity', Weather: 'Weather', 'Aerodrome capacity': 'Airport', 'Disruptions (ATC)': 'Disruptions', Other: 'Other'
-};
+export const CAUSE_SHORT = causeLabels('short');

@@ -1,5 +1,6 @@
 <script lang="ts">
   import Swap from '$lib/ui/Swap.svelte';
+  import { msg } from '$lib/i18n/msg';
   import Chapter from '$lib/ui/Chapter.svelte';
   import Figure from '$lib/viz/Figure.svelte';
   import HeroNumber from '$lib/viz/HeroNumber.svelte';
@@ -25,23 +26,23 @@
       <div class="swaps">
       {#if step === 0}
         <Swap>
-          <Figure title={`ATFM delay in the European network, ${dayPhrase(net?.dataDate)}`} sources={['D-eurocontrol']} freshness={fresh} dataDate={net?.dataDate}>
-            <HeroNumber value={net?.headline.delayMinutes ?? null} label="minutes of ATFM delay"
-              sub={net?.headline.delayPerFlight != null ? `${fmtDec(net.headline.delayPerFlight, 2)} min per flight` : undefined} />
+          <Figure title={msg('fig_delay_total_title', { when: dayPhrase(net?.dataDate) })} sources={['D-eurocontrol']} freshness={fresh} dataDate={net?.dataDate}>
+            <HeroNumber value={net?.headline.delayMinutes ?? null} label={msg('fig_delay_total_label')}
+              sub={net?.headline.delayPerFlight != null ? msg('fig_delay_per_flight', { value: fmtDec(net.headline.delayPerFlight, 2) }) : undefined} />
           </Figure>
         </Swap>
       {:else if step === 1}
         <Swap>
-          <Figure title={`ATFM delay by cause, ${dayPhrase(net?.dataDate)}`} subtitle="Minutes" sources={['D-eurocontrol']} freshness={fresh} dataDate={net?.dataDate}
-            table={{ caption: `ATFM delay minutes by cause, ${dayPhrase(net?.dataDate)}`, columns: [{ key: 'label', label: 'Cause' }, { key: 'value', label: 'Minutes', format: fmtInt }], rows: causeBars(net).map((b) => ({ label: b.label, value: b.value })) }}>
-            <BarChart bars={causeBars(net)} label="ATFM delay minutes by cause" yFormat={fmtInt} />
+          <Figure title={msg('fig_delay_cause_title', { when: dayPhrase(net?.dataDate) })} subtitle={msg('fig_delay_cause_sub')} sources={['D-eurocontrol']} freshness={fresh} dataDate={net?.dataDate}
+            table={{ caption: msg('fig_delay_cause_caption', { when: dayPhrase(net?.dataDate) }), columns: [{ key: 'label', label: msg('ui_col_cause') }, { key: 'value', label: msg('ui_col_minutes'), format: fmtInt }], rows: causeBars(net).map((b) => ({ label: b.label, value: b.value })) }}>
+            <BarChart bars={causeBars(net)} label={msg('fig_delay_cause_label')} yFormat={fmtInt} />
           </Figure>
         </Swap>
       {:else if step === 2}
         <Swap>
-          <Figure title="ATFM delay by cause, this year" subtitle="Daily minutes, 7-day average" sources={['D-eurocontrol']} freshness={fresh} dataDate={net?.dataDate}
-            table={{ caption: 'Delay by cause, year to date', columns: [{ key: 'day', label: 'Day' }, ...CAUSES.map((c) => ({ key: c, label: CAUSE_LABEL[c], format: fmtInt }))], rows: causeRows(net).map((r) => ({ day: doyLabel(r.x), ...r.values })) }}>
-            <StackedArea rows={causeRows(net)} keys={[...CAUSES]} colors={CAUSE_COLOR} labels={CAUSE_LABEL} label="ATFM delay minutes by cause this year" xFormat={doyLabel} yFormat={fmtInt} reveal={0.2 + progress * 1.6} />
+          <Figure title={msg('fig_delay_year_title')} subtitle={msg('fig_delay_year_sub')} sources={['D-eurocontrol']} freshness={fresh} dataDate={net?.dataDate}
+            table={{ caption: msg('fig_delay_year_caption'), columns: [{ key: 'day', label: msg('ui_col_day') }, ...CAUSES.map((c) => ({ key: c, label: CAUSE_LABEL[c], format: fmtInt }))], rows: causeRows(net).map((r) => ({ day: doyLabel(r.x), ...r.values })) }}>
+            <StackedArea rows={causeRows(net)} keys={[...CAUSES]} colors={CAUSE_COLOR} labels={CAUSE_LABEL} label={msg('fig_delay_year_label')} xFormat={doyLabel} yFormat={fmtInt} reveal={0.2 + progress * 1.6} />
           </Figure>
         </Swap>
       {:else}
@@ -54,7 +55,7 @@
               {/each}
               <SourceLine ids={['D-situation']} freshness={ec.reportFreshness} dataDate={report.date} />
             {:else}
-              <p>The latest situation report could not be loaded.</p>
+              <p>{msg('fig_report_missing')}</p>
               <SourceLine ids={['D-situation']} />
             {/if}
           </article>

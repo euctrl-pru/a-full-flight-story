@@ -1,11 +1,12 @@
 <script lang="ts">
   import type { StepDef } from '$lib/story/types';
+  import { msg } from '$lib/i18n/msg';
   import RichText from './RichText.svelte';
   let { step }: { step: StepDef } = $props();
 </script>
 
 <div class="card">
-  {#if step.illustrative}<span class="badge" title="FFS101 is a fictional flight; the process is real">Illustrative</span>{/if}
+  {#if step.illustrative}<span class="badge" title={msg('ui_illustrative_title')}>{msg('ui_illustrative')}</span>{/if}
   <RichText text={step.text} />
 </div>
 

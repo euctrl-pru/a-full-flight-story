@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { msg } from '$lib/i18n/msg';
   import Chapter from '$lib/ui/Chapter.svelte';
   import BaseMap from '$lib/viz/BaseMap.svelte';
   import RouteMap from '$lib/viz/RouteMap.svelte';
@@ -14,7 +15,7 @@
   {#snippet graphic({ step, progress })}
     <div class="stage">
       <div class="map-wrap">
-        <BaseMap label="FFS101's route across Europe's airspace" frame={EUROPE_FRAME} frameTo={ROUTE_FRAME} t={step === 0 ? progress : 1}
+        <BaseMap label={msg('fig_airspace_map')} frame={EUROPE_FRAME} frameTo={ROUTE_FRAME} t={step === 0 ? progress : 1}
           highlight={[ISO.BE, ISO.LU, ISO.FR, ISO.CH, ISO.IT]}>
           {#snippet children({ projection, path, width })}
             <RouteMap {projection} {path} {width} showPlane={false} progress={step === 0 ? progress : 1}
@@ -25,7 +26,7 @@
           {/snippet}
         </BaseMap>
       </div>
-      <SourceLine ids={['D-naturalearth', 'S17', 'S18']} illustrative detail={step >= 1 ? 'dashed: great circle; solid: filed route' : undefined} />
+      <SourceLine ids={['D-naturalearth', 'S17', 'S18']} illustrative detail={step >= 1 ? msg('fig_airspace_detail') : undefined} />
     </div>
   {/snippet}
 </Chapter>

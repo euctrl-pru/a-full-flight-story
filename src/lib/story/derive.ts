@@ -1,3 +1,4 @@
+import { msg } from '$lib/i18n/msg';
 import type { EntityBundle } from '$lib/data/eurocontrol';
 import { dayOfYear, yearOfSeries, stackByName } from '$lib/data/series';
 import { CAUSES, CAUSE_COLOR, CAUSE_SHORT, yearStyle } from '$lib/viz/palette';
@@ -23,7 +24,7 @@ const FORECAST_STYLE: Record<string, Partial<LineSeries>> = {
 export function forecastLines(b: EntityBundle | undefined): LineSeries[] {
   return (b?.traffic ?? [])
     .filter((s) => s.chartType === 'forecast' && s.name in FORECAST_STYLE)
-    .map((s) => ({ id: s.name, label: s.name === 'Actual' ? 'Actual' : `${s.name} forecast`, color: '', ...FORECAST_STYLE[s.name], points: s.points.map((p) => ({ x: +p.date.slice(0, 4), y: p.value / 1e6 })) }));
+    .map((s) => ({ id: s.name, label: msg(s.name === 'Actual' ? 'fig_series_actual' : `fig_series_forecast_${s.name.toLowerCase()}`), color: '', ...FORECAST_STYLE[s.name], points: s.points.map((p) => ({ x: +p.date.slice(0, 4), y: p.value / 1e6 })) }));
 }
 
 export function causeRows(b: EntityBundle | undefined, range = 'Y2D') {
@@ -40,17 +41,19 @@ export function causeBars(b: EntityBundle | undefined): Bar[] {
 
 export function punctualityLines(b: EntityBundle | undefined, days = 365): LineSeries[] {
   const style = [{ color: 'var(--series-1)', width: 2 }, { color: 'var(--series-2)', width: 2 }];
+  const labels = [msg('fig_series_dep_punct'), msg('fig_series_arr_punct')];
   return ['Departure punct.', 'Arrival punct.'].flatMap((name, i) => {
     const s = (b?.punctuality ?? []).find((x) => x.chartType === 'evo_chart' && x.name === name);
-    return s ? [{ id: name, label: name.replace(' punct.', ' punctuality'), ...style[i], points: s.points.slice(-days).map((p) => ({ x: dayNum(p.date), y: p.value })) }] : [];
+    return s ? [{ id: name, label: labels[i], ...style[i], points: s.points.slice(-days).map((p) => ({ x: dayNum(p.date), y: p.value })) }] : [];
   });
 }
 
 export function co2Lines(b: EntityBundle | undefined): LineSeries[] {
   const style = [{ color: 'var(--series-1)', width: 2 }, { color: 'var(--series-2)', width: 2 }];
+  const labels = [msg('fig_series_co2'), msg('fig_series_dep_index')];
   return ['CO2 index', 'Departures index'].flatMap((name, i) => {
     const s = (b?.co2 ?? []).find((x) => x.chartType === 'evo_chart' && x.name === name);
-    return s ? [{ id: name, label: name.replace('CO2', 'CO₂'), ...style[i], points: s.points.map((p) => ({ x: dayNum(p.date), y: p.value })) }] : [];
+    return s ? [{ id: name, label: labels[i], ...style[i], points: s.points.map((p) => ({ x: dayNum(p.date), y: p.value })) }] : [];
   });
 }
 

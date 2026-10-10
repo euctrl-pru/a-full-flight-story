@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { msg } from '$lib/i18n/msg';
   import type { ZoneCharge } from '$lib/sim/charges';
   import { ZONE_COLOR } from './palette';
   import { fmtInt } from './chart-utils';
@@ -6,9 +7,9 @@
   const SHORT: Record<string, string> = { BELU: 'BE-LU', FR: 'FR', DE: 'DE', CH: 'CH', IT: 'IT' };
   const sum = (z: ZoneCharge[], k: 'km' | 'charge') => z.reduce((s, x) => s + x[k], 0);
   const rows = $derived([
-    ...(mode !== 'cost' ? [{ id: 'pd', label: 'Planned · distance', zones: planned, k: 'km' as const, unit: 'km' }] : []),
-    ...(mode !== 'distance' ? [{ id: 'pc', label: 'Planned · charges', zones: planned, k: 'charge' as const, unit: '€' }] : []),
-    ...(mode === 'compare' ? [{ id: 'rc', label: 'Rerouted · charges', zones: rerouted, k: 'charge' as const, unit: '€' }] : [])
+    ...(mode !== 'cost' ? [{ id: 'pd', label: msg('fig_charges_planned_distance'), zones: planned, k: 'km' as const, unit: 'km' }] : []),
+    ...(mode !== 'distance' ? [{ id: 'pc', label: msg('fig_charges_planned_charges'), zones: planned, k: 'charge' as const, unit: '€' }] : []),
+    ...(mode === 'compare' ? [{ id: 'rc', label: msg('fig_charges_rerouted_charges'), zones: rerouted, k: 'charge' as const, unit: '€' }] : [])
   ]);
   const maxTotal = $derived(Math.max(...rows.filter((r) => r.k === 'charge').map((r) => sum(r.zones, 'charge')), 1));
 </script>
@@ -28,8 +29,8 @@
       </div>
     </div>
   {/each}
-  <table class="visually-hidden"><caption>Route charges by zone</caption><thead><tr><th>Route</th><th>Zone</th><th>km</th><th>€</th></tr></thead>
-    <tbody>{#each [{ n: 'Planned', zs: planned }, { n: 'Rerouted', zs: rerouted }] as g (g.n)}{#each g.zs as z (z.zone.id)}<tr><td>{g.n}</td><td>{z.zone.label}</td><td>{z.km}</td><td>{z.charge}</td></tr>{/each}{/each}</tbody></table>
+  <table class="visually-hidden"><caption>{msg('fig_charges_caption')}</caption><thead><tr><th>{msg('ui_col_route')}</th><th>{msg('ui_col_zone')}</th><th>{msg('ui_col_km')}</th><th>€</th></tr></thead>
+    <tbody>{#each [{ n: msg('fig_charges_planned'), zs: planned }, { n: msg('fig_charges_rerouted'), zs: rerouted }] as g (g.n)}{#each g.zs as z (z.zone.id)}<tr><td>{g.n}</td><td>{z.zone.label}</td><td>{z.km}</td><td>{z.charge}</td></tr>{/each}{/each}</tbody></table>
 </div>
 
 <style>

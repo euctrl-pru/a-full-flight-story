@@ -1,11 +1,12 @@
 <script lang="ts">
   import type { Freshness } from '$lib/data/live';
+  import { msg } from '$lib/i18n/msg';
   let { freshness }: { freshness: Freshness | null } = $props();
 </script>
 
 {#if freshness}
-  <span class="fresh {freshness}" title={freshness === 'live' ? 'Fetched live from the EUROCONTROL API in your browser' : 'Bundled snapshot (live fetch unavailable or not newer)'}>
-    {freshness === 'live' ? '● Live' : '◌ Snapshot'}
+  <span class="fresh {freshness}" title={msg(freshness === 'live' ? 'ui_fresh_live_title' : 'ui_fresh_snapshot_title')}>
+    {msg(freshness === 'live' ? 'ui_fresh_live' : 'ui_fresh_snapshot')}
   </span>
 {/if}
 

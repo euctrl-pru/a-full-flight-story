@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { msg } from '$lib/i18n/msg';
   import { theme as shared } from './theme.svelte';
   let theme = $state<'dark' | 'light'>('dark');
   $effect(() => {
@@ -13,7 +14,7 @@
   }
 </script>
 
-<button type="button" class="tt" onclick={toggle} aria-label="Switch to {theme === 'dark' ? 'light' : 'dark'} theme">{theme === 'dark' ? '☀' : '☾'}</button>
+<button type="button" class="tt" onclick={toggle} aria-label={msg(theme === 'dark' ? 'ui_theme_to_light' : 'ui_theme_to_dark')}>{theme === 'dark' ? '☀' : '☾'}</button>
 
 <style>
   .tt { all: unset; cursor: pointer; width: 28px; height: 28px; display: grid; place-items: center; border-radius: 6px; border: 1px solid var(--border); }

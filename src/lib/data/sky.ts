@@ -50,13 +50,6 @@ export function adsbLolTiles(b: Bbox, stepLat = 6, stepLon = 8): { lat: number; 
 
 export const minutesAgo = (iso: string, now = Date.now()) => Math.max(0, Math.round((now - Date.parse(iso)) / 60_000));
 
-export function ageLabel(iso: string, now = Date.now()): string {
-  const m = minutesAgo(iso, now);
-  if (m < 60) return `${m} min ago`;
-  if (m < 48 * 60) return `${Math.floor(m / 60)} h${m % 60 ? ` ${m % 60} min` : ''} ago`;
-  return `${Math.floor(m / 1440)} days ago`;
-}
-
 export function newerSky(cur: SkySnapshot | null, next: unknown): next is SkySnapshot {
   const n = next as SkySnapshot | null;
   if (!n || typeof n.fetchedAt !== 'string' || !Array.isArray(n.aircraft) || !(n.count > 0)) return false;

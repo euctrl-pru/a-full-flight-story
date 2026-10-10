@@ -1,12 +1,13 @@
 <script lang="ts">
+  import { msg } from '$lib/i18n/msg';
   import { getSource } from '$lib/story/sources';
   let { ids }: { ids: string[] } = $props();
-  const items = $derived(ids.map((id) => ({ id, s: getSource(id), label: id.startsWith('S') ? id.slice(1) : 'data' })));
+  const items = $derived(ids.map((id) => ({ id, s: getSource(id), label: id.startsWith('S') ? id.slice(1) : msg('ui_cite_data') })));
 </script>
 
 <sup class="cites">
   {#each items as { id, s, label } (id)}
-    <a class="cite" href={s.url} target="_blank" rel="noopener noreferrer" aria-label="Source {label}: {s.title}, {s.publisher}">
+    <a class="cite" href={s.url} target="_blank" rel="noopener noreferrer" aria-label={msg('ui_cite_label', { label, title: s.title, publisher: s.publisher })}>
       {label}<span class="tip" role="tooltip"><strong>{s.publisher}</strong><br />{s.title}</span>
     </a>
   {/each}

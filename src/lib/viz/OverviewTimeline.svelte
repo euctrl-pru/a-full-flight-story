@@ -5,6 +5,7 @@
   import { ATM_PHASES, phaseOf } from '$lib/story/phases';
   import { timeScale, phaseSpans, TIME_TICKS, scaleHours, CHAPTER_ANCHORS } from '$lib/story/timescale';
   import { stackRows, spreadAlong } from './label-layout';
+  import { msg } from '$lib/i18n/msg';
   import Tooltip from './Tooltip.svelte';
   import SourceLine from './SourceLine.svelte';
   import { reducedMotion } from '$lib/scroll/motion';
@@ -32,7 +33,7 @@
 
 <div class="ot" bind:clientWidth={width}>
   {#if width}
-    <svg width={width} height={H} role="img" aria-label="Timeline of FFS101 from ten months before take-off to a year after, coloured by planning phase">
+    <svg width={width} height={H} role="img" aria-label={msg('timeline_aria')}>
       {#each spans as p (p.id)}
         {#if vertical}
           <rect x="104" y={s(p.from)} width="10" height={s(p.to) - s(p.from)} fill={phaseOf(p.id).color} opacity="0.8" />
@@ -60,7 +61,7 @@
         {/if}
       {/each}
     </svg>
-    <ol class="labels" aria-label="Chapters on the timeline">
+    <ol class="labels" aria-label={msg('timeline_chapters_aria')}>
       {#each chapters as d, i (d.c.id)}
         <li style:left={vertical ? '176px' : `${labelPos[i] - 4}px`} style:top={vertical ? `${labelPos[i] - 10}px` : `${52 + rows[i] * 22}px`}>
           <button type="button" onclick={() => go(d.c.id)} style:--c={d.c.phase ? phaseOf(d.c.phase).color : 'var(--accent)'}>{d.c.title}</button>
@@ -68,10 +69,10 @@
       {/each}
     </ol>
     <Tooltip visible={!!hi} x={hi ? (vertical ? 114 : s(timeScale(hi.at))) : 0} y={hi ? (vertical ? s(timeScale(hi.at)) : 30) : 0} containerWidth={width}>
-      {#if hi}<strong>{hi.label}</strong><div class="row">{new Date(hi.at).toUTCString().slice(5, 22)} UTC</div>{/if}
+      {#if hi}<strong>{hi.label}</strong><div class="row">{new Date(hi.at).toUTCString().slice(5, 22)} {msg('ui_utc')}</div>{/if}
     </Tooltip>
   {/if}
-  <SourceLine ids={['S8', 'S7']} illustrative detail="signed-log time axis relative to FFS101’s off-block time" />
+  <SourceLine ids={['S8', 'S7']} illustrative detail={msg('timeline_detail')} />
 </div>
 
 <style>

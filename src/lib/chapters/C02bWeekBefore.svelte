@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { msg } from '$lib/i18n/msg';
   import Chapter from '$lib/ui/Chapter.svelte';
   import BaseMap from '$lib/viz/BaseMap.svelte';
   import RouteMap from '$lib/viz/RouteMap.svelte';
@@ -14,7 +15,7 @@
   {#snippet graphic({ step })}
     <div class="stage">
       <div class="map-wrap">
-        <BaseMap label="Military training areas and FFS101's planned route" frame={ROUTE_FRAME} highlight={[ISO.BE, ISO.LU, ISO.FR, ISO.CH, ISO.IT]}>
+        <BaseMap label={msg('fig_week_map')} frame={ROUTE_FRAME} highlight={[ISO.BE, ISO.LU, ISO.FR, ISO.CH, ISO.IT]}>
           {#snippet children({ projection, path, width })}
             <RouteMap {projection} {path} {width} military={step === 0} showPlane={false} progress={1} routes={[{ id: 'planned', coords: ROUTE_PLANNED, style: 'active' }]} />
           {/snippet}

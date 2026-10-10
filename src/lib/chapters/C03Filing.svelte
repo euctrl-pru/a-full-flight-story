@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { msg } from '$lib/i18n/msg';
   import Chapter from '$lib/ui/Chapter.svelte';
   import Figure from '$lib/viz/Figure.svelte';
   import FplAnatomy from '$lib/viz/FplAnatomy.svelte';
@@ -11,7 +12,7 @@
 <Chapter chapter={ch}>
   {#snippet graphic({ step })}
     <div class="stage">
-      <Figure title="FFS101's ICAO flight plan" subtitle="ICAO 2012 format, as sent to IFPS" sources={['S9', 'S10']} illustrative>
+      <Figure title={msg('fig_fpl_title')} subtitle={msg('fig_fpl_sub')} sources={['S9', 'S10']} illustrative>
         <FplAnatomy active={ACTIVE[step] ?? []} stage={STAGE[step] ?? 'message'} />
       </Figure>
     </div>

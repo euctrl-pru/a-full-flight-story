@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
+  import { msg } from '$lib/i18n/msg';
   import Chapter from '$lib/ui/Chapter.svelte';
   import BaseMap from '$lib/viz/BaseMap.svelte';
   import RouteMap from '$lib/viz/RouteMap.svelte';
@@ -30,7 +31,7 @@
   {#snippet graphic({ step, progress })}
     <div class="stage">
       <div class="map-wrap">
-        <BaseMap label="Planned route through the regulated sector and the proposed reroute" frame={ROUTE_FRAME}>
+        <BaseMap label={msg('fig_reroute_map')} frame={ROUTE_FRAME}>
           {#snippet children({ projection, path, width })}
             <RouteMap {projection} {path} {width} regulated showPlane={false}
               progress={step === 1 ? progress : 1}
@@ -41,12 +42,12 @@
         </BaseMap>
         {#if step === 2 && charges}
           <table class="panel decision">
-            <caption>Planned vs rerouted (illustrative)</caption>
-            <thead><tr><th></th><th>Via Reims</th><th>Via Karlsruhe</th></tr></thead>
+            <caption>{msg('fig_reroute_caption')}</caption>
+            <thead><tr><th></th><th>{msg('fig_reroute_via_reims')}</th><th>{msg('fig_reroute_via_karlsruhe')}</th></tr></thead>
             <tbody>
-              <tr><th scope="row">ATFM delay</th><td>+{HERO.ctotDelayMin} min</td><td>+{HERO.rerouteCtotDelayMin} min</td></tr>
-              <tr><th scope="row">Extra distance</th><td>—</td><td>+{extraKm} km</td></tr>
-              <tr><th scope="row">En-route charges</th><td>€{fmtInt(sum(charges.planned))}</td><td>€{fmtInt(sum(charges.rerouted))}</td></tr>
+              <tr><th scope="row">{msg('fig_reroute_row_delay')}</th><td>+{HERO.ctotDelayMin} min</td><td>+{HERO.rerouteCtotDelayMin} min</td></tr>
+              <tr><th scope="row">{msg('fig_reroute_row_distance')}</th><td>—</td><td>+{extraKm} km</td></tr>
+              <tr><th scope="row">{msg('fig_reroute_row_charges')}</th><td>€{fmtInt(sum(charges.planned))}</td><td>€{fmtInt(sum(charges.rerouted))}</td></tr>
             </tbody>
           </table>
         {/if}

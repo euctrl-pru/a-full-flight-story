@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { msg } from '$lib/i18n/msg';
   import { ACTORS, PHASES, matrix } from '$lib/story/stakeholders';
   import { EVENTS, type Phase } from '$lib/story/flight';
   import Tooltip from './Tooltip.svelte';
@@ -18,7 +19,7 @@
 
 <div class="sm" bind:clientWidth={width}>
   {#if width}
-    <svg {width} height={top + ACTORS.length * rowH + 8} role="img" aria-label="Which stakeholder acted in which phase of FFS101's life">
+    <svg {width} height={top + ACTORS.length * rowH + 8} role="img" aria-label={msg('fig_matrix_aria')}>
       {#each PHASES as p, j (p.id)}<text class="ph" x={left + j * colW + colW / 2} y="14" text-anchor="middle" opacity={j <= limit ? 1 : 0.35}>{width > 700 ? p.label : p.label.slice(0, 3)}</text>{/each}
       {#each ACTORS as a, i (a.id)}
         <text class="ac" x="0" y={narrow ? top + i * rowH + 10 : top + i * rowH + 16}>{a.label}</text>

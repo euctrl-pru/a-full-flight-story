@@ -8,7 +8,7 @@
   import { ACTORS } from '$lib/story/stakeholders';
   import { story } from '$lib/scroll/storyState.svelte';
   import { reveal } from '$lib/scroll/reveal';
-  import { UI } from './ui-strings';
+  import { msg } from '$lib/i18n/msg';
   import Cite from './Cite.svelte';
 
   let { phase }: { phase: AtmPhase } = $props();
@@ -32,7 +32,7 @@
 </script>
 
 <section class="phase-divider" id="phase-{phase}" bind:this={el} use:reveal style:--c={p.color} aria-labelledby="phase-{phase}-title">
-  <p class="eyebrow">Phase {ATM_PHASES.findIndex((x) => x.id === phase) + 1} of 4</p>
+  <p class="eyebrow">{msg('ui_phase_of', { n: ATM_PHASES.findIndex((x) => x.id === phase) + 1 })}</p>
   <h2 id="phase-{phase}-title">{p.label}</h2>
   <p class="horizon">{p.horizon}</p>
   <svg class="strip" viewBox="0 0 100 6" preserveAspectRatio="none" aria-hidden="true">
@@ -42,11 +42,11 @@
   </svg>
   <div class="cols">
     <div>
-      <h3>{UI.whatDecided}</h3>
+      <h3>{msg('ui_what_decided')}</h3>
       <p>{p.decides}<Cite ids={p.sources} /></p>
     </div>
     <div>
-      <h3>{UI.whoAtTable}</h3>
+      <h3>{msg('ui_who_at_table')}</h3>
       <ul class="chips">{#each actors as a, i (a.id)}<li class="chip" style:--i={i}>{a.label}</li>{/each}</ul>
     </div>
   </div>

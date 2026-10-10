@@ -1,10 +1,11 @@
 <script lang="ts">
+  import { msg } from '$lib/i18n/msg';
   import type { TableSpec } from './types';
   let { spec, maxRows = 400 }: { spec: TableSpec; maxRows?: number } = $props();
 </script>
 
 <details class="dt">
-  <summary>Show data table</summary>
+  <summary>{msg('ui_show_table')}</summary>
   <div class="scroll">
     <table>
       <caption class="visually-hidden">{spec.caption}</caption>
@@ -15,7 +16,7 @@
         {/each}
       </tbody>
     </table>
-    {#if spec.rows.length > maxRows}<p class="more">Showing the first {maxRows} of {spec.rows.length} rows.</p>{/if}
+    {#if spec.rows.length > maxRows}<p class="more">{msg('ui_table_more', { max: maxRows, total: spec.rows.length })}</p>{/if}
   </div>
 </details>
 
