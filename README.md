@@ -9,6 +9,7 @@ npm install
 npm run dev            # http://localhost:5173
 npm test               # unit tests (Vitest)
 npm run test:e2e       # Playwright: desktop + 390 px mobile
+npm run test:e2e:base  # builds with BASE_PATH=/a-full-flight-story, loads all six locales, fails on any same-origin 4xx/5xx (run separately, not in parallel with test:e2e)
 ```
 
 ## Data

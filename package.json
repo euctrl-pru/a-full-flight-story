@@ -12,6 +12,7 @@
     "check": "npm run i18n && svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "test": "npm run i18n && vitest run",
     "test:e2e": "playwright test",
+    "test:e2e:base": "playwright test -c playwright.base.config.ts",
     "fetch:eurocontrol": "tsx scripts/fetch-eurocontrol.ts",
     "fetch:sky": "tsx scripts/fetch-sky.ts",
     "sources": "tsx scripts/extract-sources.ts",

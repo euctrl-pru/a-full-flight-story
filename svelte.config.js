@@ -5,7 +5,7 @@ import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 export default {
   preprocess: vitePreprocess(),
   kit: {
-    adapter: adapter({ pages: 'build', assets: 'build', strict: true }),
+    adapter: adapter({ pages: process.env.BUILD_DIR ?? 'build', assets: process.env.BUILD_DIR ?? 'build', strict: true }),
     paths: { base: process.env.BASE_PATH ?? '' }
   }
 };
