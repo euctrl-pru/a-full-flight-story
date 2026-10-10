@@ -21,7 +21,7 @@ test('slow API (beyond 8 s timeout) still shows the snapshot', async ({ page }) 
   await page.route('https://api-data-app.eurocontrol.int/**', async (r) => { await new Promise((res) => setTimeout(res, 12_000)); await r.abort(); });
   await page.goto('/');
   await scrollStepTo(page, '#cold-open [data-step="1"]');
-  await expect(page.locator('#cold-open .fresh')).toHaveText(/Snapshot/, { timeout: 5_000 });
+  await expect(page.locator('#cold-open .fresh')).toHaveText(/Snapshot/, { timeout: 10_000 });
 });
 
 test('empty sky snapshot → honest empty state', async ({ page }) => {
