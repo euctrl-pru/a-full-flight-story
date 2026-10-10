@@ -7,6 +7,8 @@
   import C00ColdOpen from '$lib/chapters/C00ColdOpen.svelte';
   import C01Strategic from '$lib/chapters/C01Strategic.svelte';
   import C02Airspace from '$lib/chapters/C02Airspace.svelte';
+  import C02bWeekBefore from '$lib/chapters/C02bWeekBefore.svelte';
+  import PhaseDivider from '$lib/ui/PhaseDivider.svelte';
   import C03Filing from '$lib/chapters/C03Filing.svelte';
   import C04Twist from '$lib/chapters/C04Twist.svelte';
   import C05Delay from '$lib/chapters/C05Delay.svelte';
@@ -37,8 +39,15 @@
     <h2 id="overview-title">{UI.overviewTitle}</h2>
     <OverviewTimeline />
   </section>
-  <C00ColdOpen /><C01Strategic /><C02Airspace /><C03Filing /><C04Twist /><C05Delay />
-  <C06Reroute /><C07Ground /><C08Enroute /><C09Arrival /><C10PostOps /><C11Sources />
+  <C00ColdOpen />
+  <PhaseDivider phase="strategic" />
+  <C01Strategic /><C02Airspace />
+  <PhaseDivider phase="pretactical" />
+  <C02bWeekBefore /><C03Filing />
+  <PhaseDivider phase="tactical" />
+  <C04Twist /><C05Delay /><C06Reroute /><C07Ground /><C08Enroute /><C09Arrival />
+  <PhaseDivider phase="postops" />
+  <C10PostOps /><C11Sources />
 </main>
 
 <style>

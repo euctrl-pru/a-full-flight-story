@@ -26,6 +26,7 @@ test('reduced motion shows final numbers immediately', async ({ page }) => {
   await page.route('https://api-data-app.eurocontrol.int/**', (r) => r.abort());
   await page.goto('/');
   await page.evaluate(() => { const el = document.querySelector('#cold-open [data-step="1"]')!; window.scrollTo(0, el.getBoundingClientRect().top + window.scrollY - innerHeight * 0.3); });
+  await expect(page.locator('#cold-open')).toHaveAttribute('data-active-step', '1');
   const v = page.locator('#cold-open .hero .v');
   await expect(v).not.toHaveText('—');
   const first = await v.textContent();
