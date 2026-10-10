@@ -22,8 +22,8 @@
     <div class="stage">
       <div class="map-wrap">
         <BaseMap label="Aircraft over Europe from the latest ADS-B snapshot">
-          {#snippet children({ projection, path })}
-            {#if step >= 2}<RouteMap {projection} {path} routes={[{ id: 'p', coords: ROUTE_PLANNED, style: 'active' }]} progress={1} showPlane={false} />{/if}
+          {#snippet children({ projection, path, width })}
+            {#if step >= 2}<RouteMap {projection} {path} {width} routes={[{ id: 'p', coords: ROUTE_PLANNED, style: 'active' }]} progress={1} showPlane={false} />{/if}
           {/snippet}
           {#snippet overlay({ projection, width, height })}
             {#if sky.snap && sky.snap.count > 0}<SkyCanvas aircraft={sky.snap.aircraft} {projection} {width} {height} dim={step >= 2 ? 1 : 0} />{/if}

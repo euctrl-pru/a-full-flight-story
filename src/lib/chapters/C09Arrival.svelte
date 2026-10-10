@@ -28,8 +28,8 @@
         <Swap>
           <div class="map-wrap">
             <BaseMap label="FFS101 descending into Rome Fiumicino" frame={ROUTE_FRAME} frameTo={ROME_FRAME} t={progress}>
-              {#snippet children({ projection, path })}
-                <RouteMap {projection} {path} progress={0.85 + 0.149 * progress} routes={[{ id: 'flown', coords: ROUTE_REROUTED, style: 'active' }]} />
+              {#snippet children({ projection, path, width })}
+                <RouteMap {projection} {path} {width} progress={0.85 + 0.149 * progress} routes={[{ id: 'flown', coords: ROUTE_REROUTED, style: 'active' }]} />
               {/snippet}
             </BaseMap>
           </div>

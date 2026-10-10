@@ -39,8 +39,8 @@
         <Swap>
           <div class="map-wrap">
             <BaseMap label="FFS101 en route, coloured by the air navigation service provider in control" frame={ROUTE_FRAME}>
-              {#snippet children({ projection, path })}
-                <RouteMap {projection} {path} showAnsp progress={along(step, progress)} routes={[{ id: 'flown', coords: ROUTE_REROUTED, spans, style: 'active' }]} />
+              {#snippet children({ projection, path, width })}
+                <RouteMap {projection} {path} {width} showAnsp progress={along(step, progress)} routes={[{ id: 'flown', coords: ROUTE_REROUTED, spans, style: 'active' }]} />
               {/snippet}
             </BaseMap>
           </div>

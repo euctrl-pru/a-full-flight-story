@@ -16,8 +16,8 @@
       <div class="map-wrap">
         <BaseMap label="FFS101's route across Europe's airspace" frame={EUROPE_FRAME} frameTo={ROUTE_FRAME} t={step === 0 ? progress : 1}
           highlight={[ISO.BE, ISO.LU, ISO.FR, ISO.CH, ISO.IT]}>
-          {#snippet children({ projection, path })}
-            <RouteMap {projection} {path} showPlane={false} progress={step === 0 ? progress : 1}
+          {#snippet children({ projection, path, width })}
+            <RouteMap {projection} {path} {width} showPlane={false} progress={step === 0 ? progress : 1}
               routes={[
                 ...(step >= 1 ? [{ id: 'gc', coords: [AIRPORTS.EBBR.lonlat, AIRPORTS.LIRF.lonlat], style: 'ghost' as const }] : []),
                 { id: 'planned', coords: ROUTE_PLANNED, style: 'active' as const }

@@ -31,8 +31,8 @@
     <div class="stage">
       <div class="map-wrap">
         <BaseMap label="Planned route through the regulated sector and the proposed reroute" frame={ROUTE_FRAME}>
-          {#snippet children({ projection, path })}
-            <RouteMap {projection} {path} regulated showPlane={false}
+          {#snippet children({ projection, path, width })}
+            <RouteMap {projection} {path} {width} regulated showPlane={false}
               progress={step === 1 ? progress : 1}
               routes={step < 3
                 ? [{ id: 'planned', coords: ROUTE_PLANNED, style: 'ghost' }, ...(step >= 1 ? [{ id: 'rrp', coords: ROUTE_REROUTED, style: 'active' as const }] : [])]
