@@ -8,10 +8,12 @@
   import { doyLabel, fmtInt, fmtDec } from '$lib/viz/chart-utils';
   import { HERO } from '$lib/story/flight';
   import { chapter } from '$lib/story/chapters';
+  import { currentYear } from '$lib/story/freshness';
 
   const ch = chapter('strategic');
   const net = $derived(bundle('network'));
-  const lines = $derived(trafficLines(net));
+  const cy = $derived(currentYear(net?.dataDate));
+  const lines = $derived(trafficLines(net, [2019, cy - 1, cy], cy));
   const fc = $derived(forecastLines(net));
 </script>
 

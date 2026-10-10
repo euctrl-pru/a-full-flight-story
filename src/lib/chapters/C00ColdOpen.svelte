@@ -10,6 +10,7 @@
   import { ageLabel, minutesAgo } from '$lib/data/sky';
   import { ROUTE_PLANNED } from '$lib/story/flight';
   import { chapter } from '$lib/story/chapters';
+  import { dayPhrase } from '$lib/story/freshness';
 
   const ch = chapter('cold-open');
   const net = $derived(bundle('network'));
@@ -42,7 +43,7 @@
           </Swap>
         {:else if step === 1}
           <Swap>
-            <HeroNumber value={net?.headline.flights ?? null} label="flights in the European network yesterday" />
+            <HeroNumber value={net?.headline.flights ?? null} label={`flights in the European network ${dayPhrase(net?.dataDate)}`} />
             <SourceLine ids={['D-eurocontrol']} detail="network-wide" freshness={ec.freshness.network ?? null} dataDate={net?.dataDate} />
           </Swap>
         {:else}

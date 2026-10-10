@@ -5,7 +5,7 @@ export const CHAPTERS: ChapterDef[] = [
     id: 'cold-open', kicker: 'Prologue', phase: null, title: 'The sky over Europe', clockLabel: 'Now', clock: 0,
     steps: [
       { id: 'co-sky', text: 'Every dot is an aircraft over Europe, captured from the positions they broadcast shortly before this page was last built [D-opensky].' },
-      { id: 'co-yesterday', text: 'Yesterday the European network handled the number on screen. In 2025 it handled 11.1 million flights, and on its busiest day — 18 July 2025 — 37,034: one new flight every 2.3 seconds [S1, D-eurocontrol].' },
+      { id: 'co-yesterday', text: 'The European network handled the number on screen {{date:network}}. In 2025 it handled 11.1 million flights, and on its busiest day — 18 July 2025 — 37,034: one new flight every 2.3 seconds [S1, D-eurocontrol].' },
       { id: 'co-hero', illustrative: true, text: 'None of them just took off. Behind each is a choreography of airlines, airports, air traffic controllers and EUROCONTROL’s **Network Manager**. This is the story of one: **FFS101**, a fictional 07:00 Airbus A320neo from Brussels to Rome [S35].' }
     ]
   },
@@ -58,10 +58,10 @@ export const CHAPTERS: ChapterDef[] = [
   {
     id: 'delay', kicker: 'Zoom out', phase: 'tactical', title: 'Why Europe waits', clockLabel: 'Zoom out · Europe', clock: 0.5,
     steps: [
-      { id: 'de-yesterday', text: 'FFS101 is not alone. Yesterday, flow-management ({ATFM}) delay across the network added up to the minutes on screen [D-eurocontrol].' },
-      { id: 'de-causes', text: 'Mostly not because of weather: in 2025, ATC capacity and staffing caused 58% of en-route ATFM delay, weather 28% [S1]. Yesterday’s split is on screen [D-eurocontrol].' },
+      { id: 'de-yesterday', text: 'FFS101 is not alone. Flow-management ({ATFM}) delay across the network added up to the minutes on screen {{date:network}} [D-eurocontrol].' },
+      { id: 'de-causes', text: 'Mostly not because of weather: in 2025, ATC capacity and staffing caused 58% of en-route ATFM delay, weather 28% [S1]. The split for that day is on screen [D-eurocontrol].' },
       { id: 'de-year', text: 'Across the year the pattern repeats — summer storms and staffing peaks. France accounted for 36% of en-route delay in 2025 [S1, D-eurocontrol].' },
-      { id: 'de-report', text: 'Every week the Network Manager writes up what happened. This is its latest network situation report, fetched live [D-situation].' }
+      { id: 'de-report', text: 'Every week the Network Manager writes up what happened. This is its latest network situation report, {{live:report}} [D-situation].' }
     ]
   },
   {

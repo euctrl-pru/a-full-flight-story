@@ -11,6 +11,7 @@
   import { CAUSES, CAUSE_COLOR, CAUSE_LABEL } from '$lib/viz/palette';
   import { doyLabel, fmtInt, fmtDec } from '$lib/viz/chart-utils';
   import { chapter } from '$lib/story/chapters';
+  import { dayPhrase } from '$lib/story/freshness';
 
   const ch = chapter('delay');
   const net = $derived(bundle('network'));
@@ -24,16 +25,16 @@
       <div class="swaps">
       {#if step === 0}
         <Swap>
-          <Figure title="ATFM delay in the European network, yesterday" sources={['D-eurocontrol']} freshness={fresh} dataDate={net?.dataDate}>
+          <Figure title={`ATFM delay in the European network, ${dayPhrase(net?.dataDate)}`} sources={['D-eurocontrol']} freshness={fresh} dataDate={net?.dataDate}>
             <HeroNumber value={net?.headline.delayMinutes ?? null} label="minutes of ATFM delay"
               sub={net?.headline.delayPerFlight != null ? `${fmtDec(net.headline.delayPerFlight, 2)} min per flight` : undefined} />
           </Figure>
         </Swap>
       {:else if step === 1}
         <Swap>
-          <Figure title="Yesterday's ATFM delay by cause" subtitle="Minutes" sources={['D-eurocontrol']} freshness={fresh} dataDate={net?.dataDate}
-            table={{ caption: 'ATFM delay minutes by cause, yesterday', columns: [{ key: 'label', label: 'Cause' }, { key: 'value', label: 'Minutes', format: fmtInt }], rows: causeBars(net).map((b) => ({ label: b.label, value: b.value })) }}>
-            <BarChart bars={causeBars(net)} label="ATFM delay minutes by cause yesterday" yFormat={fmtInt} />
+          <Figure title={`ATFM delay by cause, ${dayPhrase(net?.dataDate)}`} subtitle="Minutes" sources={['D-eurocontrol']} freshness={fresh} dataDate={net?.dataDate}
+            table={{ caption: `ATFM delay minutes by cause, ${dayPhrase(net?.dataDate)}`, columns: [{ key: 'label', label: 'Cause' }, { key: 'value', label: 'Minutes', format: fmtInt }], rows: causeBars(net).map((b) => ({ label: b.label, value: b.value })) }}>
+            <BarChart bars={causeBars(net)} label="ATFM delay minutes by cause" yFormat={fmtInt} />
           </Figure>
         </Swap>
       {:else if step === 2}

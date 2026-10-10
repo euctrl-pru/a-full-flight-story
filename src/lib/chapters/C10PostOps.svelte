@@ -10,9 +10,11 @@
   import { doyLabel, fmtInt, fmtDec } from '$lib/viz/chart-utils';
   import { ENTITIES, type EntityKey } from '$lib/data/eurocontrol';
   import { chapter } from '$lib/story/chapters';
+  import { currentYear } from '$lib/story/freshness';
 
   const ch = chapter('postops');
   const net = $derived(bundle('network'));
+  const cy = $derived(currentYear(net?.dataDate));
   const ANSPS: EntityKey[] = ['skeyes', 'MUAC', 'DSNA', 'DFS', 'Skyguide', 'ENAV'];
 </script>
 
@@ -40,11 +42,11 @@
               {@const b = bundle(k)}
               <div class="cell panel">
                 <h4>{ENTITIES[k].label}</h4>
-                <LineChart series={trafficLines(b, [2019, 2026])} label="{ENTITIES[k].label} daily flights 2026 vs 2019" height={110} xFormat={doyLabel} yFormat={fmtInt} directLabels={false} xTicks={[1, 182]} yTicks={2} />
+                <LineChart series={trafficLines(b, [2019, cy], cy)} label="{ENTITIES[k].label} daily flights {cy} vs 2019" height={110} xFormat={doyLabel} yFormat={fmtInt} directLabels={false} xTicks={[1, 182]} yTicks={2} />
               </div>
             {/each}
           </div>
-          <SourceLine ids={['D-eurocontrol']} detail="daily flights handled, 7-day average; blue 2026, grey 2019" freshness={ec.freshness.MUAC ?? null} dataDate={bundle('MUAC')?.dataDate} />
+          <SourceLine ids={['D-eurocontrol']} detail="daily flights handled, 7-day average; blue {cy}, grey 2019" freshness={ec.freshness.MUAC ?? null} dataDate={bundle('MUAC')?.dataDate} />
         </Swap>
       {/if}
       </div>
